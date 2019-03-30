@@ -45,3 +45,6 @@ Vue.use(Radio);
 
 import { Lazyload } from 'vant';
 Vue.use(Lazyload);
+
+import { DatetimePicker } from 'vant';
+Vue.use(DatetimePicker);

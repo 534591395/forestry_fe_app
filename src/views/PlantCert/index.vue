@@ -80,7 +80,7 @@
     <div class="plant-cert-card">
       <div class="plant-cert-card__header flex-center-y">
         <img src="../../assets/cert.png" alt="" class="plant-cert-card__img">
-        
+
         <div class="plant-cert-card__title">木材运输与植物检疫申请单</div>
       </div>
 
@@ -90,23 +90,23 @@
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-center-y-cell__value change-cell-title-width-large" :border="false">
-        <van-field :readonly="$route.params.create_time" label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right" 
+        <van-field :readonly="$route.params.create_time" label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right"
         v-model="formData.processing_area" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-cell__value" :border="false">
-        <van-field 
-          readonly 
+        <van-field
+          readonly
           label="植物产品名称"
           v-model="formData.plant_name"
           @focus="$route.params.create_time ? null : popup.plantNamePopup = true"
           input-align="right"
-        > 
+        >
         </van-field>
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-cell__value" :border="false">
-        <van-field 
+        <van-field
           readonly
           label="品种"
           v-model="formData.variety"
@@ -131,12 +131,12 @@
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-center-y-cell__value" :border="false">
-        <van-field :readonly="$route.params.create_time" label="包装方式" placeholder="请输入包装方式" input-align="right" 
+        <van-field :readonly="$route.params.create_time" label="包装方式" placeholder="请输入包装方式" input-align="right"
         v-model="formData.packaging" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-center-y-cell__value" :border="false">
-        <van-field :readonly="$route.params.create_time" label="规格" placeholder="请输入规格" input-align="right" 
+        <van-field :readonly="$route.params.create_time" label="规格" placeholder="请输入规格" input-align="right"
         v-model="formData.standard" />
       </van-cell-group>
 
@@ -147,10 +147,10 @@
 
       <van-cell-group class="van-hairline--bottom change-cell__value change-field__error-message change-cell-title-width-default" :border="false">
         <van-field :readonly="$route.params.create_time" label="收货单位详细地址" disabled>
-          <van-radio-group 
+          <van-radio-group
             :disabled="$route.params.create_time"
-            v-model="formData.receive_address_type" 
-            slot="button" 
+            v-model="formData.receive_address_type"
+            slot="button"
             class="flex-center-y"
           >
             <van-radio :name="0">省内</van-radio>
@@ -172,16 +172,26 @@
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.create_time" label="日期" placeholder="按年-月-日输入（中间要加横线）" input-align="right" required
-        v-model="formData.date_time" :error-message="errMsg.date_timeErrMsg" @blur="handleInputBlur('date_time')" />
-      </van-cell-group>
-      
-      <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
+        <van-cell title="日期" is-link :value="formData.date_txt" @click="formData.show_date_time = true" />
+        <!--<van-field :readonly="$route.params.create_time" label="日期" placeholder="按年-月-日输入（中间要加横线）" input-align="right" required-->
+        <!--v-model="formData.date_time" :error-message="errMsg.date_timeErrMsg" @blur="handleInputBlur('date_time')" />-->
+        <van-popup v-model="formData.show_date_time" position="bottom" :overlay="true">
           <van-datetime-picker
             v-model="formData.date_time"
             type="date"
+            @confirm="dateConfirm"
           />
+        </van-popup>
       </van-cell-group>
+
+      <!--<van-cell-group class="van-hairline&#45;&#45;bottom change-field__body change-field__error-message" :border="false">-->
+        <!--<van-popup v-model="formData.show_date_time" position="bottom" :overlay="true">-->
+          <!--<van-datetime-picker-->
+            <!--v-model="formData.date_time"-->
+            <!--type="date"-->
+          <!--/>-->
+        <!--</van-popup>-->
+      <!--</van-cell-group>-->
 
       <van-cell-group class="van-hairline--bottom change-field__body" :border="false">
         <van-field :readonly="$route.params.create_time" label="申请人" placeholder="请输入申请人" input-align="right"
@@ -204,9 +214,9 @@
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.create_time" label="提单量" placeholder="请输入提单量" input-align="right" required 
+        <van-field :readonly="$route.params.create_time" label="提单量" placeholder="请输入提单量" input-align="right" required
         v-model="formData.bill_number" :error-message="errMsg.bill_numberErrMsg" @blur="handleInputBlur('bill_number')" />
-      </van-cell-group>      
+      </van-cell-group>
 
       <div v-if="formData.picture_url">
         <p class="title-pic">
@@ -230,12 +240,12 @@
       <van-popup v-model="popup.plantNamePopup" position="bottom">
         <van-radio-group
           class="plant-cert__radio"
-          v-model="formData.plant_name" 
+          v-model="formData.plant_name"
           @change="popup.plantNamePopup = false"
         >
-          <van-radio 
+          <van-radio
             v-for="(item, index) in $store.getters.oBasicInfo['植物产品名称'].info"
-            :key="index" 
+            :key="index"
             :name="item"
           >
            {{ item }}
@@ -244,14 +254,14 @@
       </van-popup>
 
       <van-popup v-model="popup.varietyPopup" position="bottom">
-        <van-radio-group 
+        <van-radio-group
           v-model="formData.variety"
           class="plant-cert__radio"
           @change="popup.varietyPopup = false"
         >
-          <van-radio 
+          <van-radio
             v-for="(item, index) in $store.getters.oBasicInfo['品种'].info"
-            :key="index" 
+            :key="index"
             :name="item"
           >
             {{ item }}
@@ -264,6 +274,7 @@
 
 <script>
 import UploadPicture from '../../components/UploadPicture';
+import moment from 'moment'
 
 export default {
   name: 'PlantCert',
@@ -286,7 +297,7 @@ export default {
         }).then(() => {
           this.skipNewPath();
         }).catch(() => {
-          
+
         });
       }
     }
@@ -308,7 +319,9 @@ export default {
         receive_address: '',
         phone: '',
         person_id: '',
-        date_time: '',
+        date_txt: '',
+        show_date_time: false,
+        date_time: new Date(),
         apply_person: '',
         transport_person: '',
         report_number: '',
@@ -437,7 +450,14 @@ export default {
           id: this.formData.id
         }
       });
+    },
+    dateConfirm() {
+      this.formData.show_date_time = false;
+      this.$set(this.formData, 'date_txt', moment(this.formData.date_time).format('YYYY-MM-DD'))
     }
+  },
+  created() {
+    this.$set(this.formData, 'date_txt', moment().format('YYYY-MM-DD'))
   }
 }
 </script>
