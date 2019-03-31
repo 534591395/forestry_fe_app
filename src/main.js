@@ -22,19 +22,19 @@ Vue.prototype.$qs = qs;
 Vue.prototype.$http = request;
 Vue.prototype.$window = window;
 
-// document.addEventListener('plusready', () => {
-//   // window.plus.storage.clear();
-//
-// });
-window.$vm = new Vue({
-  el: '#app',
-  router,
-  store,
-  components: { App },
-  template: '<App/>',
-  data() {
-    return {
-      bus: new Vue()
+document.addEventListener('plusready', () => {
+  // window.plus.storage.clear();
+  window.$vm = new Vue({
+    el: '#app',
+    router,
+    store,
+    components: { App },
+    template: '<App/>',
+    data() {
+      return {
+        bus: new Vue()
+      }
     }
-  }
+  });
 });
+
