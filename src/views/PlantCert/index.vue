@@ -172,7 +172,7 @@
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
-        <van-cell title="日期" is-link :value="formData.date_txt" @click="formData.show_date_time = true" />
+        <van-cell title="日期" is-link :value="formData.date_txt" @click="$route.params.create_time ? null : formData.show_date_time = true" />
         <!--<van-field :readonly="$route.params.create_time" label="日期" placeholder="按年-月-日输入（中间要加横线）" input-align="right" required-->
         <!--v-model="formData.date_time" :error-message="errMsg.date_timeErrMsg" @blur="handleInputBlur('date_time')" />-->
         <van-popup v-model="formData.show_date_time" position="bottom" :overlay="true">
@@ -215,7 +215,7 @@
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
         <van-field :readonly="$route.params.create_time" label="提单量" placeholder="请输入提单量" input-align="right" required
-        v-model="formData.bill_number" :error-message="errMsg.bill_numberErrMsg" @blur="handleInputBlur('bill_number')" />
+        v-model="formData.amount" :error-message="errMsg.amount_numberErrMsg" @blur="handleInputBlur('amount')" />
       </van-cell-group>
 
       <div v-if="formData.picture_url">
@@ -281,10 +281,14 @@ export default {
   components: {
     UploadPicture
   },
-  created() {
+  mounted() {
     window.scrollTo(0, 0);
     if(this.$route.params.create_time) {
-      this.formData = this.$route.params;
+      this.formData = Object.assign(this.formData, this.$route.params);
+      this.formData.date_txt =  this.$route.params.date_time;
+      const timeArr = this.$route.params.date_time.split('-');
+      this.formData.date_time= new Date(timeArr[0],timeArr[1],timeArr[2]);
+      console.log(this.formData)
       this.statusObject['2'].text = `审核已通过，请至城厢镇林业局${this.formData.windows}号窗口领取`;
       this.statusObject['3'].text = `审核未通过，被拒原因: ${this.formData.refuse_reason}`;
 
@@ -327,7 +331,7 @@ export default {
         report_number: '',
         car_number: '',
         // 提单量
-        bill_number: ''
+        amount: ''
       },
       errMsg: {
         car_amountErrMsg: '',
@@ -340,7 +344,7 @@ export default {
         transport_personErrMsg: '',
         report_numberErrMsg: '',
         car_numberErrMsg: '',
-        bill_numberErrMsg: ''
+        amount_numberErrMsg: ''
       },
       statusObject: {
         1: {
@@ -374,6 +378,7 @@ export default {
     submit() {
       if(this.validate()) {
         let data = JSON.parse(JSON.stringify(this.formData));
+        data.date_time = data.date_txt;
         this.$http({
           url: '/cert/addPlantCert',
           method: 'POST',
@@ -425,8 +430,8 @@ export default {
         this.errMsg.car_numberErrMsg = '此项不能为空';
         flag = false;
       }
-      if (this.formData.bill_number == '') {
-        this.errMsg.bill_numberErrMsg = '此项不能为空';
+      if (this.formData.amount == '') {
+        this.errMsg.amount_numberErrMsg = '此项不能为空';
         flag = false;
       }
 
@@ -453,11 +458,11 @@ export default {
     },
     dateConfirm() {
       this.formData.show_date_time = false;
-      this.$set(this.formData, 'date_txt', moment(this.formData.date_time).format('YYYY-MM-DD'))
+      this.$set(this.formData, 'date_txt', moment(this.formData.date_time).format('YYYY-MM-DD'));
     }
   },
   created() {
-    this.$set(this.formData, 'date_txt', moment().format('YYYY-MM-DD'))
+    this.$set(this.formData, 'date_txt', moment().format('YYYY-MM-DD'));
   }
 }
 </script>
