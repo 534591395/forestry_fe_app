@@ -161,7 +161,7 @@
       </van-cell-group>
 
       <van-checkbox :disabled="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" class="checkbox-label" shape="square" v-model="oFormData.outCityCompany">
-        省（市）外企业主要：
+        其他：
       </van-checkbox>
       <van-cell-group class="van-hairline--bottom" :border="false" style="margin-top: 1px;">
         <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" placeholder="请输入企业名称，以逗号分隔" type="textarea" rows="2" v-model="oFormData.outCityCompanyName">
