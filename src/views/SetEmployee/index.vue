@@ -24,7 +24,8 @@
 <template>
   <div class="set-employee">
     <van-nav-bar title="修改业务员" left-arrow @click-left="$router.push({name: 'setCompanyInfo'})" fixed v-if="!$window.$storage.get('isReg')" />
-    <van-nav-bar title="添加业务员" right-text="跳过" fixed @click-right="$router.push({name: 'chooseCert'})" v-else />
+    <!-- <van-nav-bar title="添加业务员" right-text="跳过" fixed @click-right="$router.push({name: 'chooseCert'})" v-else /> -->
+    <van-nav-bar title="添加业务员" right-text="跳过" fixed @click-right="finishReg" v-else />
 
     <employee-card ref="employee-card" v-for="(item, index) in employee" :key="index" v-model="employee[index]" :index="index" @del-card="handleDelCard" />
 
@@ -72,6 +73,10 @@ export default {
     }
   },
   methods: {
+    finishReg() {
+      window.$storage.del('isReg');
+      this.$router.push({name: 'applyRecord'});
+    },
     getEmployee() {
       this.$http({
         url: '/employee/getEmployee',
@@ -114,7 +119,8 @@ export default {
           if(res && res.data.code == 0) {
             this.$toast.success('修改业务员成功');
             if(window.$storage.get('isReg')) {
-              this.$router.push({name: 'chooseCert'});
+              //this.$router.push({name: 'chooseCert'});
+              this.finishReg();
             }
             else {
               this.$router.push({name: 'companySetting'});
