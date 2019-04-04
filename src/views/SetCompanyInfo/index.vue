@@ -191,14 +191,14 @@
       <van-row>
         <van-col span="12">
           <van-cell-group class="van-hairline--bottom" :border="false">
-            <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="台锯数量" placeholder="数量" v-model="oFormData.saw">
+            <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="台锯数量" placeholder="数量" v-model="oFormData.saw" :required="isSaw" :error-message="isSaw ? oErrMsg.sawErrMsg : ''" @blur="handleInputBlur('saw', 'string')">
               <span slot="button" style="color: #333333;">套</span>
             </van-field>
           </van-cell-group>
         </van-col>
         <van-col span="12">
           <van-cell-group class="van-hairline--bottom" :border="false">
-            <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="日生产量 " placeholder="生产量" v-model="oFormData.sawOutput">
+            <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="日生产量 " placeholder="生产量" v-model="oFormData.sawOutput" :required="isSaw" :error-message="isSaw ? oErrMsg.sawOutputErrMsg : ''" @blur="handleInputBlur('sawOutput', 'string')">
               <span slot="button" style="color: #333333;">m³</span>
             </van-field>
           </van-cell-group>
@@ -237,7 +237,7 @@
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom" :border="false" style="margin-top: 1px;">
-        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="月销售量" placeholder="请输入销售量" v-model="oFormData.saleMount">
+        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="月销售量" placeholder="请输入销售量" v-model="oFormData.saleMount" required :error-message="oErrMsg.saleMountErrMsg" @blur="handleInputBlur('saleMount', 'string')">
           <span slot="button" style="color: #333333;">m³</span>
         </van-field>
       </van-cell-group>
@@ -321,6 +321,7 @@ export default {
   data() {
     return {
       sComponent: 'info',
+      isSaw: false,
       oFormData: {
         id: 0,
         name: '',
@@ -357,7 +358,10 @@ export default {
         storeErrMsg: '',
         companyTypeErrMsg: '',
         sourceErrMsg: '',
-        kindErrMsg: ''
+        kindErrMsg: '',
+        saleMountErrMsg: '',
+        sawErrMsg: '',
+        sawOutputErrMsg: ''
       },
       statusObject: {
         1: {
@@ -381,6 +385,13 @@ export default {
           text: '已注销'
         }
       }
+    }
+  },
+  watch: {
+    'oFormData.companyType'(newVal, oldVal) {
+      console.log(newVal);
+      this.isSaw = newVal.toString().indexOf('木材加工') > -1
+      console.log(this.isSaw);
     }
   },
   methods: {
@@ -453,6 +464,18 @@ export default {
       }
       if(this.oFormData.kind == '') {
         this.oErrMsg.kindErrMsg = '此项不能为空';
+        bFlag = true;
+      }
+      if(this.oFormData.saleMount == '') {
+        this.oErrMsg.saleMountErrMsg = '此项不能为空';
+        bFlag = true;
+      }
+      if(this.oFormData.saw == '') {
+        this.oErrMsg.sawErrMsg = '此项不能为空';
+        bFlag = true;
+      }
+      if(this.oFormData.sawOutput == '') {
+        this.oErrMsg.sawOutputErrMsg = '此项不能为空';
         bFlag = true;
       }
 
