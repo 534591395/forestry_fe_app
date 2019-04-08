@@ -150,7 +150,7 @@ export default {
       }
 
       await this.$store.dispatch('login', {oLoginFormData: this.oLoginFormData, oVm: this});
-      if(this.$store.getters.oUserInfo.id) {
+      if(this.$store.getters.token) {
         this.$router.push({name: 'home'});
       }
     },

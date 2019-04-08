@@ -16,16 +16,16 @@ const request = axios.create({
 });
 
 request.interceptors.request.use((config) => {
-  config.headers['x-auth-token'] = window.$storage.get('token');
+  config.headers['token'] = window.$storage.get('token');
 
   return config;
 });
 
 request.interceptors.response.use((res) => {
   // console.log(JSON.stringify(res.data));
-  if(res.config.url.includes('/auth/login')) {
-    window.$storage.set('token', res.headers['x-auth-token']);
-  }
+  // if(res.config.url.includes('/auth/login')) {
+  //   window.$storage.set('token', res.headers['x-auth-token']);
+  // }
 
   if(res.data.resultCode == 'login_0006') {
     console.warn('登陆超时');

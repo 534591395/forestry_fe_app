@@ -1,10 +1,14 @@
 const user = {
   state: {
-    oUserInfo: {}
+    oUserInfo: {},
+    token: ''
   },
   mutations: {
     setUserInfo(state, data) {
       state.oUserInfo = data;
+    },
+    setToken(state, data) {
+      state.token = data;
     }
   },
   actions: {
@@ -35,8 +39,9 @@ const user = {
         data: params
       }).then((res) => {
         if(res && res.data.success) {
-          context.commit('setUserInfo', res.data.data);
-          window.$storage.set('user', res.data.data);
+          window.$storage.set('token', res.data.module);
+          context.commit('setToken', res.data.module);
+          //window.$storage.set('user', res.data.data);
         }
       });
     }
