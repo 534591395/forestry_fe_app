@@ -9,18 +9,32 @@ const user = {
   },
   actions: {
     login(context, { oLoginFormData, oVm }) {
+      let params = {};
+      let url = '';
+      if (oLoginFormData.sLoginType == 'code') {
+        params = {
+          mobile: oLoginFormData.sUsername,
+          smsCode: oLoginFormData.sPassword
+        };
+        url = '/auth/loginBySmsCode';
+      } else 
+      if (oLoginFormData.sLoginType == 'password'){
+        params = {
+          mobile: oLoginFormData.sUsername,
+          password: oLoginFormData.sPassword
+        };
+        url = '/auth/login';
+      }
       return oVm.$http({
-        url: '/auth/login',
+        url: url,
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          //'Content-Type': 'application/x-www-form-urlencoded',
         },
-        data: oVm.$qs.stringify({
-          username: `${oLoginFormData.sUsername}-@_${oLoginFormData.sLoginType}`,
-          password: oLoginFormData.sPassword
-        })
+        //data: oVm.$qs.stringify(params)
+        data: params
       }).then((res) => {
-        if(res && res.data.code == 0) {
+        if(res && res.data.success) {
           context.commit('setUserInfo', res.data.data);
           window.$storage.set('user', res.data.data);
         }

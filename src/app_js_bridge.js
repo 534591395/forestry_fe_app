@@ -10,12 +10,16 @@ var defalutObj = function() {
     window.plus.navigator.getUserAgent=function() {
         return "iphone";
     };
+    window.plus.storage = {};
+    window.plus.storage.removeItem = function(key) {
+        window.localStorage.removeItem(key);
+    }
 
-    window.$storage.get = function(param) {
-        return window.localStorage.getItem(param);
+    window.$storage.get = function(key) {
+        return window.localStorage.getItem(key);
     };
-    window.$storage.set = function(param, data) {
-        window.localStorage.setItem(param, data);
+    window.$storage.set = function(key, data) {
+        window.localStorage.setItem(key, data);
     };
 };
 

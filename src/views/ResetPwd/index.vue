@@ -164,21 +164,20 @@ export default {
           code: this.oLoginFormData.sCode
         }
       }).then((res) => {
-        if(res && res.data.code == 0) {
+        if(res && res.data.success) {
           this.sComponent = 'confirm';
         }
       });
     },
     getCode(fCallback) {
       this.$http({
-        url: '/auth/getCode4RegAndResetPwd',
-        method: 'GET',
+        url: '/sms/v1/sendSmsCode',
+        method: 'POST',
         params: {
-          phone: this.oLoginFormData.sUsername,
-          type: 'resetPwd'
+          mobile: this.oLoginFormData.sUsername
         }
       }).then((res) => {
-        if(res && res.data.code == 0) {
+        if(res && res.data.success) {
           this.$toast.success('验证码已发送');
           fCallback && fCallback();
         }

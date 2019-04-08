@@ -176,15 +176,15 @@ export default {
       }
 
       this.$http({
-        url: '/auth/regUser',
+        url: '/auth/regist',
         method: 'POST',
         data: {
-          username: this.oLoginFormData.sUsername,
+          mobile: this.oLoginFormData.sUsername,
           password: this.oLoginFormData.sPassword,
-          code: this.oLoginFormData.sCode
+          smsCode: this.oLoginFormData.sCode
         }
       }).then((res) => {
-        if(res && res.data.code == 0) {
+        if(res && res.data.success) {
           this.$toast.success('注册成功，请登陆');
           this.skipNewPath('login');
         }
@@ -192,14 +192,13 @@ export default {
     },
     getCode(fCallback) {
       this.$http({
-        url: '/auth/getCode4RegAndResetPwd',
-        method: 'GET',
+        url: '/sms/v1/sendSmsCode',
+        method: 'POST',
         params: {
-          phone: this.oLoginFormData.sUsername,
-          type: 'reg'
+          mobile: this.oLoginFormData.sUsername
         }
       }).then((res) => {
-        if(res && res.data.code == 0) {
+        if(res && res.data.success) {
           this.$toast.success('验证码已发送');
           fCallback && fCallback();
         }
