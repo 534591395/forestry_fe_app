@@ -177,10 +177,10 @@
         <!--</van-field>-->
 
         <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="（木材）原料主要品种"
-                   required disabled :error-message="oErrMsg.kindErrMsg" @blur="handleInputBlur('source', 'array')">
-          <van-checkbox-group :disabled="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" slot="button" v-model="oFormData.source">
-            <template v-for="(item, index) in 3">
-              <van-checkbox :key="index" style="margin-bottom: 7px;" :name="item" shape="square">材料示例</van-checkbox>
+                   required disabled :error-message="oErrMsg.kindErrMsg" @blur="handleInputBlur('kind', 'array')">
+          <van-checkbox-group :disabled="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" slot="button" v-model="oFormData.kind">
+            <template  v-for="(item, index) in $store.getters.oBasicInfo['品种'].info">
+              <van-checkbox :key="index" style="margin-bottom: 7px;" :name="item" shape="square">{{ item }}</van-checkbox>
             </template>
           </van-checkbox-group>
         </van-field>
@@ -334,7 +334,7 @@ export default {
         source: [],
         outCityCompany: false,
         outCityCompanyName: '',
-        kind: '',
+        kind: [],
         saw: '',
         sawOutput: '',
         other: '',
@@ -408,14 +408,15 @@ export default {
       let data = JSON.parse(JSON.stringify(this.oFormData));
       data.companyType = data.companyType.toString();
       data.source = data.source.toString();
+      data.kind = data.kind.toString();
       data.outCityCompany = data.outCityCompany ? 1 : 0;
 
       this.$http({
-        url: '/company/editCompany',
+        url: '/company/authApi/editCompany',
         method: 'POST',
         data
       }).then((res) => {
-        if(res && res.data.code == 0) {
+        if(res && res.data.success) {
           this.$toast.success('提交企业信息成功');
           this.$router.push({name: 'setEmployee'});
         }
@@ -462,7 +463,7 @@ export default {
         this.oErrMsg.sourceErrMsg = '此项不能为空';
         bFlag = true;
       }
-      if(this.oFormData.kind == '') {
+      if(this.oFormData.kind.length == 0) {
         this.oErrMsg.kindErrMsg = '此项不能为空';
         bFlag = true;
       }

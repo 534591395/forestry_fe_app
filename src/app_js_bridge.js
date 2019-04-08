@@ -13,7 +13,16 @@ var defalutObj = function() {
     window.plus.storage = {};
     window.plus.storage.removeItem = function(key) {
         window.localStorage.removeItem(key);
-    }
+    };
+
+    window.plus.io = {};
+    window.plus.io.resolveLocalFileSystemURL = function() {};
+
+    window.plus.gallery = {};
+    window.plus.gallery.pick = function() {};
+
+    window.plus.uploader = {};
+    window.plus.uploader.createUpload = function() {};
 
     window.$storage.get = function(key) {
         return window.localStorage.getItem(key);

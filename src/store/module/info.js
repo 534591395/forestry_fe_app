@@ -23,16 +23,17 @@ const info = {
   actions: {
     getCompanyInfo(context, oVm) {
       return oVm.$http({
-        url: '/company/getCompany',
-        method: 'GET'
+        url: '/company/authApi/getCompany',
+        method: 'POST'
       }).then((res) => {
-        if(res && res.data.code == 0) {
-          if(res.data.data) {
+        if(res && res.data.success) {
+          if(res.data.module) {
             res.data.data.companyType = res.data.data.companyType.split(',');
             res.data.data.source = res.data.data.source.split(',');
+            res.data.data.kind = res.data.data.kind.split(',');
             res.data.data.outCityCompany = res.data.data.outCityCompany == 1;
           }
-          context.commit('setCompanyInfo', res.data.data || {});
+          context.commit('setCompanyInfo', res.data.module || {});
         }
       });
     },
