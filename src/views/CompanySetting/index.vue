@@ -56,7 +56,7 @@
         &__title {
           color: #333333;
           font-size: 14px;
-          margin: 13px 35px 10px 8px;
+          margin: 13px 30px 10px 8px;
         }
         &__text {
           color: #999999;
@@ -126,7 +126,7 @@
       <van-col span="12">
         <div class="company-setting-middle-card">
           <div class="flex-center-y">
-            <div class="company-setting-middle-card__title">可用板材量</div>
+            <div class="company-setting-middle-card__title">可用非原木量</div>
             <div class="company-setting-middle-card__text flex-center-y" @click="$router.push({name: 'boardCert'})">
               开证
               <van-icon name="arrow" />
@@ -196,7 +196,8 @@ export default {
         url: '/cert/authApi/getCertAmount',
         method: 'POST',
         data: {
-          cid: this.$store.getters.oCompanyInfo.id
+          cid: this.$store.getters.oCompanyInfo.id,
+          isWood: 0 
         }
       }).then((res) => {
         if(res && res.data.success) {
