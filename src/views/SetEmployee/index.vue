@@ -79,8 +79,8 @@ export default {
     },
     getEmployee() {
       this.$http({
-        url: '/employee/getEmployee',
-        method: 'GET'
+        url: '/employee/authApi/getEmployee',
+        method: 'POST'
       }).then((res) => {
         if(res && res.data.code == 0) {
           this.employeeInit = JSON.parse(JSON.stringify(res.data.data));
@@ -110,7 +110,7 @@ export default {
       }
       if(flag) {
         this.$http({
-          url: '/employee/editEmployee',
+          url: '/employee/authApi/addEmployee',
           method: 'POST',
           data: {
             employee: this.employee
