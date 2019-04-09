@@ -39,9 +39,10 @@ const user = {
         data: params
       }).then((res) => {
         if(res && res.data.success) {
-          window.$storage.set('token', res.data.module);
-          context.commit('setToken', res.data.module);
-          //window.$storage.set('user', res.data.data);
+          window.$storage.set('token', res.data.module.token);
+          context.commit('setToken', res.data.module.token);
+          context.commit('setUserInfo', res.data.module);
+          window.$storage.set('user', res.data.module);
         }
       });
     }
