@@ -2,8 +2,10 @@ import axios from 'axios';
 
 import { delAllInfo } from '../service/auth';
 
-window.baseUrl = 'http://47.105.67.161';
-// window.baseUrl = 'http://192.168.0.110';
+// 上线打包前需要还原
+//window.baseUrl = 'http://47.105.67.161';
+// dev
+window.baseUrl = '';
 
 const request = axios.create({
   // 上线打包前需要还原

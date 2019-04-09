@@ -141,8 +141,8 @@
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom" :border="false" style="margin-top: 1px;">
-        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="企业类型" required disabled :error-message="oErrMsg.companyTypeErrMsg" @blur="handleInputBlur('companyType', 'array')">
-          <van-checkbox-group :disabled="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" slot="button" v-model="oFormData.companyType">
+        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="企业类型" required disabled :error-message="oErrMsg.companyTypeErrMsg" @blur="handleInputBlur('companytype', 'array')">
+          <van-checkbox-group :disabled="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" slot="button" v-model="oFormData.companytype">
             <template v-for="(item, index) in $store.getters.oBasicInfo['企业类型'].info">
               <van-checkbox :key="index" style="margin-bottom: 7px;" :name="item" shape="square">{{ item }}</van-checkbox>
             </template>
@@ -160,11 +160,11 @@
         </van-field>
       </van-cell-group>
 
-      <van-checkbox :disabled="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" class="checkbox-label" shape="square" v-model="oFormData.outCityCompany">
+      <van-checkbox :disabled="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" class="checkbox-label" shape="square" v-model="oFormData.outcitycompany">
         其他：
       </van-checkbox>
       <van-cell-group class="van-hairline--bottom" :border="false" style="margin-top: 1px;">
-        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" placeholder="请输入企业名称，以逗号分隔" type="textarea" rows="2" v-model="oFormData.outCityCompanyName">
+        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" placeholder="请输入企业名称，以逗号分隔" type="textarea" rows="2" v-model="oFormData.outcitycompanyname">
           <span slot="button" style="color: transparent;">1</span>
         </van-field>
       </van-cell-group>
@@ -177,10 +177,10 @@
         <!--</van-field>-->
 
         <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="（木材）原料主要品种"
-                   required disabled :error-message="oErrMsg.kindErrMsg" @blur="handleInputBlur('source', 'array')">
-          <van-checkbox-group :disabled="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" slot="button" v-model="oFormData.source">
-            <template v-for="(item, index) in 3">
-              <van-checkbox :key="index" style="margin-bottom: 7px;" :name="item" shape="square">材料示例</van-checkbox>
+                   required disabled :error-message="oErrMsg.kindErrMsg" @blur="handleInputBlur('kind', 'array')">
+          <van-checkbox-group :disabled="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" slot="button" v-model="oFormData.kind">
+            <template  v-for="(item, index) in $store.getters.oBasicInfo['品种'].info">
+              <van-checkbox :key="index" style="margin-bottom: 7px;" :name="item" shape="square">{{ item }}</van-checkbox>
             </template>
           </van-checkbox-group>
         </van-field>
@@ -198,7 +198,7 @@
         </van-col>
         <van-col span="12">
           <van-cell-group class="van-hairline--bottom" :border="false">
-            <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="日生产量 " placeholder="生产量" v-model="oFormData.sawOutput" :required="isSaw" :error-message="isSaw ? oErrMsg.sawOutputErrMsg : ''" @blur="handleInputBlur('sawOutput', 'string')">
+            <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="日生产量 " placeholder="生产量" v-model="oFormData.sawoutput" :required="isSaw" :error-message="isSaw ? oErrMsg.sawOutputErrMsg : ''" @blur="handleInputBlur('sawoutput', 'string')">
               <span slot="button" style="color: #333333;">m³</span>
             </van-field>
           </van-cell-group>
@@ -215,7 +215,7 @@
         </van-col>
         <van-col span="12">
           <van-cell-group class="van-hairline--bottom" :border="false" style="margin-top: 1px;">
-            <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="日生产量 " placeholder="生产量" v-model="oFormData.otherOutput">
+            <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="日生产量 " placeholder="生产量" v-model="oFormData.otheroutput">
               <span slot="button" style="color: #333333;">m³</span>
             </van-field>
           </van-cell-group>
@@ -231,13 +231,13 @@
       <p class="title">产品销售</p>
 
       <van-cell-group class="van-hairline--bottom" :border="false">
-        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="主要销售区域" placeholder="请输入销售区域名称" v-model="oFormData.saleArea">
+        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="主要销售区域" placeholder="请输入销售区域名称" v-model="oFormData.salearea">
           <span slot="button" style="color: transparent;">1</span>
         </van-field>
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom" :border="false" style="margin-top: 1px;">
-        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="月销售量" placeholder="请输入销售量" v-model="oFormData.saleMount" required :error-message="oErrMsg.saleMountErrMsg" @blur="handleInputBlur('saleMount', 'string')">
+        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="月销售量" placeholder="请输入销售量" v-model="oFormData.salemount" required :error-message="oErrMsg.saleMountErrMsg" @blur="handleInputBlur('salemount', 'string')">
           <span slot="button" style="color: #333333;">m³</span>
         </van-field>
       </van-cell-group>
@@ -259,15 +259,15 @@
       <div class="card">
         <p class="title-pic" style="margin: 0 0 22px 0;padding-top: 37px;">企业营业执照</p>
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
-          <upload-picture :sPictureUrl="oFormData.licencePic" :fSetPicturUrl="setLicencePictureUrl" :canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
+          <upload-picture :sPictureUrl="oFormData.licencepic" :fSetPicturUrl="setLicencePictureUrl" :canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
         </van-cell-group>
 
         <p class="title-pic" style="margin: 25px 0 10px 0;">法人身份证</p>
         <p class="tip-pic">需上传清晰的身份证正反面照片</p>
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;">
-            <upload-picture :sPictureUrl="oFormData.cardFrontPic" :fSetPicturUrl="setCardFrontPictureUrl" style="margin-right: 15px;" :canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
-            <upload-picture :sPictureUrl="oFormData.cardOppositePic" :fSetPicturUrl="setCardOppositePictureUrl" :canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
+            <upload-picture :sPictureUrl="oFormData.cardfrontpic" :fSetPicturUrl="setCardFrontPictureUrl" style="margin-right: 15px;" :canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
+            <upload-picture :sPictureUrl="oFormData.cardoppositepic" :fSetPicturUrl="setCardOppositePictureUrl" :canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
           </div>
         </van-cell-group>
 
@@ -276,7 +276,7 @@
           <p class="download download-title" @click="savePic2SysGallery('林业植物检疫监管告知书')">下载</p>
         </div>
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
-          <upload-picture :sPictureUrl="oFormData.notificationPic" :fSetPicturUrl="setNotificationPictureUrl" :canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
+          <upload-picture :sPictureUrl="oFormData.notificationpic" :fSetPicturUrl="setNotificationPictureUrl" :canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
         </van-cell-group>
 
         <div class="flex-space-between">
@@ -284,7 +284,7 @@
           <p class="download download-title" @click="savePic2SysGallery('木材调运检疫开证承诺书')">下载</p>
         </div>
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
-          <upload-picture :sPictureUrl="oFormData.commitPic" :fSetPicturUrl="setCommitPictureUrl" :canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
+          <upload-picture :sPictureUrl="oFormData.commitpic" :fSetPicturUrl="setCommitPictureUrl" :canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
         </van-cell-group>
       </div>
 
@@ -330,24 +330,24 @@ export default {
         phone: '',
         address: '',
         store: '',
-        companyType: [],
+        companytype: [],
         source: [],
-        outCityCompany: false,
-        outCityCompanyName: '',
-        kind: '',
+        outcitycompany: false,
+        outcitycompanyname: '',
+        kind: [],
         saw: '',
-        sawOutput: '',
+        sawoutput: '',
         other: '',
-        otherOutput: '',
+        otheroutput: '',
         product: '',
-        saleArea: '',
-        saleMount: '',
+        salearea: '',
+        salemount: '',
         remark: '',
-        licencePic: '',
-        cardFrontPic: '',
-        cardOppositePic: '',
-        notificationPic: '',
-        commitPic: ''
+        licencepic: '',
+        cardfrontpic: '',
+        cardoppositepic: '',
+        notificationpic: '',
+        commitpic: ''
       },
       oErrMsg: {
         nameErrMsg: '',
@@ -388,7 +388,7 @@ export default {
     }
   },
   watch: {
-    'oFormData.companyType'(newVal, oldVal) {
+    'oFormData.companytype'(newVal, oldVal) {
       console.log(newVal);
       this.isSaw = newVal.toString().indexOf('木材加工') > -1
       console.log(this.isSaw);
@@ -406,16 +406,17 @@ export default {
       }
 
       let data = JSON.parse(JSON.stringify(this.oFormData));
-      data.companyType = data.companyType.toString();
+      data.companytype = data.companytype.toString();
       data.source = data.source.toString();
-      data.outCityCompany = data.outCityCompany ? 1 : 0;
+      data.kind = data.kind.toString();
+      data.outcitycompany = data.outcitycompany ? 1 : 0;
 
       this.$http({
-        url: '/company/editCompany',
+        url: '/company/authApi/editCompany',
         method: 'POST',
         data
       }).then((res) => {
-        if(res && res.data.code == 0) {
+        if(res && res.data.success) {
           this.$toast.success('提交企业信息成功');
           this.$router.push({name: 'setEmployee'});
         }
@@ -454,7 +455,7 @@ export default {
         this.oErrMsg.storeErrMsg = '此项不能为空';
         bFlag = true;
       }
-      if(this.oFormData.companyType.length == 0) {
+      if(this.oFormData.companytype.length == 0) {
         this.oErrMsg.companyTypeErrMsg = '此项不能为空';
         bFlag = true;
       }
@@ -462,11 +463,11 @@ export default {
         this.oErrMsg.sourceErrMsg = '此项不能为空';
         bFlag = true;
       }
-      if(this.oFormData.kind == '') {
+      if(this.oFormData.kind.length == 0) {
         this.oErrMsg.kindErrMsg = '此项不能为空';
         bFlag = true;
       }
-      if(this.oFormData.saleMount == '') {
+      if(this.oFormData.salemount == '') {
         this.oErrMsg.saleMountErrMsg = '此项不能为空';
         bFlag = true;
       }
@@ -474,7 +475,7 @@ export default {
         this.oErrMsg.sawErrMsg = '此项不能为空';
         bFlag = true;
       }
-      if(this.oFormData.sawOutput == '') {
+      if(this.oFormData.sawoutput == '') {
         this.oErrMsg.sawOutputErrMsg = '此项不能为空';
         bFlag = true;
       }
@@ -483,23 +484,23 @@ export default {
       return bFlag;
     },
     validatePicForm() {
-      if(this.oFormData.licencePic == '') {
+      if(this.oFormData.licencepic == '') {
         this.$toast('请提交企业营业执照照片');
         return true;
       }
-      if(this.oFormData.cardFrontPic == '') {
+      if(this.oFormData.cardfrontpic == '') {
         this.$toast('请提交法人身份证正反面照片');
         return true;
       }
-      if(this.oFormData.cardOppositePic == '') {
+      if(this.oFormData.cardoppositepic == '') {
         this.$toast('请提交法人身份证正反面照片');
         return true;
       }
-      if(this.oFormData.notificationPic == '') {
+      if(this.oFormData.notificationpic == '') {
         this.$toast('请提交林业植物检疫监管告知书照片');
         return true;
       }
-      if(this.oFormData.commitPic == '') {
+      if(this.oFormData.commitpic == '') {
         this.$toast('请提交木材调运检疫开证承诺书照片');
         return true;
       }
@@ -514,19 +515,19 @@ export default {
       this.sComponent = 'picture';
     },
     setLicencePictureUrl(sUrl) {
-      this.oFormData.licencePic = sUrl;
+      this.oFormData.licencepic = sUrl;
     },
     setCardFrontPictureUrl(sUrl) {
-      this.oFormData.cardFrontPic = sUrl;
+      this.oFormData.cardfrontpic = sUrl;
     },
     setCardOppositePictureUrl(sUrl) {
-      this.oFormData.cardOppositePic = sUrl;
+      this.oFormData.cardoppositepic = sUrl;
     },
     setNotificationPictureUrl(sUrl) {
-      this.oFormData.notificationPic = sUrl;
+      this.oFormData.notificationpic = sUrl;
     },
     setCommitPictureUrl(sUrl) {
-      this.oFormData.commitPic = sUrl;
+      this.oFormData.commitpic = sUrl;
     },
     async savePic2SysGallery(sType) {
       await this.$store.dispatch('savePic2SysGallery', {sType, oVm: this});

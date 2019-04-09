@@ -11,9 +11,71 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/': {
-        //target: 'http://localhost:8089',
+      '/cert': {
         target: 'http://47.105.67.161:8083',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/': '/'
+        }
+      },
+      '/sms': {
+        target: 'http://47.105.67.161:8083',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/': '/'
+        }
+      },
+      '/company': {
+        target: 'http://47.105.67.161:8083',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/': '/'
+        }
+      },
+      '/auth': {
+        target: 'http://47.105.67.161:8083',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/': '/'
+        }
+      },
+      '/plantCert': {
+        target: 'http://47.105.67.161:8083',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/': '/'
+        }
+      },
+      '/sysParam': {
+        target: 'http://47.105.67.161:8083',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/': '/'
+        }
+      },
+      '/user': {
+        target: 'http://47.105.67.161:8083',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/': '/'
+        }
+      },
+      '/woodCert': {
+        target: 'http://47.105.67.161:8083',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/': '/'
+        }
+      },
+      '/employee': {
+        target: 'http://47.105.67.161:8083',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/': '/'
+        }
+      },
+      '/system': {
+        target: 'http://47.105.67.161',
         changeOrigin: true,
         pathRewrite: {
           '^/': '/'
