@@ -84,10 +84,10 @@ export default {
     },
     logout() {
       this.$http({
-        url: '/auth/logout',
-        method: 'GET'
+        url: '/auth/authApi/logout',
+        method: 'POST'
       }).then((res) => {
-        if(res && res.data.code == 0) {
+        if(res && res.data.success) {
           delAllInfo();
           this.$toast.success('退出登陆成功');
           this.$router.push({name: 'login'});

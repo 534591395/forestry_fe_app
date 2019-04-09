@@ -61,9 +61,9 @@
 
       <van-cell-group :border="false" style="margin-top: 20px;">
         <div style="display: flex;">
-          <upload-picture style="margin-right: 15px;" :sPictureUrl="value.socialSecurityPic" :fSetPicturUrl="setSocialSecurityPictureUrl":canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
-          <upload-picture style="margin-right: 15px;" :sPictureUrl="value.cardFrontPic" :fSetPicturUrl="setCardFrontPictureUrl":canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
-          <upload-picture :sPictureUrl="value.cardOppositePic" :fSetPicturUrl="setCardOppositePictureUrl":canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
+          <upload-picture style="margin-right: 15px;" :sPictureUrl="value.socialsecuritypic" :fSetPicturUrl="setSocialSecurityPictureUrl":canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
+          <upload-picture style="margin-right: 15px;" :sPictureUrl="value.cardfrontpic" :fSetPicturUrl="setCardFrontPictureUrl":canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
+          <upload-picture :sPictureUrl="value.cardoppositepic" :fSetPicturUrl="setCardOppositePictureUrl":canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
         </div>
       </van-cell-group>
     </div>
@@ -120,13 +120,13 @@ export default {
         return flag;
       }
 
-      if(this.value.socialSecurityPic == '') {
+      if(this.value.socialsecuritypic == '') {
         flag = false;
       }
-      if(this.value.cardFrontPic == '') {
+      if(this.value.cardfrontpic == '') {
         flag = false;
       }
-      if(this.value.cardOppositePic == '') {
+      if(this.value.cardoppositepic == '') {
         flag = false;
       }
       if(!flag) {
@@ -137,13 +137,13 @@ export default {
       return flag;
     },
     setSocialSecurityPictureUrl(sUrl) {
-      this.value.socialSecurityPic = sUrl;
+      this.value.socialsecuritypic = sUrl;
     },
     setCardFrontPictureUrl(sUrl) {
-      this.value.cardFrontPic = sUrl;
+      this.value.cardfrontpic = sUrl;
     },
     setCardOppositePictureUrl(sUrl) {
-      this.value.cardOppositePic = sUrl;
+      this.value.cardoppositepic = sUrl;
     }
   }
 }

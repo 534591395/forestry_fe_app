@@ -156,12 +156,12 @@ export default {
       }
 
       this.$http({
-        url: '/auth/forgetPwd',
+        url: '/auth/resetPassword',
         method: 'POST',
         data: {
-          username: this.oLoginFormData.sUsername,
+          mobile: this.oLoginFormData.sUsername,
           password: this.oLoginFormData.sPassword,
-          code: this.oLoginFormData.sCode
+          smsCode: this.oLoginFormData.sCode
         }
       }).then((res) => {
         if(res && res.data.success) {

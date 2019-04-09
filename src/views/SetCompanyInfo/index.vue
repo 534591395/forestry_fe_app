@@ -313,6 +313,8 @@ export default {
     UploadPicture
   },
   created() {
+    this.$store.dispatch('getFileInfo', this);     
+    this.$store.dispatch('getBasicInfo', this);
     if(!window.$storage.get('isReg')) {
       this.oFormData = JSON.parse(JSON.stringify(this.$store.getters.oCompanyInfo));
       this.statusObject['3'].text = `审核未通过，被拒原因: ${this.oFormData.refuse_reason}`;

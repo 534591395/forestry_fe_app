@@ -82,9 +82,9 @@ export default {
         url: '/employee/authApi/getEmployee',
         method: 'POST'
       }).then((res) => {
-        if(res && res.data.code == 0) {
-          this.employeeInit = JSON.parse(JSON.stringify(res.data.data));
-          this.employee = res.data.data || [
+        if(res && res.data.success) {
+          this.employeeInit = JSON.parse(JSON.stringify(res.data.module));
+          this.employee = (res.data.module.length > 0 ? res.data.module : '' ) || [
             {
               name: '',
               username: '',

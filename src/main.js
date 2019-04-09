@@ -14,7 +14,7 @@ import './styles/normalize.css';
 import './styles/style.css';
 
 // 上线打包前需要去掉
-// import './app_js_bridge.js';
+//import './app_js_bridge.js';
 
 Vue.config.productionTip = false;
 

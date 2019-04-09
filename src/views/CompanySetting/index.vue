@@ -93,7 +93,7 @@
           <div class="company-setting-top-card-header__text">{{ $store.getters.oCompanyInfo.name }}</div>
         </div>
 
-        <van-icon name="arrow" color="#FFF" size="0.5rem" v-if="$window.$storage.get('user').boss === 0"
+        <van-icon name="arrow" color="#FFF" size="0.5rem" v-if="!$store.getters.oUserInfo.userC.boss"
         class="company-setting-top-card-header__icon"  @click="$router.push({name: 'setCompanyInfo'})" />
       </div>
 
