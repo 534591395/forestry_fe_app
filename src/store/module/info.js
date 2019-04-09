@@ -28,10 +28,10 @@ const info = {
       }).then((res) => {
         if(res && res.data.success) {
           if(res.data.module) {
-            res.data.data.companyType = res.data.data.companyType.split(',');
-            res.data.data.source = res.data.data.source.split(',');
-            res.data.data.kind = res.data.data.kind.split(',');
-            res.data.data.outCityCompany = res.data.data.outCityCompany == 1;
+            res.data.module.companytype = res.data.module.companytype.split(',');
+            res.data.module.source = res.data.module.source.split(',');
+            res.data.module.kind = res.data.module.kind.split(',');
+            res.data.module.outcitycompany = res.data.module.outcitycompany == 1;
           }
           context.commit('setCompanyInfo', res.data.module || {});
         }

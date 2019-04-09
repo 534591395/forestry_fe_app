@@ -159,8 +159,8 @@ export default {
   components: {
     MyGallery
   },
-  created() {
-    this.$store.dispatch('getCompanyInfo', this);
+  async created() {
+    await this.$store.dispatch('getCompanyInfo', this);
     this.getCertAmount();
   },
   computed: {
@@ -193,11 +193,14 @@ export default {
   methods: {
     getCertAmount() {
       this.$http({
-        url: '/cert/getCertAmount',
-        method: 'GET'
+        url: '/cert/authApi/getCertAmount',
+        method: 'POST',
+        data: {
+          cid: this.$store.getters.oCompanyInfo.id
+        }
       }).then((res) => {
-        if(res && res.data.code == 0) {
-          this.amount = res.data.data;
+        if(res && res.data.success) {
+          this.amount = res.data.module;
         }
       });
     }
