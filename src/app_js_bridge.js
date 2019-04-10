@@ -14,6 +14,16 @@ var defalutObj = function() {
     window.plus.storage.removeItem = function(key) {
         window.localStorage.removeItem(key);
     };
+    window.plus.storage.getItem = function(key) {
+        let data = window.localStorage.getItem(key);
+        if(data) {
+            data = JSON.parse(data);
+        }
+        return data;
+    };
+    window.plus.storage.setItem = function(key, data) {
+        window.localStorage.setItem(key, JSON.stringify(data));
+    };
 
     window.plus.io = {};
     window.plus.io.resolveLocalFileSystemURL = function() {};
@@ -25,10 +35,14 @@ var defalutObj = function() {
     window.plus.uploader.createUpload = function() {};
 
     window.$storage.get = function(key) {
-        return window.localStorage.getItem(key);
+        let data = window.localStorage.getItem(key);
+        if(data) {
+            data = JSON.parse(data);
+        }
+        return data;
     };
     window.$storage.set = function(key, data) {
-        window.localStorage.setItem(key, data);
+        window.localStorage.setItem(key, JSON.stringify(data));
     };
 };
 

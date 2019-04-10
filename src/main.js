@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import qs from 'qs';
 
+// 上线打包前需要去掉
+import './app_js_bridge.js';
+
 import App from './App';
 import router from './router';
 import store from './store';
@@ -13,8 +16,6 @@ import './config/importUI';
 import './styles/normalize.css';
 import './styles/style.css';
 
-// 上线打包前需要去掉
-import './app_js_bridge.js';
 
 Vue.config.productionTip = false;
 
