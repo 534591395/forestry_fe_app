@@ -48,3 +48,6 @@ Vue.use(Lazyload);
 
 import { DatetimePicker } from 'vant';
 Vue.use(DatetimePicker);
+
+import { Picker  } from 'vant';
+Vue.use(Picker);

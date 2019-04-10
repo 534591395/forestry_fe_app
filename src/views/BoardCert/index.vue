@@ -68,6 +68,26 @@
     margin-left: 10px;
   }
 }
+.set-employee {
+  background: #F8F8F8;
+  margin-top: 46px;
+  overflow: auto;
+  &-add-employee {
+    height: 61px;
+    border-radius: 10px;
+    background: #FFF;
+    margin: 20px 10px 0 10px;
+    &__text {
+      color: #C7C7C7;
+      font-size: 14px;
+    }
+  }
+  &-btn {
+    padding: 0 15px 0 15px;
+    margin-top: 52px;
+    margin-bottom: 20px;
+  }
+}
 </style>
 
 <template>
@@ -85,7 +105,7 @@
     <div class="wood-cert-card">
       <div class="wood-cert-card__header flex-center-y">
         <img src="../../assets/cert.png" alt="" class="wood-cert-card__img">
-        
+
         <div class="wood-cert-card__title">板材类开证单</div>
       </div>
 
@@ -109,7 +129,7 @@
 
         <div style="margin-bottom: 10px;">
           <a href="javascript: void(0);" class="add-btn" @click="formData.declarationPic.push('')" v-if="!$route.params.create_time">+新增</a>
-          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time" 
+          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time"
           @click="formData.declarationPic.length == 1 ? formData.declarationPic.splice(formData.declarationPic.length - 1, 0) : formData.declarationPic.splice(formData.declarationPic.length - 1, 1)">- 删除</a>
         </div>
 
@@ -135,12 +155,47 @@
           </div>
         </van-cell-group>
 
-        <van-cell-group class="van-hairline--bottom" :border="false" style="padding: 20px 0;">
-          <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"
-          v-model="formData.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.create_time">
-            <span slot="button" style="color: #333333;">m³</span>
-          </van-field>
-        </van-cell-group>
+        <!--新增第四点-->
+        <p class="title-pic" style="margin: 0;padding-top: 37px;">
+          4.植物产品名称与开证量
+        </p>
+
+        <!--<div v-for="(item, index) in product" :key="index" style="padding-top: 22px;">-->
+          <!--&lt;!&ndash;选择品名&ndash;&gt;-->
+          <!--<van-cell-group class="change-field__body change-field__error-message" :border="false">-->
+            <!--<van-cell title="品名(材种)" is-link :value="formData.wood_name" @click="show_wood_names = true" :border="false" />-->
+            <!--<van-popup v-model="show_wood_names" position="bottom" :overlay="true">-->
+              <!--<van-picker :columns="woodNames" @change="onChangeWoodName" />-->
+            <!--</van-popup>-->
+          <!--</van-cell-group>-->
+          <!--&lt;!&ndash;选择名称&ndash;&gt;-->
+          <!--<van-cell-group class="change-field__body change-field__error-message" :border="false">-->
+            <!--<van-cell title="植物产品名称" is-link :value="item.product_name" @click="show_product_names = true" :border="false" />-->
+            <!--<van-popup v-model="show_product_names" position="bottom" :overlay="true">-->
+              <!--<van-picker :columns="productNames" @change="onChangeProductName" />-->
+            <!--</van-popup>-->
+            <!--<van-cell v-show="item.wood_name === '非原木'" title=" " is-link :value="formData.materials" @click="show_materialss = true" :border="false" />-->
+            <!--<van-popup v-model="show_materialss" position="bottom" :overlay="true">-->
+              <!--<van-picker :columns="materialss" @change="onChangeMaterials" />-->
+            <!--</van-popup>-->
+          <!--</van-cell-group>-->
+
+          <!--<van-cell-group class="van-hairline&#45;&#45;bottom" :border="false" style="padding-bottom: 20px;">-->
+            <!--<van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"-->
+                       <!--v-model="item.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.create_time" input-align="right">-->
+              <!--<span slot="button" style="color: #333333;">m³</span>-->
+            <!--</van-field>-->
+          <!--</van-cell-group>-->
+        <!--</div>-->
+        <card v-for="(item, index) in product" :key="index" v-model="product[index]" :index="index" @del-card="handleDelCard"></card>
+        <div class="set-employee-add-employee flex-center-xy" @click="addFn">
+          <div class="set-employee-add-employee__text">
+            <van-icon name="plus" />
+            <span>
+          新增一条
+        </span>
+          </div>
+        </div>
 
         <p class="wood-cert-card__tips">注：此次开证总量</p>
       </div>
@@ -154,11 +209,12 @@
 
 <script>
 import UploadPicture from '../../components/UploadPicture';
-
+import card from './card'
 export default {
   name: 'BoardCert',
   components: {
-    UploadPicture
+    UploadPicture,
+    card
   },
   created() {
     window.scrollTo(0, 0);
@@ -176,12 +232,16 @@ export default {
       formData: {
         noticePic: [''],
         declarationPic: [''],
-        contractPic: [''],
-        amount: ''
+        contractPic: ['']
       },
-      errMsg: {
-        amountErrMsg: ''
-      },
+      product: [
+        {
+          wood_name: '',
+          product_name: '',
+          materials: '',
+          amount: '',
+        }
+      ],
       statusObject: {
         1: {
           img: require('../../assets/statusWait.png'),
@@ -205,7 +265,7 @@ export default {
     submit() {
       if(this.validate()) {
         let data = JSON.parse(JSON.stringify(this.formData));
-        
+
         data.contractPic = data.contractPic.toString();
         data.declarationPic = data.declarationPic.toString();
         data.noticePic = data.noticePic.toString();
@@ -274,7 +334,22 @@ export default {
     },
     goBack() {
       window.history.back();
-    }
+    },
+    addFn() {
+      this.product.push(
+        {
+          wood_name: '',
+          product_name: '',
+          materials: '',
+          amount: ''
+        }
+      )
+    },
+    handleDelCard(index) {
+      if(this.product.length != 1) {
+        this.product.splice(index, 1);
+      }
+    },
   }
 }
 </script>
