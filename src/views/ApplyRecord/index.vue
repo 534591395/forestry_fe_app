@@ -152,15 +152,15 @@ export default {
         url: '/cert/authApi/getCert',
         method: 'POST',
         data: {
-          type: this.applyType,
+          woodVariety : this.applyType,
           status: this.applyStatus,
           uid : this.$store.getters.oUserInfo.userC.id
         }
       }).then((res) => {
         if(res && res.data.success) {
           this.applyData = [];
-          if(res.data.data.boardCert) {
-            for(let i of res.data.data.boardCert) {
+          if(res.data.module.woodAndBoard) {
+            for(let i of res.data.module.woodAndBoard) {
               i.type = 1;
               this.applyData.push(i);
             }
@@ -171,8 +171,8 @@ export default {
               this.applyData.push(i);
             }
           }
-          if(res.data.data.plantCert) {
-            for(let i of res.data.data.plantCert) {
+          if(res.data.data.plant) {
+            for(let i of res.data.data.plant) {
               i.type = 2;
               this.applyData.push(i);
             }
