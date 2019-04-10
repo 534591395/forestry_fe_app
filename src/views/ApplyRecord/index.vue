@@ -90,8 +90,11 @@ export default {
   components: {
     ApplyCard
   },
-  created() {
-    this.getCert();
+  async created() {
+    if (!this.$store.getters.oUserInfo.userC) {
+      await this.$store.dispatch('getUserInfo', this);
+    }
+    await this.getCert();
   },
   computed: {
     applyTypeZh() {
@@ -146,14 +149,15 @@ export default {
   methods: {
     getCert() {
       this.$http({
-        url: '/cert/getCert',
-        method: 'GET',
-        params: {
+        url: '/cert/authApi/getCert',
+        method: 'POST',
+        data: {
           type: this.applyType,
-          status: this.applyStatus
+          status: this.applyStatus,
+          uid : this.$store.getters.oUserInfo.userC.id
         }
       }).then((res) => {
-        if(res && res.data.code == 0) {
+        if(res && res.data.success) {
           this.applyData = [];
           if(res.data.data.boardCert) {
             for(let i of res.data.data.boardCert) {
