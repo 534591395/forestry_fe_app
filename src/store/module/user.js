@@ -45,6 +45,17 @@ const user = {
           window.$storage.set('user', res.data.module);
         }
       });
+    },
+    getUserInfo(context, oVm) {
+      return oVm.$http({
+        url: '/auth/authApi/getUserCInfo',
+        method: 'POST'
+      }).then((res) => {
+        if(res && res.data.success) {
+          context.commit('setUserInfo', res.data.module);
+          window.$storage.set('user', res.data.module);
+        }
+      });
     }
   }
 }

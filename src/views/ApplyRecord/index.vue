@@ -90,8 +90,11 @@ export default {
   components: {
     ApplyCard
   },
-  created() {
-    this.getCert();
+  async created() {
+    if (!this.$store.getters.oUserInfo.userC) {
+      await this.$store.dispatch('getUserInfo', this);
+    }
+    await this.getCert();
   },
   computed: {
     applyTypeZh() {
@@ -146,17 +149,18 @@ export default {
   methods: {
     getCert() {
       this.$http({
-        url: '/cert/getCert',
-        method: 'GET',
-        params: {
-          type: this.applyType,
-          status: this.applyStatus
+        url: '/cert/authApi/getCert',
+        method: 'POST',
+        data: {
+          woodVariety : this.applyType,
+          status: this.applyStatus,
+          uid : this.$store.getters.oUserInfo.userC.id
         }
       }).then((res) => {
-        if(res && res.data.code == 0) {
+        if(res && res.data.success) {
           this.applyData = [];
-          if(res.data.data.boardCert) {
-            for(let i of res.data.data.boardCert) {
+          if(res.data.module.woodAndBoard) {
+            for(let i of res.data.module.woodAndBoard) {
               i.type = 1;
               this.applyData.push(i);
             }
@@ -167,8 +171,8 @@ export default {
               this.applyData.push(i);
             }
           }
-          if(res.data.data.plantCert) {
-            for(let i of res.data.data.plantCert) {
+          if(res.data.data.plant) {
+            for(let i of res.data.data.plant) {
               i.type = 2;
               this.applyData.push(i);
             }
