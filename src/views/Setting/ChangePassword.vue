@@ -61,12 +61,17 @@ export default {
   methods: {
     submit() {
       if(this.validate()) {
+        const data = {
+          newPassword: this.formData.newPassword,
+          oldPassword: this.formData.currentPassword
+        };
+
         this.$http({
-          url: '/auth/changePassword',
+          url: '/auth/authApi/changePassword',
           method: 'POST',
-          data: this.formData
+          data: data
         }).then((res) => {
-          if(res && res.data.code == 0) {
+          if(res && res.data.success) {
             this.$toast.success('修改密码成功');
             this.$emit('close-popup');
           }

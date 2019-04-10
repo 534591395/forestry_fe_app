@@ -93,27 +93,27 @@
         <p class="title-pic" style="margin: 0;padding-top: 37px;">1.太仓出入境检验检疫局进境散装木材准运通知单</p>
 
         <div style="margin-bottom: 10px;">
-          <a href="javascript: void(0);" class="add-btn" @click="formData.noticePic.push('')" v-if="!$route.params.create_time">+新增</a>
+          <a href="javascript: void(0);" class="add-btn" @click="formData.noticepic.push('')" v-if="!$route.params.create_time">+新增</a>
           <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time" 
-          @click="formData.noticePic.length == 1 ? formData.noticePic.splice(formData.noticePic.length - 1, 0) : formData.noticePic.splice(formData.noticePic.length - 1, 1)">- 删除</a>
+          @click="formData.noticepic.length == 1 ? formData.noticepic.splice(formData.noticepic.length - 1, 0) : formData.noticepic.splice(formData.noticepic.length - 1, 1)">- 删除</a>
         </div>
 
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;flex-wrap: wrap;">
-            <upload-picture v-for="(item, index) in formData.noticePic" :key="index" :index="index" :canUpload="!$route.params.create_time"
+            <upload-picture v-for="(item, index) in formData.noticepic" :key="index" :index="index" :canUpload="!$route.params.create_time"
             :sPictureUrl="item" :fSetPicturUrl="setNoticePictureUrl" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
         </van-cell-group>
 
         <p class="title-pic" style="margin: 0 0 22px 0;padding-top: 37px;">
           2.进口小提单
-          <a href="javascript: void(0);" class="add-btn" @click="formData.ladingPic.push('')" v-if="!$route.params.create_time">+新增</a>
+          <a href="javascript: void(0);" class="add-btn" @click="formData.ladingpic.push('')" v-if="!$route.params.create_time">+新增</a>
           <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time" 
-          @click="formData.ladingPic.length == 1 ? formData.ladingPic.splice(formData.ladingPic.length - 1, 0) : formData.ladingPic.splice(formData.ladingPic.length - 1, 1)">- 删除</a>
+          @click="formData.ladingpic.length == 1 ? formData.ladingpic.splice(formData.ladingpic.length - 1, 0) : formData.ladingpic.splice(formData.ladingpic.length - 1, 1)">- 删除</a>
         </p>
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;flex-wrap: wrap;">
-            <upload-picture v-for="(item, index) in formData.ladingPic" :key="index" :index="index" :canUpload="!$route.params.create_time"
+            <upload-picture v-for="(item, index) in formData.ladingpic" :key="index" :index="index" :canUpload="!$route.params.create_time"
             :sPictureUrl="item" :fSetPicturUrl="setLadingPictureUrl" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
         </van-cell-group>
@@ -123,17 +123,21 @@
         </p>
 
         <div style="margin-bottom: 10px;">
-          <a href="javascript: void(0);" class="add-btn" @click="formData.declarationPic.push('')" v-if="!$route.params.create_time">+新增</a>
+          <a href="javascript: void(0);" class="add-btn" @click="formData.declarationpic.push('')" v-if="!$route.params.create_time">+新增</a>
           <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time" 
-          @click="formData.declarationPic.length == 1 ? formData.declarationPic.splice(formData.declarationPic.length - 1, 0) : formData.declarationPic.splice(formData.declarationPic.length - 1, 1)">- 删除</a>
+          @click="formData.declarationpic.length == 1 ? formData.declarationpic.splice(formData.declarationpic.length - 1, 0) : formData.declarationpic.splice(formData.declarationpic.length - 1, 1)">- 删除</a>
         </div>
 
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;flex-wrap: wrap;">
-            <upload-picture v-for="(item, index) in formData.declarationPic" :key="index" :index="index" :canUpload="!$route.params.create_time"
+            <upload-picture v-for="(item, index) in formData.declarationpic" :key="index" :index="index" :canUpload="!$route.params.create_time"
             :sPictureUrl="item" :fSetPicturUrl="setDeclarationPictureUrl" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
         </van-cell-group> 
+
+        <p class="title-pic" style="margin: 0;padding-top: 37px;">
+          4.植物产品名称与开证量
+        </p>
 
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding: 20px 0;">
           <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"
@@ -160,13 +164,15 @@ export default {
   components: {
     UploadPicture
   },
-  created() {
+  async created() {
+    await this.$store.dispatch('getPlantList', this);
+    await this.$store.dispatch('getWoodList', this);
     window.scrollTo(0, 0);
     if(this.$route.params.create_time) {
       this.formData = this.$route.params;
-      this.formData.noticePic = this.$route.params.noticePic.split(',');
-      this.formData.ladingPic = this.$route.params.ladingPic.split(',');
-      this.formData.declarationPic = this.$route.params.declarationPic.split(',');
+      this.formData.noticepic = this.$route.params.noticepic.split(',');
+      this.formData.ladingpic = this.$route.params.ladingpic.split(',');
+      this.formData.declarationpic = this.$route.params.declarationpic.split(',');
       this.statusObject['2'].text = `审核已通过，请至城厢镇林业局${this.formData.windows}号窗口领取`;
       this.statusObject['3'].text = `审核未通过，被拒原因: ${this.formData.refuse_reason}`;
     }
@@ -174,10 +180,12 @@ export default {
   data() {
     return {
       formData: {
-        noticePic: [''],
-        ladingPic: [''],
-        declarationPic: [''],
-        amount: ''
+        noticepic: [''],
+        ladingpic: [''],
+        declarationpic: [''],
+        amount: '',
+        woodVariety: '',
+        woodJson: ''
       },
       errMsg: {
         amountErrMsg: ''
@@ -205,16 +213,16 @@ export default {
     submit() {
       if(this.validate()) {
         let data = JSON.parse(JSON.stringify(this.formData));
-        data.ladingPic = data.ladingPic.toString();
-        data.declarationPic = data.declarationPic.toString();
-        data.noticePic = data.noticePic.toString();
+        data.ladingpic = data.ladingpic.toString();
+        data.declarationpic = data.declarationpic.toString();
+        data.noticepic = data.noticepic.toString();
 
         this.$http({
-          url: '/cert/addWoodCert',
+          url: '/cert/authApi/addWoodCert',
           method: 'POST',
           data
         }).then((res) => {
-          if(res && res.data.code == 0) {
+          if(res && res.data.success) {
             this.$toast.success('添加原木类开证单成功');
             window.$storage.set('hasCert', true);
             if(window.$storage.get('isReg')) {
@@ -241,19 +249,19 @@ export default {
         this.errMsg.amountErrMsg = '此项不能为空';
         bFlag = false;
       }
-      for(let i of this.formData.noticePic) {
+      for(let i of this.formData.noticepic) {
         if(i == '') {
           this.$toast('太仓出入境检验检疫局进境散装木材准运通知单不能有为空的项');
           return false;
         }
       }
-      for(let i of this.formData.ladingPic) {
+      for(let i of this.formData.ladingpic) {
         if(i == '') {
           this.$toast('进口小提单不能有为空的项');
           return false;
         }
       }
-      for(let i of this.formData.declarationPic) {
+      for(let i of this.formData.declarationpic) {
         if(i == '') {
           this.$toast('中华人民共和国海关进口货物报关单不能有为空的项');
           return false;
@@ -263,13 +271,13 @@ export default {
       return bFlag;
     },
     setNoticePictureUrl(index, url) {
-      this.$set(this.formData.noticePic, index, url);
+      this.$set(this.formData.noticepic, index, url);
     },
     setLadingPictureUrl(index, url) {
-      this.$set(this.formData.ladingPic, index, url);
+      this.$set(this.formData.ladingpic, index, url);
     },
     setDeclarationPictureUrl(index, url) {
-      this.$set(this.formData.declarationPic, index, url);
+      this.$set(this.formData.declarationpic, index, url);
     },
     goBack() {
       window.history.back();
