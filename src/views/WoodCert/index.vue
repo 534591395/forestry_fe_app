@@ -68,6 +68,26 @@
     margin-left: 10px;
   }
 }
+.set-employee {
+  background: #F8F8F8;
+  margin-top: 46px;
+  overflow: auto;
+  &-add-employee {
+    height: 61px;
+    border-radius: 10px;
+    background: #FFF;
+    margin: 20px 10px 0 10px;
+    &__text {
+      color: #C7C7C7;
+      font-size: 14px;
+    }
+  }
+  &-btn {
+    padding: 0 15px 0 15px;
+    margin-top: 52px;
+    margin-bottom: 20px;
+  }
+}
 </style>
 
 <template>
@@ -85,7 +105,7 @@
     <div class="wood-cert-card">
       <div class="wood-cert-card__header flex-center-y">
         <img src="../../assets/cert.png" alt="" class="wood-cert-card__img">
-        
+
         <div class="wood-cert-card__title">原木类开证单</div>
       </div>
 
@@ -94,7 +114,7 @@
 
         <div style="margin-bottom: 10px;">
           <a href="javascript: void(0);" class="add-btn" @click="formData.noticepic.push('')" v-if="!$route.params.create_time">+新增</a>
-          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time" 
+          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time"
           @click="formData.noticepic.length == 1 ? formData.noticepic.splice(formData.noticepic.length - 1, 0) : formData.noticepic.splice(formData.noticepic.length - 1, 1)">- 删除</a>
         </div>
 
@@ -108,7 +128,7 @@
         <p class="title-pic" style="margin: 0 0 22px 0;padding-top: 37px;">
           2.进口小提单
           <a href="javascript: void(0);" class="add-btn" @click="formData.ladingpic.push('')" v-if="!$route.params.create_time">+新增</a>
-          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time" 
+          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time"
           @click="formData.ladingpic.length == 1 ? formData.ladingpic.splice(formData.ladingpic.length - 1, 0) : formData.ladingpic.splice(formData.ladingpic.length - 1, 1)">- 删除</a>
         </p>
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
@@ -124,7 +144,7 @@
 
         <div style="margin-bottom: 10px;">
           <a href="javascript: void(0);" class="add-btn" @click="formData.declarationpic.push('')" v-if="!$route.params.create_time">+新增</a>
-          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time" 
+          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time"
           @click="formData.declarationpic.length == 1 ? formData.declarationpic.splice(formData.declarationpic.length - 1, 0) : formData.declarationpic.splice(formData.declarationpic.length - 1, 1)">- 删除</a>
         </div>
 
@@ -133,18 +153,28 @@
             <upload-picture v-for="(item, index) in formData.declarationpic" :key="index" :index="index" :canUpload="!$route.params.create_time"
             :sPictureUrl="item" :fSetPicturUrl="setDeclarationPictureUrl" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
-        </van-cell-group> 
+        </van-cell-group>
 
         <p class="title-pic" style="margin: 0;padding-top: 37px;">
           4.植物产品名称与开证量
         </p>
 
-        <van-cell-group class="van-hairline--bottom" :border="false" style="padding: 20px 0;">
-          <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"
-          v-model="formData.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.create_time">
-            <span slot="button" style="color: #333333;">m³</span>
-          </van-field>
-        </van-cell-group>
+        <!--<van-cell-group class="van-hairline&#45;&#45;bottom" :border="false" style="padding: 20px 0;">-->
+          <!--<van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"-->
+          <!--v-model="formData.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.create_time">-->
+            <!--<span slot="button" style="color: #333333;">m³</span>-->
+          <!--</van-field>-->
+        <!--</van-cell-group>-->
+
+        <card v-for="(item, index) in woodList" :key="index" v-model="woodList[index]" :index="index" @del-card="handleDelCard" :materialss="materialss" :plantNames="plantNames"></card>
+        <div class="set-employee-add-employee flex-center-xy" @click="addFn">
+          <div class="set-employee-add-employee__text">
+            <van-icon name="plus" />
+            <span>
+          新增一条
+        </span>
+          </div>
+        </div>
 
         <p class="wood-cert-card__tips">注：此次开证总量</p>
       </div>
@@ -159,10 +189,12 @@
 <script>
 import UploadPicture from '../../components/UploadPicture';
 
+import card from './card'
 export default {
   name: 'WoodCert',
   components: {
-    UploadPicture
+    UploadPicture,
+    card
   },
   async created() {
     await this.$store.dispatch('getPlantList', this);
@@ -187,6 +219,13 @@ export default {
         woodVariety: '',
         woodJson: ''
       },
+      woodList: [
+        {
+          plant_variety: '',
+          wood_variety: '',
+          amount: ''
+        }
+      ],
       errMsg: {
         amountErrMsg: ''
       },
@@ -281,7 +320,22 @@ export default {
     },
     goBack() {
       window.history.back();
-    }
+    },
+    addFn() {
+      // 默认值，植物数组第一个，默认选择原木
+      this.woodList.push(
+        {
+          plant_variety: '',
+          wood_variety: '',
+          amount: ''
+        }
+      )
+    },
+    handleDelCard(index) {
+      if(this.woodList.length != 1) {
+        this.woodList.splice(index, 1);
+      }
+    },
   }
 }
 </script>

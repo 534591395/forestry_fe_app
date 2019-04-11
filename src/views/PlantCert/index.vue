@@ -63,6 +63,27 @@
     padding-top: 10px;
   }
 }
+
+.set-employee {
+  background: #F8F8F8;
+  margin-top: 46px;
+  overflow: auto;
+  &-add-employee {
+    height: 61px;
+    border-radius: 10px;
+    background: #FFF;
+    margin: 20px 10px 0 10px;
+    &__text {
+      color: #C7C7C7;
+      font-size: 14px;
+    }
+  }
+  &-btn {
+    padding: 0 15px 0 15px;
+    margin-top: 52px;
+    margin-bottom: 20px;
+  }
+}
 </style>
 
 <template>
@@ -94,27 +115,37 @@
         v-model="formData.processing_area" />
       </van-cell-group>
 
-      <van-cell-group class="van-hairline--bottom change-cell__value" :border="false">
-        <van-field
-          readonly
-          label="植物产品名称"
-          v-model="formData.plant_name"
-          @focus="$route.params.create_time ? null : popup.plantNamePopup = true"
-          input-align="right"
-        >
-        </van-field>
-      </van-cell-group>
+      <!--<van-cell-group class="van-hairline&#45;&#45;bottom change-cell__value" :border="false">-->
+        <!--<van-field-->
+          <!--readonly-->
+          <!--label="植物产品名称"-->
+          <!--v-model="formData.plant_name"-->
+          <!--@focus="$route.params.create_time ? null : popup.plantNamePopup = true"-->
+          <!--input-align="right"-->
+        <!--&gt;-->
+        <!--</van-field>-->
+      <!--</van-cell-group>-->
 
-      <van-cell-group class="van-hairline--bottom change-cell__value" :border="false">
-        <van-field
-          readonly
-          label="品种"
-          v-model="formData.variety"
-          @focus="$route.params.create_time ? null : popup.varietyPopup = true"
-          input-align="right"
-        >
-        </van-field>
-      </van-cell-group>
+      <!--<van-cell-group class="van-hairline&#45;&#45;bottom change-cell__value" :border="false">-->
+        <!--<van-field-->
+          <!--readonly-->
+          <!--label="品种"-->
+          <!--v-model="formData.variety"-->
+          <!--@focus="$route.params.create_time ? null : popup.varietyPopup = true"-->
+          <!--input-align="right"-->
+        <!--&gt;-->
+        <!--</van-field>-->
+      <!--</van-cell-group>-->
+
+      <card v-for="(item, index) in woodList" :key="index" v-model="woodList[index]" :index="index" @del-card="handleDelCard" :materialss="materialss" :plantNames="plantNames"></card>
+      <div class="set-employee-add-employee flex-center-xy" @click="addFn">
+        <div class="set-employee-add-employee__text">
+          <van-icon name="plus" />
+          <span>
+          新增一条
+        </span>
+        </div>
+      </div>
 
       <van-cell-group class="van-hairline--bottom change-field__error-message" :border="false">
         <van-field :readonly="$route.params.create_time" label="车船数" placeholder="车船数" input-align="right" required
@@ -276,10 +307,12 @@
 import UploadPicture from '../../components/UploadPicture';
 import moment from 'moment'
 
+import card from './card'
 export default {
   name: 'PlantCert',
   components: {
-    UploadPicture
+    UploadPicture,
+    card
   },
   mounted() {
     window.scrollTo(0, 0);
@@ -309,6 +342,13 @@ export default {
   data() {
     let self = this;
     return {
+      woodList: [
+        {
+          plant_variety: '',
+          wood_variety: '',
+          amount: ''
+        }
+      ],
       formData: {
         producing_area: '',
         processing_area: '',
@@ -459,7 +499,22 @@ export default {
     dateConfirm() {
       this.formData.show_date_time = false;
       this.$set(this.formData, 'date_txt', moment(this.formData.date_time).format('YYYY-MM-DD'));
-    }
+    },
+    addFn() {
+      // 默认值，植物数组第一个，默认选择原木
+      this.woodList.push(
+        {
+          // plant_variety: this.getPlantValue(this.plantNames[0]),
+          // wood_variety: this.getWOODValue('原木'),
+          // amount: 0
+        }
+      )
+    },
+    handleDelCard(index) {
+      if(this.woodList.length != 1) {
+        this.woodList.splice(index, 1);
+      }
+    },
   },
   created() {
     this.$set(this.formData, 'date_txt', moment().format('YYYY-MM-DD'));
