@@ -82,18 +82,18 @@
 
     <!--选择品名-->
     <van-cell-group class="change-field__body change-field__error-message" :border="false" style="margin-top: 20px">
-      <van-cell title="品名(材种)" is-link :value="value.wood_name" @click="show_wood_names = true" :border="false" />
+      <van-cell title="品名(材种)" is-link :value="getWOODOneName(value.wood_variety)" @click="show_wood_names = true" :border="false" />
       <van-popup v-model="show_wood_names" position="bottom" :overlay="true">
         <van-picker :columns="woodNames" @change="onChangeWoodName" />
       </van-popup>
     </van-cell-group>
     <!--选择名称-->
     <van-cell-group class="change-field__body change-field__error-message" :border="false">
-      <van-cell title="植物产品名称" is-link :value="value.product_name" @click="show_product_names = true" :border="false" />
+      <van-cell title="植物产品名称" is-link :value="getPLANTName(value.plant_variety)" @click="show_product_names = true" :border="false" />
       <van-popup v-model="show_product_names" position="bottom" :overlay="true">
-        <van-picker :columns="productNames" @change="onChangeProductName" />
+        <van-picker :columns="plantNames" @change="onChangePlantName" />
       </van-popup>
-      <van-cell v-show="value.wood_name === '非原木'" title=" " is-link :value="value.materials" @click="show_materialss = true" :border="false" />
+      <van-cell v-show="getWOODOneName(value.wood_variety) === '非原木'" title=" " is-link :value="getWOODName(value.wood_variety)" @click="show_materialss = true" :border="false" />
       <van-popup v-model="show_materialss" position="bottom" :overlay="true">
         <van-picker :columns="materialss" @change="onChangeMaterials" />
       </van-popup>
@@ -105,7 +105,7 @@
         <span slot="button" style="color: #333333;">m³</span>
       </van-field>
     </van-cell-group>
-      </div>
+  </div>
 </template>
 
 <script>
@@ -113,6 +113,7 @@
   export default {
     name: 'BoardCert',
     created() {
+      
     },
     props: {
       value: {
@@ -122,15 +123,21 @@
       index: {
         type: Number,
         required: true
+      },
+      materialss: {
+        type: Array,
+        required: true
+      },
+      plantNames: {
+        type: Array,
+        required: true
       }
     },
     data() {
       return {
         woodNames: ['原木', '非原木'],
         show_wood_names: false,
-        productNames: ['落叶松', '白松', '桦木', '铁杉', '云杉', '花旗松', '辐射松', '柳杉', '白云杉'],
         show_product_names: false,
-        materialss: ['板材', '方料'],
         show_materialss: false,
         errMsg: {
           amountErrMsg: ''
@@ -138,6 +145,61 @@
       }
     },
     methods: {
+      // 根据品种名称（比如板材）获取对应的value
+      getWOODValue(paramName) {
+        let paramValue = '';
+        this.$store.getters.WOOD_VARIETY.map(item => {
+          if (item.paramName === paramName) {
+            paramValue = item.paramValue;
+          }
+        });
+        return paramValue;
+      },
+      // 根据植物名称（比如杉树）获取对应的value
+      getPLANTValue(paramName) {
+        let paramValue = '';
+        this.$store.getters.PLANT_VARIETY.map(item => {
+          if (item.paramName === paramName) {
+            paramValue = item.paramValue;
+          }
+        });
+        return paramValue;
+      },
+      // 根据品种值获取对应的名称（原木和非原木）
+      getWOODOneName(paramValue) {
+        let paramName = '原木';
+        if (paramValue) {
+          this.$store.getters.WOOD_VARIETY.map(item => {
+            if (item.paramValue === paramValue) {
+              paramName = item.paramName;
+            }
+          });
+          if (paramName != '原木') {
+            paramName = '非原木';
+          }
+        }
+        return paramName;
+      },
+      // 根据品种值获取对应的名称
+      getWOODName(paramValue) {
+        let paramName = '';
+        this.$store.getters.WOOD_VARIETY.map(item => {
+          if (item.paramValue === paramValue) {
+            paramName = item.paramName;
+          }
+        });
+        return paramName;
+      },
+      // 根据植物值获取对应的名称
+      getPLANTName(paramValue) {
+        let paramName = '';
+        this.$store.getters.PLANT_VARIETY.map(item => {
+          if (item.paramValue === paramValue) {
+            paramName = item.paramName;
+          }
+        });
+        return paramName;
+      },
       handleInputBlur(inputName) {
         if(this.value[inputName] == '') {
           this.errMsg[inputName + 'ErrMsg'] = '此项不能为空';
@@ -146,16 +208,22 @@
           this.errMsg[inputName + 'ErrMsg'] = '';
         }
       },
+      // 切换原木和非原木，切换了话，选择默认第一个值（materialss[0]）
       onChangeWoodName(picker, value, index) {
         console.log(this.value);
-        this.value.wood_name = value
+        if (value === '原木') {
+          this.value.wood_variety = this.getWOODValue('原木');
+        } else {
+          this.value.wood_variety = this.getWOODValue(this.materialss[0]);
+        }
+        //this.show_wood_names = false;
       },
-      onChangeProductName(picker, value, index) {
+      onChangePlantName(picker, value, index) {
         // console.log(`当前值：${value}, 当前索引：${index}`);
-        this.value.product_name = value
+        this.value.plant_variety = this.getPLANTValue(value);
       },
       onChangeMaterials(picker, value, index) {
-        this.value.materials = value
+        this.value.wood_variety = this.getWOODValue(value);
       }
     }
   }

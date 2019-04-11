@@ -112,13 +112,13 @@
       <div style="margin-left: 12px;">
         <p class="title-pic" style="margin: 0 0 22px 0;padding-top: 37px;">
           1.通关无纸化放行通知单
-          <a href="javascript: void(0);" class="add-btn" @click="formData.noticePic.push('')" v-if="!$route.params.create_time">+新增</a>
+          <a href="javascript: void(0);" class="add-btn" @click="formData.noticepic.push('')" v-if="!$route.params.create_time">+新增</a>
           <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time"
-          @click="formData.noticePic.length == 1 ? formData.noticePic.splice(formData.noticePic.length - 1, 0) : formData.noticePic.splice(formData.noticePic.length - 1, 1)">- 删除</a>
+          @click="formData.noticepic.length == 1 ? formData.noticepic.splice(formData.noticepic.length - 1, 0) : formData.noticepic.splice(formData.noticepic.length - 1, 1)">- 删除</a>
         </p>
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;flex-wrap: wrap;">
-            <upload-picture v-for="(item, index) in formData.noticePic" :key="index" :index="index" :canUpload="!$route.params.create_time"
+            <upload-picture v-for="(item, index) in formData.noticepic" :key="index" :index="index" :canUpload="!$route.params.create_time"
             :sPictureUrl="item" :fSetPicturUrl="setNoticePictureUrl" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
         </van-cell-group>
@@ -128,14 +128,14 @@
         </p>
 
         <div style="margin-bottom: 10px;">
-          <a href="javascript: void(0);" class="add-btn" @click="formData.declarationPic.push('')" v-if="!$route.params.create_time">+新增</a>
+          <a href="javascript: void(0);" class="add-btn" @click="formData.declarationpic.push('')" v-if="!$route.params.create_time">+新增</a>
           <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time"
-          @click="formData.declarationPic.length == 1 ? formData.declarationPic.splice(formData.declarationPic.length - 1, 0) : formData.declarationPic.splice(formData.declarationPic.length - 1, 1)">- 删除</a>
+          @click="formData.declarationpic.length == 1 ? formData.declarationpic.splice(formData.declarationpic.length - 1, 0) : formData.declarationpic.splice(formData.declarationpic.length - 1, 1)">- 删除</a>
         </div>
 
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;flex-wrap: wrap;">
-            <upload-picture v-for="(item, index) in formData.declarationPic" :key="index" :index="index" :canUpload="!$route.params.create_time"
+            <upload-picture v-for="(item, index) in formData.declarationpic" :key="index" :index="index" :canUpload="!$route.params.create_time"
             :sPictureUrl="item" :fSetPicturUrl="setDeclarationPictureUrl" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
         </van-cell-group>
@@ -160,34 +160,7 @@
           4.植物产品名称与开证量
         </p>
 
-        <!--<div v-for="(item, index) in product" :key="index" style="padding-top: 22px;">-->
-          <!--&lt;!&ndash;选择品名&ndash;&gt;-->
-          <!--<van-cell-group class="change-field__body change-field__error-message" :border="false">-->
-            <!--<van-cell title="品名(材种)" is-link :value="formData.wood_name" @click="show_wood_names = true" :border="false" />-->
-            <!--<van-popup v-model="show_wood_names" position="bottom" :overlay="true">-->
-              <!--<van-picker :columns="woodNames" @change="onChangeWoodName" />-->
-            <!--</van-popup>-->
-          <!--</van-cell-group>-->
-          <!--&lt;!&ndash;选择名称&ndash;&gt;-->
-          <!--<van-cell-group class="change-field__body change-field__error-message" :border="false">-->
-            <!--<van-cell title="植物产品名称" is-link :value="item.product_name" @click="show_product_names = true" :border="false" />-->
-            <!--<van-popup v-model="show_product_names" position="bottom" :overlay="true">-->
-              <!--<van-picker :columns="productNames" @change="onChangeProductName" />-->
-            <!--</van-popup>-->
-            <!--<van-cell v-show="item.wood_name === '非原木'" title=" " is-link :value="formData.materials" @click="show_materialss = true" :border="false" />-->
-            <!--<van-popup v-model="show_materialss" position="bottom" :overlay="true">-->
-              <!--<van-picker :columns="materialss" @change="onChangeMaterials" />-->
-            <!--</van-popup>-->
-          <!--</van-cell-group>-->
-
-          <!--<van-cell-group class="van-hairline&#45;&#45;bottom" :border="false" style="padding-bottom: 20px;">-->
-            <!--<van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"-->
-                       <!--v-model="item.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.create_time" input-align="right">-->
-              <!--<span slot="button" style="color: #333333;">m³</span>-->
-            <!--</van-field>-->
-          <!--</van-cell-group>-->
-        <!--</div>-->
-        <card v-for="(item, index) in product" :key="index" v-model="product[index]" :index="index" @del-card="handleDelCard"></card>
+        <card v-for="(item, index) in woodList" :key="index" v-model="woodList[index]" :index="index" @del-card="handleDelCard" :materialss="materialss" :plantNames="plantNames"></card>
         <div class="set-employee-add-employee flex-center-xy" @click="addFn">
           <div class="set-employee-add-employee__text">
             <van-icon name="plus" />
@@ -216,13 +189,19 @@ export default {
     UploadPicture,
     card
   },
-  created() {
+  async created() {
+    await this.$store.dispatch('getPlantList', this);
+    await this.$store.dispatch('getWoodList', this);
+    this.materialss = this.getNotWoodNameList();
+    this.plantNames = this.getPlantNameList();
+    this.addFn();
     window.scrollTo(0, 0);
     if(this.$route.params.create_time) {
       this.formData = this.$route.params;
-      this.formData.noticePic = this.$route.params.noticePic.split(',');
+      this.formData.noticepic = this.$route.params.noticepic.split(',');
       this.formData.contractPic = this.$route.params.contractPic.split(',');
-      this.formData.declarationPic = this.$route.params.declarationPic.split(',');
+      this.formData.declarationpic = this.$route.params.declarationpic.split(',');
+      this.woodList = JSON.parse(this.$route.params.woodJson)['woodList'];
       this.statusObject['2'].text = `审核已通过，请至城厢镇林业局${this.formData.windows}号窗口领取`;
       this.statusObject['3'].text = `审核未通过，被拒原因: ${this.formData.refuse_reason}`;
     }
@@ -230,17 +209,16 @@ export default {
   data() {
     return {
       formData: {
-        noticePic: [''],
-        declarationPic: [''],
+        noticepic: [''],
+        declarationpic: [''],
         contractPic: ['']
       },
-      product: [
-        {
-          wood_name: '',
-          product_name: '',
-          materials: '',
-          amount: '',
-        }
+      woodList: [
+        // {
+        //   plant_variety: '',
+        //   wood_variety: '',
+        //   amount: ''
+        // }
       ],
       statusObject: {
         1: {
@@ -258,17 +236,61 @@ export default {
           backgroundColor: '#FF8F3B',
           text: ''
         }
-      }
+      },
+      // 品种类型，比如：板材
+      materialss: [],
+      // 植物品种，比如：杉树
+      plantNames: []
     }
   },
   methods: {
+    //获取非原木名称列表
+    getNotWoodNameList() {
+      let list = [];
+      this.$store.getters.WOOD_VARIETY.map(item => {
+        if (item.paramName !== '原木') {
+          list.push(item.paramName);
+        }
+      });
+      return list;
+    },
+    // 获取植物品种名称列表
+    getPlantNameList() {
+      let list = [];
+      this.$store.getters.PLANT_VARIETY.map(item => {
+        list.push(item.paramName);
+      });
+      return list;
+    },
+    // 根据品种名称获取对应的值
+    getWOODValue(paramName) {
+      let paramValue = '';
+      this.$store.getters.WOOD_VARIETY.map(item => {
+        if (item.paramName === paramName) {
+          paramValue = item.paramValue;
+        }
+      });
+      return paramValue;
+    },
+    // 根据植物名称获取对应的值
+    getPlantValue(paramName) {
+      let paramValue = '';
+      this.$store.getters.PLANT_VARIETY.map(item => {
+        if (item.paramName === paramName) {
+          paramValue = item.paramValue;
+        }
+      });
+      return paramValue;
+    },
     submit() {
       if(this.validate()) {
         let data = JSON.parse(JSON.stringify(this.formData));
 
         data.contractPic = data.contractPic.toString();
-        data.declarationPic = data.declarationPic.toString();
-        data.noticePic = data.noticePic.toString();
+        data.declarationpic = data.declarationpic.toString();
+        data.noticepic = data.noticepic.toString();
+        data.woodVariety = this.getWOODValue('板材');
+        data.woodJson = JSON.stringify({woodList: this.woodList});
 
         this.$http({
           url: '/cert/addBoardCert',
@@ -302,13 +324,13 @@ export default {
         this.errMsg.amountErrMsg = '此项不能为空';
         bFlag = false;
       }
-      for(let i of this.formData.noticePic) {
+      for(let i of this.formData.noticepic) {
         if(i == '') {
           this.$toast('通关无纸化放行通知单不能有为空的项');
           return false;
         }
       }
-      for(let i of this.formData.declarationPic) {
+      for(let i of this.formData.declarationpic) {
         if(i == '') {
           this.$toast('中华人民共和国海关进口货物报关单不能有为空的项');
           return false;
@@ -324,30 +346,30 @@ export default {
       return bFlag;
     },
     setNoticePictureUrl(index, url) {
-      this.$set(this.formData.noticePic, index, url);
+      this.$set(this.formData.noticepic, index, url);
     },
     setContractPictureUrl(index, url) {
       this.$set(this.formData.contractPic, index, url);
     },
     setDeclarationPictureUrl(index, url) {
-      this.$set(this.formData.declarationPic, index, url);
+      this.$set(this.formData.declarationpic, index, url);
     },
     goBack() {
       window.history.back();
     },
     addFn() {
-      this.product.push(
+      // 默认值，植物数组第一个，默认选择原木
+      this.woodList.push(
         {
-          wood_name: '',
-          product_name: '',
-          materials: '',
-          amount: ''
+          plant_variety: this.getPlantValue(this.plantNames[0]),
+          wood_variety: this.getWOODValue('原木'),
+          amount: 0
         }
       )
     },
     handleDelCard(index) {
-      if(this.product.length != 1) {
-        this.product.splice(index, 1);
+      if(this.woodList.length != 1) {
+        this.woodList.splice(index, 1);
       }
     },
   }

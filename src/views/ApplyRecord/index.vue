@@ -165,14 +165,8 @@ export default {
               this.applyData.push(i);
             }
           }
-          if(res.data.data.woodCert) {
-            for(let i of res.data.data.woodCert) {
-              i.type = 0;
-              this.applyData.push(i);
-            }
-          }
-          if(res.data.data.plant) {
-            for(let i of res.data.data.plant) {
+          if(res.data.module.plant) {
+            for(let i of res.data.module.plant) {
               i.type = 2;
               this.applyData.push(i);
             }
