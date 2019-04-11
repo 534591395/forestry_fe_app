@@ -293,11 +293,11 @@ export default {
         data.woodJson = JSON.stringify({woodList: this.woodList});
 
         this.$http({
-          url: '/cert/addBoardCert',
+          url: '/cert/authApi/addWoodCert',
           method: 'POST',
           data
         }).then((res) => {
-          if(res && res.data.code == 0) {
+          if(res && res.data.success) {
             this.$toast.success('添加板材类开证单成功');
             window.$storage.set('hasCert', true);
             if(window.$storage.get('isReg')) {
