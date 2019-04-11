@@ -65,12 +65,12 @@
       <div style="margin-left: 12px;">
         <p class="title-pic" style="margin: 0 0 22px 0;padding-top: 37px;">
           附件图片
-          <a href="javascript: void(0);" class="add-btn" @click="formData.picture_url.push('')">+新增</a>
+          <a href="javascript: void(0);" class="add-btn" @click="formData.pictureUrl.push('')">+新增</a>
           <a href="javascript: void(0);" class="add-btn" @click="delItem">- 删除</a>
         </p>
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;flex-wrap: wrap;">
-            <upload-picture v-for="(item, index) in formData.picture_url" :key="index" :index="index" uploadType="cert"
+            <upload-picture v-for="(item, index) in formData.pictureUrl" :key="index" :index="index" uploadType="cert"
             :sPictureUrl="item" :fSetPicturUrl="setNoticePictureUrl" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
         </van-cell-group>
@@ -96,9 +96,9 @@ export default {
   data() {
     return {
       formData: {
-        picture_url: [''],
-        picture_location: [''],
-        picture_time: ['']
+        pictureUrl: [''],
+        pictureLocation: [''],
+        pictureTime : ['']
       }
     }
   },
@@ -106,18 +106,18 @@ export default {
     submit() {
       if(this.validate()) {
         let data = {
-          picture_url: this.formData.picture_url.toString(),
-          picture_location: this.formData.picture_location.toString(),
-          picture_time: this.formData.picture_time.join('@'),
+          pictureUrl: this.formData.pictureUrl.toString(),
+          pictureLocation: this.formData.pictureLocation.toString(),
+          pictureTime : this.formData.pictureTime.join('@'),
           id: this.$route.query.id
         };
 
         this.$http({
-          url: '/cert/addPlantCertPicture',
+          url: '/cert/authApi/addPlantCertPicture',
           method: 'POST',
           data
         }).then((res) => {
-          if(res && res.data.code === 0) {
+          if(res && res.data.success) {
             this.$toast.success('上传车辆运输图片成功');
             this.$router.push({name: 'applyRecord'});
           }
@@ -125,7 +125,7 @@ export default {
       }
     },
     validate() {
-      for(let i of this.formData.picture_url) {
+      for(let i of this.formData.pictureUrl) {
         if(i === '') {
           this.$toast('附件图片不能有为空的项');
           return false;
@@ -135,15 +135,15 @@ export default {
       return true;
     },
     delItem() {
-      if(this.formData.picture_url.length > 1) {
-        this.formData.picture_url.splice(this.formData.picture_url.length - 1, 1);
-        this.formData.picture_location.splice(this.formData.picture_location.length - 1, 1);
+      if(this.formData.pictureUrl.length > 1) {
+        this.formData.pictureUrl.splice(this.formData.pictureUrl.length - 1, 1);
+        this.formData.pictureLocation.splice(this.formData.pictureLocation.length - 1, 1);
       }
     },
     setNoticePictureUrl(index, url, time, name) {
-      this.$set(this.formData.picture_url, index, url);
-      this.formData.picture_time[index] = time;
-      this.formData.picture_location[index] = window.$storage.get('picture')[name];
+      this.$set(this.formData.pictureUrl, index, url);
+      this.formData.pictureTime[index] = time;
+      this.formData.pictureLocation[index] = window.$storage.get('picture')[name];
     }
   }
 }

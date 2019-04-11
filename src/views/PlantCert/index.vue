@@ -420,11 +420,11 @@ export default {
         let data = JSON.parse(JSON.stringify(this.formData));
         data.date_time = data.date_txt;
         this.$http({
-          url: '/cert/addPlantCert',
+          url: '/cert/authApi/addPlantCert',
           method: 'POST',
           data
         }).then((res) => {
-          if(res && res.data.code === 0) {
+          if(res && res.data.success) {
             this.$toast.success('添加木材运输证与植物检疫申请成功');
             this.goBack();
           }
