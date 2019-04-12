@@ -40,14 +40,14 @@
       <span class="employee-card__title">个人信息</span>
 
       <van-cell-group class="van-hairline--bottom" :border="false" style="margin-bottom: 20px;margin-top: 10px;">
-        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" placeholder="请输入业务员姓名" left-icon="contact" required v-model="value.name"
+        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" placeholder="请输入业务员姓名" left-icon="contact" required v-model="value.name" disabled
         :error-message="errMsg.nameErrMsg" @blur="handleInputBlur('name')">
           <span slot="button" style="color: transparent;">1</span>
         </van-field>
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom" :border="false" style="margin-bottom: 20px;">
-        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" placeholder="请输入业务员手机号" left-icon="phone-o" required v-model="value.username"
+        <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" placeholder="请输入业务员手机号" left-icon="phone-o" required v-model="value.username" disabled
         :error-message="errMsg.usernameErrMsg" @blur="handleInputBlur('username')">
           <span slot="button" style="color: transparent;">1</span>
         </van-field>
@@ -62,9 +62,9 @@
 
       <van-cell-group :border="false" style="margin-top: 20px;">
         <div style="display: flex;">
-          <upload-picture style="margin-right: 15px;" :sPictureUrl="value.socialsecuritypic" :fSetPicturUrl="setSocialSecurityPictureUrl":canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
-          <upload-picture style="margin-right: 15px;" :sPictureUrl="value.cardfrontpic" :fSetPicturUrl="setCardFrontPictureUrl":canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
-          <upload-picture :sPictureUrl="value.cardoppositepic" :fSetPicturUrl="setCardOppositePictureUrl":canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
+          <upload-picture style="margin-right: 15px;" :sPictureUrl="value.socialsecuritypic" :fSetPicturUrl="setSocialSecurityPictureUrl" :canUpload="false" />
+          <upload-picture style="margin-right: 15px;" :sPictureUrl="value.cardfrontpic" :fSetPicturUrl="setCardFrontPictureUrl" :canUpload="false" />
+          <upload-picture :sPictureUrl="value.cardoppositepic" :fSetPicturUrl="setCardOppositePictureUrl" :canUpload="false" />
         </div>
       </van-cell-group>
     </div>
