@@ -107,8 +107,8 @@ export default {
           method: 'POST',
           data: this.employee
         }).then((res) => {
-          if(res && res.data.success0) {
-            this.$toast.success('添加成功');
+          if(res && res.data.success) {
+            this.$toast.success('修改成功');
             this.$router.go(-1)
           }
         });
