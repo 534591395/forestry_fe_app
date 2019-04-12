@@ -31,6 +31,11 @@ export default new Router({
       component: () => import('../views/SetEmployee')
     },
     {
+      path: '/setEmployeeCard',
+      name: 'setEmployeeCard',
+      component: () => import('../views/SetEmployeeCard')
+    },
+    {
       path: '/chooseCert',
       name: 'chooseCert',
       component: () => import('../views/ChooseCert')

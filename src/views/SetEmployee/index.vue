@@ -3,6 +3,7 @@
   background: #F8F8F8;
   margin-top: 46px;
   overflow: auto;
+  height: 100vh;
   &-add-employee {
     height: 61px;
     border-radius: 10px;
@@ -23,13 +24,13 @@
 
 <template>
   <div class="set-employee">
-    <van-nav-bar title="修改业务员" left-arrow @click-left="$router.push({name: 'setCompanyInfo'})" fixed v-if="!$window.$storage.get('isReg')" />
+    <!--<van-nav-bar title="修改业务员" left-arrow @click-left="$router.push({name: 'setCompanyInfo'})" fixed v-if="!$window.$storage.get('isReg')" />-->
     <!-- <van-nav-bar title="添加业务员" right-text="跳过" fixed @click-right="$router.push({name: 'chooseCert'})" v-else /> -->
-    <van-nav-bar title="添加业务员" right-text="跳过" fixed @click-right="finishReg" v-else />
+    <!--<van-nav-bar title="添加业务员" right-text="跳过" fixed @click-right="finishReg" v-else />-->
+    <van-nav-bar title="业务员列表" left-arrow @click-left="$router.push({name: 'setCompanyInfo'})" fixed />
+    <employee-card ref="employee-card" v-for="(item, index) in employee" :key="index" v-model="employee[index]" :index="index" @edit-card="handleEditCard" />
 
-    <employee-card ref="employee-card" v-for="(item, index) in employee" :key="index" v-model="employee[index]" :index="index" @del-card="handleDelCard" />
-
-    <div class="set-employee-add-employee flex-center-xy" v-if="employee.length == 1" @click="addEmployee">
+    <div class="set-employee-add-employee flex-center-xy" @click="addEmployee">
       <div class="set-employee-add-employee__text">
         <van-icon name="plus" />
         <span>
@@ -39,9 +40,15 @@
     </div>
 
     <div class="set-employee-btn change-button-background">
-      <van-button size="large" round type="primary" @click="submit" v-if="$store.getters.oCompanyInfo.status === 2 || $store.getters.oCompanyInfo.status === 3 || $window.$storage.get('isReg')">提交</van-button>
-      <van-button size="large" round type="primary" @click="$router.push({name: 'companySetting'})" v-if="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4">返回</van-button>
+      <van-button size="large" round type="primary" @click="submit" v-if="employee.length > 0">提交</van-button>
+      <van-button size="large" round type="primary" @click="finishReg" v-else>跳过</van-button>
     </div>
+
+    <!--原先的提交按钮-->
+    <!--<div class="set-employee-btn change-button-background">-->
+      <!--<van-button size="large" round type="primary" @click="submit" v-if="$store.getters.oCompanyInfo.status === 2 || $store.getters.oCompanyInfo.status === 3 || $window.$storage.get('isReg')">提交</van-button>-->
+      <!--<van-button size="large" round type="primary" @click="$router.push({name: 'companySetting'})" v-if="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4">返回</van-button>-->
+    <!--</div>-->
   </div>
 </template>
 
@@ -64,9 +71,9 @@ export default {
         {
           name: '',
           username: '',
-          socialSecurityPic: '',
-          cardFrontPic: '',
-          cardOppositePic: ''
+          socialsecuritypic: '',
+          cardfrontpic: '',
+          cardoppositepic: ''
         }
       ],
       employeeInit: []
@@ -88,61 +95,62 @@ export default {
             {
               name: '',
               username: '',
-              socialSecurityPic: '',
-              cardFrontPic: '',
-              cardOppositePic: ''
+              socialsecuritypic: '',
+              cardfrontpic: '',
+              cardoppositepic: ''
             }
           ];
         }
       });
     },
     submit() {
-      if(window.$underscore.isEqual(this.employeeInit, this.employee)) {
-        this.$router.push({name: 'companySetting'});
-        return;
-      }
-
-      let flag = true;
-      for(let i in this.employee) {
-        if(!this.$refs['employee-card'][i].validate()) {
-          flag = false;
-        }
-      }
-      if(flag) {
-        this.$http({
-          url: '/employee/authApi/addEmployee',
-          method: 'POST',
-          data: {
-            employee: this.employee
-          }
-        }).then((res) => {
-          if(res && res.data.code == 0) {
-            this.$toast.success('修改业务员成功');
-            if(window.$storage.get('isReg')) {
-              //this.$router.push({name: 'chooseCert'});
-              this.finishReg();
-            }
-            else {
-              this.$router.push({name: 'companySetting'});
-            }
-          }
-        });
-      }
+    //   if(window.$underscore.isEqual(this.employeeInit, this.employee)) {
+    //     this.$router.push({name: 'companySetting'});
+    //     return;
+    //   }
+    //
+    //   let flag = true;
+    //   for(let i in this.employee) {
+    //     if(!this.$refs['employee-card'][i].validate()) {
+    //       flag = false;
+    //     }
+    //   }
+    //   if(flag) {
+    //     this.$http({
+    //       url: '/employee/authApi/addEmployee',
+    //       method: 'POST',
+    //       data: {
+    //         employee: this.employee
+    //       }
+    //     }).then((res) => {
+    //       if(res && res.data.code == 0) {
+    //         this.$toast.success('修改业务员成功');
+    //         if(window.$storage.get('isReg')) {
+    //           //this.$router.push({name: 'chooseCert'});
+    //           this.finishReg();
+    //         }
+    //         else {
+    //           this.$router.push({name: 'companySetting'});
+    //         }
+    //       }
+    //     });
+    //   }
     },
-    handleDelCard(index) {
-      if(this.employee.length != 1 && this.$store.getters.oCompanyInfo.status !== 1 && this.$store.getters.oCompanyInfo.status !== 4) {
-        this.employee.splice(index, 1);
+    handleEditCard(index) {
+      let employee = this.employee[index];
+      let info = {
+        name: employee.name,
+        username: employee.username,
+        socialsecuritypic: employee.socialsecuritypic,
+        cardfrontpic: employee.cardfrontpic,
+        cardoppositepic: employee.cardoppositepic,
+        id: employee.id
       }
+      this.$router.push({path: '/setEmployeeCard', query: {info: info}})
     },
     addEmployee() {
       if (this.$store.getters.oCompanyInfo.status !== 1 && this.$store.getters.oCompanyInfo.status !== 4) {
-        this.employee.push({
-          name: '',
-          username: '',
-          socialSecurityPic: '',
-          cardFrontPic: '',
-          cardOppositePic: ''
-        });
+        this.$router.push({name: 'setEmployeeCard'})
       }
     }
   }

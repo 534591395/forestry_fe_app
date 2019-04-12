@@ -34,7 +34,7 @@
 
 <template>
   <div class="employee-card">
-    <van-icon name="edit" class="employee-card__icon" @click="$emit('edit-card', index)" />
+    <!--<van-icon name="edit" class="employee-card__icon" @click="$emit('del-card', index)" />-->
 
     <div>
       <span class="employee-card__title">个人信息</span>
@@ -62,9 +62,9 @@
 
       <van-cell-group :border="false" style="margin-top: 20px;">
         <div style="display: flex;">
-          <upload-picture style="margin-right: 15px;" :sPictureUrl="value.socialsecuritypic" :fSetPicturUrl="setSocialSecurityPictureUrl":canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
-          <upload-picture style="margin-right: 15px;" :sPictureUrl="value.cardfrontpic" :fSetPicturUrl="setCardFrontPictureUrl":canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
-          <upload-picture :sPictureUrl="value.cardoppositepic" :fSetPicturUrl="setCardOppositePictureUrl":canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
+          <upload-picture style="margin-right: 15px;" :sPictureUrl="value.socialsecuritypic" :fSetPicturUrl="setSocialSecurityPictureUrl" :canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
+          <upload-picture style="margin-right: 15px;" :sPictureUrl="value.cardfrontpic" :fSetPicturUrl="setCardFrontPictureUrl" :canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
+          <upload-picture :sPictureUrl="value.cardoppositepic" :fSetPicturUrl="setCardOppositePictureUrl" :canUpload="!($store.getters.oCompanyInfo.status == 1 || $store.getters.oCompanyInfo.status == 4)" />
         </div>
       </van-cell-group>
     </div>
@@ -82,10 +82,6 @@ export default {
   props: {
     value: {
       type: Object,
-      required: true
-    },
-    index: {
-      type: Number,
       required: true
     }
   },
