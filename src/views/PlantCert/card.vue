@@ -80,8 +80,17 @@
   <div class="wood-cert">
     <van-icon name="cross" class="wood-cert__icon" @click="$emit('del-card', index)" />
 
+    <van-cell-group class="change-center-y-cell__value change-cell-title-width-default" :border="false" style="margin-top: 20px">
+      <van-field :readonly="$route.params.create_time" label="植物来源（产地）" placeholder="请输入产地" input-align="right"
+                 v-model="value.producing_area" />
+    </van-cell-group>
+
+    <van-cell-group class="change-center-y-cell__value change-cell-title-width-large" :border="false">
+      <van-field :readonly="$route.params.create_time" label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right"
+                 v-model="value.processing_area" />
+    </van-cell-group>
     <!--选择品名-->
-    <van-cell-group class="change-field__body change-field__error-message" :border="false" style="margin-top: 20px">
+    <van-cell-group class="change-field__body change-field__error-message" :border="false">
       <van-cell title="品名(材种)" is-link :value="getWOODOneName(value.wood_variety)" @click="show_wood_names = true" :border="false" />
       <van-popup v-model="show_wood_names" position="bottom" :overlay="true">
         <van-picker :columns="woodNames" @change="onChangeWoodName" />
@@ -89,14 +98,14 @@
     </van-cell-group>
     <!--选择名称-->
     <van-cell-group class="change-field__body change-field__error-message" :border="false">
-      <van-cell title="植物产品名称" is-link :value="getPLANTName(value.plant_variety)" @click="show_product_names = true" :border="false" />
+      <van-cell v-show="getWOODOneName(value.wood_variety) === '非原木'" :title="getWOODOneName(value.wood_variety) === '非原木' ? ' ' : '植物产品名称'" is-link :value="getWOODName(value.wood_variety)" @click="show_materialss = true" :border="false" />
+      <van-popup v-model="show_materialss" position="bottom" :overlay="true">
+        <van-picker :columns="materialss" @change="onChangeMaterials" />
+      </van-popup>
+      <van-cell :title="getWOODOneName(value.wood_variety) === '非原木' ? '植物产品名称' : ' '" is-link :value="getPLANTName(value.plant_variety)" @click="show_product_names = true" :border="false" />
       <van-popup v-model="show_product_names" position="bottom" :overlay="true">
         <van-picker :columns="plantNames" @change="onChangePlantName" />
       </van-popup>
-      <!--<van-cell v-show="getWOODOneName(value.wood_variety) === '非原木'" title=" " is-link :value="getWOODName(value.wood_variety)" @click="show_materialss = true" :border="false" />-->
-      <!--<van-popup v-model="show_materialss" position="bottom" :overlay="true">-->
-        <!--<van-picker :columns="materialss" @change="onChangeMaterials" />-->
-      <!--</van-popup>-->
     </van-cell-group>
 
     <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 20px;">

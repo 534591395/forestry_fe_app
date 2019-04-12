@@ -105,15 +105,15 @@
         <div class="plant-cert-card__title">木材运输与植物检疫申请单</div>
       </div>
 
-      <van-cell-group class="van-hairline--bottom change-center-y-cell__value change-cell-title-width-default" :border="false">
-        <van-field :readonly="$route.params.create_time" label="植物来源（产地）" placeholder="请输入产地" input-align="right"
-        v-model="formData.producing_area" />
-      </van-cell-group>
+      <!--<van-cell-group class="van-hairline&#45;&#45;bottom change-center-y-cell__value change-cell-title-width-default" :border="false">-->
+        <!--<van-field :readonly="$route.params.create_time" label="植物来源（产地）" placeholder="请输入产地" input-align="right"-->
+        <!--v-model="formData.producing_area" />-->
+      <!--</van-cell-group>-->
 
-      <van-cell-group class="van-hairline--bottom change-center-y-cell__value change-cell-title-width-large" :border="false">
-        <van-field :readonly="$route.params.create_time" label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right"
-        v-model="formData.processing_area" />
-      </van-cell-group>
+      <!--<van-cell-group class="van-hairline&#45;&#45;bottom change-center-y-cell__value change-cell-title-width-large" :border="false">-->
+        <!--<van-field :readonly="$route.params.create_time" label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right"-->
+        <!--v-model="formData.processing_area" />-->
+      <!--</van-cell-group>-->
 
       <!--<van-cell-group class="van-hairline&#45;&#45;bottom change-cell__value" :border="false">-->
         <!--<van-field-->
@@ -344,6 +344,8 @@ export default {
     return {
       woodList: [
         {
+          producing_area: '',
+          processing_area: '',
           plant_variety: '',
           wood_variety: '',
           amount: ''
