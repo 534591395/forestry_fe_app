@@ -320,9 +320,9 @@ export default {
     },
     validate() {
       let bFlag = true;
-      if(this.formData.amount == '') {
-        this.errMsg.amountErrMsg = '此项不能为空';
-        bFlag = false;
+      if(!this.woodList.length) {
+        this.$toast('植物产品名称与开证量必须添加');
+        return false;
       }
       for(let i of this.formData.noticepic) {
         if(i == '') {
