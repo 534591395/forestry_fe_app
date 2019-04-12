@@ -166,7 +166,7 @@
           <!--</van-field>-->
         <!--</van-cell-group>-->
 
-        <card v-for="(item, index) in woodList" :key="index" v-model="woodList[index]" :index="index" @del-card="handleDelCard" :materialss="materialss" :plantNames="plantNames"></card>
+        <card v-for="(item, index) in woodList" :key="index" v-model="woodList[index]" :index="index" @del-card="handleDelCard" :plantNames="plantNames"></card>
         <div class="set-employee-add-employee flex-center-xy" @click="addFn">
           <div class="set-employee-add-employee__text">
             <van-icon name="plus" />
@@ -175,8 +175,6 @@
         </span>
           </div>
         </div>
-
-        <p class="wood-cert-card__tips">注：此次开证总量</p>
       </div>
     </div>
 
@@ -199,6 +197,8 @@ export default {
   async created() {
     await this.$store.dispatch('getPlantList', this);
     await this.$store.dispatch('getWoodList', this);
+    this.plantNames = this.getPlantNameList();
+    this.addFn();
     window.scrollTo(0, 0);
     if(this.$route.params.create_time) {
       this.formData = this.$route.params;
@@ -220,11 +220,11 @@ export default {
         woodJson: ''
       },
       woodList: [
-        {
-          plant_variety: '',
-          wood_variety: '',
-          amount: ''
-        }
+        // {
+        //   plant_variety: '',
+        //   wood_variety: '',
+        //   amount: ''
+        // }
       ],
       errMsg: {
         amountErrMsg: ''
@@ -249,12 +249,42 @@ export default {
     }
   },
   methods: {
+    // 获取植物品种名称列表
+    getPlantNameList() {
+      let list = [];
+      this.$store.getters.PLANT_VARIETY.map(item => {
+        list.push(item.paramName);
+      });
+      return list;
+    },
+    // 根据植物名称获取对应的值
+    getPlantValue(paramName) {
+      let paramValue = '';
+      this.$store.getters.PLANT_VARIETY.map(item => {
+        if (item.paramName === paramName) {
+          paramValue = item.paramValue;
+        }
+      });
+      return paramValue;
+    },
+    // 根据品种名称获取对应的值
+    getWOODValue(paramName) {
+      let paramValue = '';
+      this.$store.getters.WOOD_VARIETY.map(item => {
+        if (item.paramName === paramName) {
+          paramValue = item.paramValue;
+        }
+      });
+      return paramValue;
+    },
     submit() {
       if(this.validate()) {
         let data = JSON.parse(JSON.stringify(this.formData));
         data.ladingpic = data.ladingpic.toString();
         data.declarationpic = data.declarationpic.toString();
         data.noticepic = data.noticepic.toString();
+        data.woodVariety = this.getWOODValue('板材');
+        data.woodJson = JSON.stringify({woodList: this.woodList});
 
         this.$http({
           url: '/cert/authApi/addWoodCert',
@@ -325,9 +355,9 @@ export default {
       // 默认值，植物数组第一个，默认选择原木
       this.woodList.push(
         {
-          plant_variety: '',
-          wood_variety: '',
-          amount: ''
+          plant_variety: this.getPlantValue(this.plantNames[0]),
+          wood_variety: this.getWOODValue('原木'),
+          amount: 0
         }
       )
     },
