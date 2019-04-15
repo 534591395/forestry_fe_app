@@ -179,8 +179,8 @@
         <van-field :readonly="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" label="（木材）原料主要品种"
                    required disabled :error-message="oErrMsg.kindErrMsg" @blur="handleInputBlur('kind', 'array')">
           <van-checkbox-group :disabled="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4" slot="button" v-model="oFormData.kind">
-            <template  v-for="(item, index) in $store.getters.oBasicInfo['品种'].info">
-              <van-checkbox :key="index" style="margin-bottom: 7px;" :name="item" shape="square">{{ item }}</van-checkbox>
+            <template  v-for="(item, index) in $store.getters.WOOD_VARIETY">
+              <van-checkbox :key="index" style="margin-bottom: 7px;" :name="item.paramValue" shape="square">{{ item.paramName }}</van-checkbox>
             </template>
           </van-checkbox-group>
         </van-field>
@@ -312,10 +312,12 @@ export default {
   components: {
     UploadPicture
   },
-  created() {
-    this.$store.dispatch('getFileInfo', this);     
-    this.$store.dispatch('getBasicInfo', this);
-    if(!window.$storage.get('isReg')) {
+  async created() {
+    await this.$store.dispatch('getCompanyInfo', this);
+    await this.$store.dispatch('getFileInfo', this);     
+    await this.$store.dispatch('getBasicInfo', this);
+    await this.$store.dispatch('getWoodList', this);
+    if(Object.keys(this.$store.getters.oCompanyInfo).length) {
       this.oFormData = JSON.parse(JSON.stringify(this.$store.getters.oCompanyInfo));
       this.statusObject['3'].text = `审核未通过，被拒原因: ${this.oFormData.refuse_reason}`;
     }

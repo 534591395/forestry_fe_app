@@ -93,7 +93,7 @@
           <div class="company-setting-top-card-header__text">{{ $store.getters.oCompanyInfo.name }}</div>
         </div>
 
-        <van-icon name="arrow" color="#FFF" size="0.5rem" v-if="$window.$storage.get('user').userC.boss === 0"
+        <van-icon name="arrow" color="#FFF" size="0.5rem" v-if="$store.getters.oUserInfo.userC && $store.getters.oUserInfo.userC.boss === 0 && $store.getters.oCompanyInfo.status != 1"
         class="company-setting-top-card-header__icon"  @click="$router.push({name: 'setCompanyInfo'})" />
       </div>
 
@@ -160,6 +160,7 @@ export default {
     MyGallery
   },
   async created() {
+    await this.$store.dispatch('getUserInfo', this);
     await this.$store.dispatch('getCompanyInfo', this);
     this.getCertAmount();
   },
@@ -197,7 +198,7 @@ export default {
         method: 'POST',
         data: {
           cid: this.$store.getters.oCompanyInfo.id,
-          isWood: 0 
+          isWood: 1
         }
       }).then((res) => {
         if(res && res.data.success) {

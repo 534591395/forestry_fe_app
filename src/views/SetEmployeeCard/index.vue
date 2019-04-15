@@ -50,7 +50,8 @@ export default {
   components: {
     EmployeeCard
   },
-  created() {
+  async created() {
+    await this.$store.dispatch('getUserInfo', this);
     console.log(this.$route.query);
     let info = this.$route.query.info
     if (info) {
@@ -64,9 +65,10 @@ export default {
         {
           name: '',
           username: '',
-          socialsecuritypic: 'http://img1.tplm123.com/2014/10/23/34652/19578402393124.jpg',
-          cardfrontpic: 'http://img1.tplm123.com/2014/10/23/34652/19578402393124.jpg',
-          cardoppositepic: 'http://img1.tplm123.com/2014/10/23/34652/19578402393124.jpg'
+          socialsecuritypic: '',
+          cardfrontpic: '',
+          cardoppositepic: '',
+          boss: ''
         },
       type: 'add'
     }
@@ -81,6 +83,7 @@ export default {
       console.log(flag);
       console.log(this.employee);
       if(flag) {
+        this.employee.boss = this.$store.getters.oUserInfo.userC.boss;
         this.$http({
           url: '/employee/authApi/addEmployee',
           method: 'POST',

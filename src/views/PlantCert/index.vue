@@ -314,7 +314,9 @@ export default {
     UploadPicture,
     card
   },
-  mounted() {
+  async mounted() {
+    await this.$store.dispatch('getCompanyInfo', this);
+    await this.getFirst01();
     window.scrollTo(0, 0);
     if(this.$route.params.create_time) {
       this.formData = Object.assign(this.formData, this.$route.params);
@@ -338,6 +340,9 @@ export default {
         });
       }
     }
+  },
+  created() {
+    
   },
   data() {
     let self = this;
@@ -478,6 +483,23 @@ export default {
       }
 
       return flag;
+    },
+    // 获取一级分类原木下的列表
+    getFirst01() {
+      const data = {
+        code: 1,
+        firstparamValue: '',
+        secondparamValue: ''
+      };
+      return this.$http({
+        url: '/cert/authApi/getCertSort',
+        method: 'POST',
+        data
+      }).then((res) => {
+        if(res && res.data.success) {
+          
+        }
+      });
     },
     handleInputBlur(inputName) {
       if(this.formData[inputName] === '') {

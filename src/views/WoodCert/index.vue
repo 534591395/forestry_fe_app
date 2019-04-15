@@ -215,8 +215,6 @@ export default {
         noticepic: [''],
         ladingpic: [''],
         declarationpic: [''],
-        amount: '',
-        woodVariety: '',
         woodJson: ''
       },
       woodList: [
@@ -283,8 +281,9 @@ export default {
         data.ladingpic = data.ladingpic.toString();
         data.declarationpic = data.declarationpic.toString();
         data.noticepic = data.noticepic.toString();
-        data.woodVariety = this.getWOODValue('原木');
         data.woodJson = JSON.stringify({woodList: this.woodList});
+        data.firstVariety = 'first_variety_01';
+        data.cid = this.$store.getters.oCompanyInfo.id;
 
         this.$http({
           url: '/cert/authApi/addWoodCert',

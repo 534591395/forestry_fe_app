@@ -30,7 +30,7 @@
     <van-nav-bar title="业务员列表" left-arrow @click-left="$router.push({name: 'setCompanyInfo'})" fixed />
     <employee-card ref="employee-card" v-for="(item, index) in employee" :key="index" v-model="employee[index]" :index="index" @edit-card="handleEditCard" />
 
-    <div class="set-employee-add-employee flex-center-xy" @click="addEmployee">
+    <div class="set-employee-add-employee flex-center-xy" @click="addEmployee" v-if="this.employee.length < 2">
       <div class="set-employee-add-employee__text">
         <van-icon name="plus" />
         <span>
@@ -60,21 +60,22 @@ export default {
   components: {
     EmployeeCard
   },
-  created() {
-    if(!window.$storage.get('isReg')) {
+  async created() {
+    await this.$store.dispatch('getCompanyInfo', this);
+    if(Object.keys(this.$store.getters.oCompanyInfo).length) {
       this.getEmployee();
     }
   },
   data() {
     return {
       employee: [
-        {
-          name: '',
-          username: '',
-          socialsecuritypic: '',
-          cardfrontpic: '',
-          cardoppositepic: ''
-        }
+        // {
+        //   name: '',
+        //   username: '',
+        //   socialsecuritypic: '',
+        //   cardfrontpic: '',
+        //   cardoppositepic: ''
+        // }
       ],
       employeeInit: []
     }

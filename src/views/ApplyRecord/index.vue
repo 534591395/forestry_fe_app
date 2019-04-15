@@ -64,8 +64,8 @@
       <van-popup v-model="showApplyType" position="bottom">
         <van-radio-group v-model="applyType" class="apply-record__radio" @change="handleApplyTypeChange">
           <van-radio name="">全部申请</van-radio>
-          <van-radio name="wood">原木类申请</van-radio>
-          <van-radio name="board">板材类申请</van-radio>
+          <van-radio name="first_variety_01">原木类申请</van-radio>
+          <van-radio name="first_variety_02">板材类申请</van-radio>
           <van-radio name="plant">木材运输与植物检疫申请</van-radio>
         </van-radio-group>
       </van-popup>
@@ -102,10 +102,10 @@ export default {
         case '': {
           return '全部申请';
         }
-        case 'wood': {
+        case 'first_variety_01': {
           return '原木类申请';
         }
-        case 'board': {
+        case 'first_variety_02': {
           return '板材类申请';
         }
         case 'plant': {
@@ -152,9 +152,9 @@ export default {
         url: '/cert/authApi/getCert',
         method: 'POST',
         data: {
-          woodVariety : this.applyType,
+          firstVariety : this.applyType,
           status: this.applyStatus,
-          uid : this.$store.getters.oUserInfo.userC.id
+          uid: ''
         }
       }).then((res) => {
         if(res && res.data.success) {

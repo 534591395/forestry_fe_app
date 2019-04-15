@@ -289,8 +289,9 @@ export default {
         data.contractPic = data.contractPic.toString();
         data.declarationpic = data.declarationpic.toString();
         data.noticepic = data.noticepic.toString();
-        data.woodVariety = this.getWOODValue('板材');
         data.woodJson = JSON.stringify({woodList: this.woodList});
+        data.firstVariety = 'first_variety_02';
+        data.cid = this.$store.getters.oCompanyInfo.id;
 
         this.$http({
           url: '/cert/authApi/addWoodCert',
