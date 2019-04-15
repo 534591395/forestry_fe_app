@@ -99,7 +99,7 @@
         <img :src="statusObject[formData.status].img" alt="" class="wood-cert-status-top__img">
         <span style="word-break: break-all;">{{ statusObject[formData.status].text }}</span>
       </div>
-      <p class="wood-cert-status-bottom">{{ formData.create_time }}</p>
+      <p class="wood-cert-status-bottom">{{ `${new Date(formData.createTime).getFullYear()}年${new Date(formData.createTime).getMonth() + 1}月${new Date(formData.createTime).getDate()}日` }}</p>
     </div>
 
     <div class="wood-cert-card">
@@ -112,13 +112,13 @@
       <div style="margin-left: 12px;">
         <p class="title-pic" style="margin: 0 0 22px 0;padding-top: 37px;">
           1.通关无纸化放行通知单
-          <a href="javascript: void(0);" class="add-btn" @click="formData.noticepic.push('')" v-if="!$route.params.create_time">+新增</a>
-          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time"
+          <a href="javascript: void(0);" class="add-btn" @click="formData.noticepic.push('')" v-if="!$route.params.createTime">+新增</a>
+          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.createTime"
           @click="formData.noticepic.length == 1 ? formData.noticepic.splice(formData.noticepic.length - 1, 0) : formData.noticepic.splice(formData.noticepic.length - 1, 1)">- 删除</a>
         </p>
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;flex-wrap: wrap;">
-            <upload-picture v-for="(item, index) in formData.noticepic" :key="index" :index="index" :canUpload="!$route.params.create_time"
+            <upload-picture v-for="(item, index) in formData.noticepic" :key="index" :index="index" :canUpload="!$route.params.createTime"
             :sPictureUrl="item" :fSetPicturUrl="setNoticePictureUrl" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
         </van-cell-group>
@@ -128,14 +128,14 @@
         </p>
 
         <div style="margin-bottom: 10px;">
-          <a href="javascript: void(0);" class="add-btn" @click="formData.declarationpic.push('')" v-if="!$route.params.create_time">+新增</a>
-          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time"
+          <a href="javascript: void(0);" class="add-btn" @click="formData.declarationpic.push('')" v-if="!$route.params.createTime">+新增</a>
+          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.createTime"
           @click="formData.declarationpic.length == 1 ? formData.declarationpic.splice(formData.declarationpic.length - 1, 0) : formData.declarationpic.splice(formData.declarationpic.length - 1, 1)">- 删除</a>
         </div>
 
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;flex-wrap: wrap;">
-            <upload-picture v-for="(item, index) in formData.declarationpic" :key="index" :index="index" :canUpload="!$route.params.create_time"
+            <upload-picture v-for="(item, index) in formData.declarationpic" :key="index" :index="index" :canUpload="!$route.params.createTime"
             :sPictureUrl="item" :fSetPicturUrl="setDeclarationPictureUrl" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
         </van-cell-group>
@@ -144,13 +144,13 @@
           <p class="title-pic" style="margin: 0 0 22px 0;padding-top: 37px;">
             3.合同或销售证明
           </p>
-          <a href="javascript: void(0);" class="add-btn" @click="formData.contractPic.push('')" v-if="!$route.params.create_time">+新增</a>
-          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time"
-          @click="formData.contractPic.length == 1 ? formData.contractPic.splice(formData.contractPic.length - 1, 0) : formData.contractPic.splice(formData.contractPic.length - 1, 1)">- 删除</a>
+          <a href="javascript: void(0);" class="add-btn" @click="formData.contractpic.push('')" v-if="!$route.params.createTime">+新增</a>
+          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.createTime"
+          @click="formData.contractpic.length == 1 ? formData.contractpic.splice(formData.contractpic.length - 1, 0) : formData.contractpic.splice(formData.contractpic.length - 1, 1)">- 删除</a>
         </div>
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;flex-wrap: wrap;">
-            <upload-picture v-for="(item, index) in formData.contractPic" :key="index" :index="index" :canUpload="!$route.params.create_time"
+            <upload-picture v-for="(item, index) in formData.contractpic" :key="index" :index="index" :canUpload="!$route.params.createTime"
             :sPictureUrl="item" :fSetPicturUrl="setContractPictureUrl" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
         </van-cell-group>
@@ -161,7 +161,7 @@
         </p>
 
         <card v-for="(item, index) in woodList" :key="index" v-model="woodList[index]" :index="index" @del-card="handleDelCard" :materialss="materialss" :plantNames="plantNames"></card>
-        <div class="set-employee-add-employee flex-center-xy" @click="addFn">
+        <div class="set-employee-add-employee flex-center-xy" @click="addFn"  v-if="!$route.params.createTime">
           <div class="set-employee-add-employee__text">
             <van-icon name="plus" />
             <span>
@@ -170,12 +170,11 @@
           </div>
         </div>
 
-        <p class="wood-cert-card__tips">注：此次开证总量</p>
       </div>
     </div>
 
     <div class="wood-cert__btn change-button-background">
-      <van-button size="large" round type="primary" @click="submit" v-if="!$route.params.create_time">提交</van-button>
+      <van-button size="large" round type="primary" @click="submit" v-if="!$route.params.createTime">提交</van-button>
     </div>
   </div>
 </template>
@@ -190,20 +189,26 @@ export default {
     card
   },
   async created() {
+    await this.$store.dispatch('getCompanyInfo', this);
     await this.$store.dispatch('getPlantList', this);
     await this.$store.dispatch('getWoodList', this);
     this.materialss = this.getNotWoodNameList();
     this.plantNames = this.getPlantNameList();
     this.addFn();
     window.scrollTo(0, 0);
-    if(this.$route.params.create_time) {
-      this.formData = this.$route.params;
+    if(this.$route.params.createTime) {
+      this.formData = JSON.parse(JSON.stringify(this.$route.params)); 
       this.formData.noticepic = this.$route.params.noticepic.split(',');
-      this.formData.contractPic = this.$route.params.contractPic.split(',');
+      this.formData.contractpic = this.$route.params.contractpic.split(',');
       this.formData.declarationpic = this.$route.params.declarationpic.split(',');
-      this.woodList = JSON.parse(this.$route.params.woodJson)['woodList'];
       this.statusObject['2'].text = `审核已通过，请至城厢镇林业局${this.formData.windows}号窗口领取`;
       this.statusObject['3'].text = `审核未通过，被拒原因: ${this.formData.refuse_reason}`;
+      try {
+        const woodJson = JSON.parse(this.$route.params.woodJson);
+        this.woodList = woodJson.woodList;
+      } catch (error) {
+        this.woodList = [];
+      }
     }
   },
   data() {
@@ -211,7 +216,7 @@ export default {
       formData: {
         noticepic: [''],
         declarationpic: [''],
-        contractPic: ['']
+        contractpic: ['']
       },
       woodList: [
         // {
@@ -286,7 +291,7 @@ export default {
       if(this.validate()) {
         let data = JSON.parse(JSON.stringify(this.formData));
 
-        data.contractPic = data.contractPic.toString();
+        data.contractpic = data.contractpic.toString();
         data.declarationpic = data.declarationpic.toString();
         data.noticepic = data.noticepic.toString();
         data.woodJson = JSON.stringify({woodList: this.woodList});
@@ -337,7 +342,7 @@ export default {
           return false;
         }
       }
-      for(let i of this.formData.contractPic) {
+      for(let i of this.formData.contractpic) {
         if(i == '') {
           this.$toast('合同或销售证明不能有为空的项');
           return false;
@@ -350,7 +355,7 @@ export default {
       this.$set(this.formData.noticepic, index, url);
     },
     setContractPictureUrl(index, url) {
-      this.$set(this.formData.contractPic, index, url);
+      this.$set(this.formData.contractpic, index, url);
     },
     setDeclarationPictureUrl(index, url) {
       this.$set(this.formData.declarationpic, index, url);

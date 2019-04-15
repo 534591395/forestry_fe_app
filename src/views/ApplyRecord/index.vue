@@ -63,10 +63,10 @@
     <div class="change-top-popup change-radio">
       <van-popup v-model="showApplyType" position="bottom">
         <van-radio-group v-model="applyType" class="apply-record__radio" @change="handleApplyTypeChange">
-          <van-radio name="">全部申请</van-radio>
-          <van-radio name="first_variety_01">原木类申请</van-radio>
-          <van-radio name="first_variety_02">板材类申请</van-radio>
-          <van-radio name="plant">木材运输与植物检疫申请</van-radio>
+          <van-radio name="0">全部申请</van-radio>
+          <van-radio name="1">原木类申请</van-radio>
+          <van-radio name="2">板材类申请</van-radio>
+          <van-radio name="3">木材运输与植物检疫申请</van-radio>
         </van-radio-group>
       </van-popup>
 
@@ -99,16 +99,16 @@ export default {
   computed: {
     applyTypeZh() {
       switch (this.applyType) {
-        case '': {
+        case '0': {
           return '全部申请';
         }
-        case 'first_variety_01': {
+        case '1': {
           return '原木类申请';
         }
-        case 'first_variety_02': {
+        case '2': {
           return '板材类申请';
         }
-        case 'plant': {
+        case '3': {
           return '木材运输与植物检疫申请';
         }
         default: {
@@ -141,7 +141,7 @@ export default {
       active: 0,
       showApplyType: false,
       showApplyStatus: false,
-      applyType: '',
+      applyType: '0',
       applyStatus: 0,
       applyData: []
     }
@@ -153,19 +153,27 @@ export default {
         method: 'POST',
         data: {
           firstVariety : this.applyType,
-          status: this.applyStatus,
-          uid: ''
+          status: this.applyStatus
         }
       }).then((res) => {
-        if(res && res.data.success) {
+        if(res && res.data.success && res.data.module) {
           this.applyData = [];
           if(res.data.module.woodAndBoard) {
             for(let i of res.data.module.woodAndBoard) {
-              i.type = 1;
+              // 原木运输证
+              if (i.firstVariety == 'first_variety_01') {
+                i.type = 0;
+              } else
+              // 非原木运输证（板材）
+              if (i.firstVariety == 'first_variety_02') {
+                i.type = 1;
+              }
+              
               this.applyData.push(i);
             }
           }
           if(res.data.module.plant) {
+            // 植物运输证 i.type = 2
             for(let i of res.data.module.plant) {
               i.type = 2;
               this.applyData.push(i);

@@ -99,7 +99,7 @@
         <img :src="statusObject[formData.status].img" alt="" class="wood-cert-status-top__img">
         <span style="word-break: break-all;">{{ statusObject[formData.status].text }}</span>
       </div>
-      <p class="wood-cert-status-bottom">{{ formData.create_time }}</p>
+      <p class="wood-cert-status-bottom">{{ `${new Date(formData.createTime).getFullYear()}年${new Date(formData.createTime).getMonth() + 1}月${new Date(formData.createTime).getDate()}日` }}</p>
     </div>
 
     <div class="wood-cert-card">
@@ -113,27 +113,27 @@
         <p class="title-pic" style="margin: 0;padding-top: 37px;">1.太仓出入境检验检疫局进境散装木材准运通知单</p>
 
         <div style="margin-bottom: 10px;">
-          <a href="javascript: void(0);" class="add-btn" @click="formData.noticepic.push('')" v-if="!$route.params.create_time">+新增</a>
-          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time"
+          <a href="javascript: void(0);" class="add-btn" @click="formData.noticepic.push('')" v-if="!$route.params.createTime">+新增</a>
+          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.createTime"
           @click="formData.noticepic.length == 1 ? formData.noticepic.splice(formData.noticepic.length - 1, 0) : formData.noticepic.splice(formData.noticepic.length - 1, 1)">- 删除</a>
         </div>
 
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;flex-wrap: wrap;">
-            <upload-picture v-for="(item, index) in formData.noticepic" :key="index" :index="index" :canUpload="!$route.params.create_time"
+            <upload-picture v-for="(item, index) in formData.noticepic" :key="index" :index="index" :canUpload="!$route.params.createTime"
             :sPictureUrl="item" :fSetPicturUrl="setNoticePictureUrl" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
         </van-cell-group>
 
         <p class="title-pic" style="margin: 0 0 22px 0;padding-top: 37px;">
           2.进口小提单
-          <a href="javascript: void(0);" class="add-btn" @click="formData.ladingpic.push('')" v-if="!$route.params.create_time">+新增</a>
-          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time"
+          <a href="javascript: void(0);" class="add-btn" @click="formData.ladingpic.push('')" v-if="!$route.params.createTime">+新增</a>
+          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.createTime"
           @click="formData.ladingpic.length == 1 ? formData.ladingpic.splice(formData.ladingpic.length - 1, 0) : formData.ladingpic.splice(formData.ladingpic.length - 1, 1)">- 删除</a>
         </p>
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;flex-wrap: wrap;">
-            <upload-picture v-for="(item, index) in formData.ladingpic" :key="index" :index="index" :canUpload="!$route.params.create_time"
+            <upload-picture v-for="(item, index) in formData.ladingpic" :key="index" :index="index" :canUpload="!$route.params.createTime"
             :sPictureUrl="item" :fSetPicturUrl="setLadingPictureUrl" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
         </van-cell-group>
@@ -143,14 +143,14 @@
         </p>
 
         <div style="margin-bottom: 10px;">
-          <a href="javascript: void(0);" class="add-btn" @click="formData.declarationpic.push('')" v-if="!$route.params.create_time">+新增</a>
-          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.create_time"
+          <a href="javascript: void(0);" class="add-btn" @click="formData.declarationpic.push('')" v-if="!$route.params.createTime">+新增</a>
+          <a href="javascript: void(0);" class="add-btn" v-if="!$route.params.createTime"
           @click="formData.declarationpic.length == 1 ? formData.declarationpic.splice(formData.declarationpic.length - 1, 0) : formData.declarationpic.splice(formData.declarationpic.length - 1, 1)">- 删除</a>
         </div>
 
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;flex-wrap: wrap;">
-            <upload-picture v-for="(item, index) in formData.declarationpic" :key="index" :index="index" :canUpload="!$route.params.create_time"
+            <upload-picture v-for="(item, index) in formData.declarationpic" :key="index" :index="index" :canUpload="!$route.params.createTime"
             :sPictureUrl="item" :fSetPicturUrl="setDeclarationPictureUrl" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
         </van-cell-group>
@@ -161,13 +161,13 @@
 
         <!--<van-cell-group class="van-hairline&#45;&#45;bottom" :border="false" style="padding: 20px 0;">-->
           <!--<van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"-->
-          <!--v-model="formData.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.create_time">-->
+          <!--v-model="formData.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.createTime">-->
             <!--<span slot="button" style="color: #333333;">m³</span>-->
           <!--</van-field>-->
         <!--</van-cell-group>-->
 
         <card v-for="(item, index) in woodList" :key="index" v-model="woodList[index]" :index="index" @del-card="handleDelCard" :plantNames="plantNames"></card>
-        <div class="set-employee-add-employee flex-center-xy" @click="addFn">
+        <div class="set-employee-add-employee flex-center-xy" @click="addFn"  v-if="!$route.params.createTime">
           <div class="set-employee-add-employee__text">
             <van-icon name="plus" />
             <span>
@@ -179,7 +179,7 @@
     </div>
 
     <div class="wood-cert__btn change-button-background">
-      <van-button size="large" round type="primary" @click="submit" v-if="!$route.params.create_time">提交</van-button>
+      <van-button size="large" round type="primary" @click="submit" v-if="!$route.params.createTime">提交</van-button>
     </div>
   </div>
 </template>
@@ -195,18 +195,26 @@ export default {
     card
   },
   async created() {
+    await this.$store.dispatch('getCompanyInfo', this);
     await this.$store.dispatch('getPlantList', this);
     await this.$store.dispatch('getWoodList', this);
     this.plantNames = this.getPlantNameList();
     this.addFn();
     window.scrollTo(0, 0);
-    if(this.$route.params.create_time) {
-      this.formData = this.$route.params;
+    if(this.$route.params.createTime) {
+      this.formData = JSON.parse(JSON.stringify(this.$route.params));   
       this.formData.noticepic = this.$route.params.noticepic.split(',');
       this.formData.ladingpic = this.$route.params.ladingpic.split(',');
       this.formData.declarationpic = this.$route.params.declarationpic.split(',');
       this.statusObject['2'].text = `审核已通过，请至城厢镇林业局${this.formData.windows}号窗口领取`;
       this.statusObject['3'].text = `审核未通过，被拒原因: ${this.formData.refuse_reason}`;
+      try {
+        const woodJson = JSON.parse(this.$route.params.woodJson);
+        this.woodList = woodJson.woodList;
+      } catch (error) {
+        this.woodList = [];
+      }
+      
     }
   },
   data() {

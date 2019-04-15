@@ -67,13 +67,13 @@
         <van-col span="6">
           <div class="apply-card-main__th">提交日期</div>
           <div class="apply-card-main__td">
-            {{ `${new Date(data.create_time.replace(/-/g, "/")).getMonth() + 1}月${new Date(data.create_time.replace(/-/g, "/")).getDate()}日` }}
+            {{ `${new Date(data.createTime).getMonth() + 1}月${new Date(data.createTime).getDate()}日` }}
           </div>
         </van-col>
 
         <van-col span="6">
-          <div class="apply-card-main__th">开证总量</div>
-          <div class="apply-card-main__td">{{ data.amount || data.car_amount * data.every_car_amount }}m³</div>
+          <div class="apply-card-main__th">植物产品名称</div>
+          <div class="apply-card-main__td">{{ data.variety }}种</div>
         </van-col>
 
         <van-col span="6">
@@ -96,11 +96,11 @@ export default {
   created() {
     switch (this.data.type) {
       case 0: {
-        this.file = this.data.ladingPic.split(',').length + this.data.declarationPic.split(',').length + this.data.noticePic.split(',').length
+        this.file = this.data.ladingpic.split(',').length + this.data.declarationpic.split(',').length + this.data.noticepic.split(',').length
         break;
       }
       case 1: {
-        this.file = this.data.contractPic.split(',').length + this.data.declarationPic.split(',').length + this.data.noticePic.split(',').length
+        this.file = this.data.contractpic.split(',').length + this.data.declarationpic.split(',').length + this.data.noticepic.split(',').length
         break;
       }
       case 2: {
