@@ -64,12 +64,12 @@
 <template>
     <div class="wood-cert">
       <van-nav-bar title="可用原木量" left-arrow @click-left="goBack" fixed />
-      <div class="group">
+      <div class="group" v-for="(item, index) in list" :key="index">
         <div class="name">
-          <div class="icon">落</div>
-          <div class="txt">落叶松</div>
+          <div class="icon">{{item.plantVarietyName.split('')[0]}}</div>
+          <div class="txt">{{item.plantVarietyName}}</div>
         </div>
-        <div class="num"><span>50</span> m³</div>
+        <div class="num"><span>{{item.amount}}</span> m³</div>
       </div>
       <div class="tip" @click="$router.push({name: 'woodCert'})">余量不够？去开证></div>
     </div>
@@ -79,14 +79,34 @@
     // @ is an alias to /src
 
     export default {
-        name: '',
-        data() {
-            return {}
-        },
+      name: '',
+      data() {
+        return {
+          list: []
+        }
+      },
+      async created() {
+        await this.$store.dispatch('getCompanyInfo', this);
+        this.getCertAmount();
+      },
       methods: {
         goBack() {
           window.history.back();
         },
+        getCertAmount() {
+          this.$http({
+            url: '/cert/authApi/getCertAmount',
+            method: 'POST',
+            data: {
+              cid: this.$store.getters.oCompanyInfo.id,
+              isWood: 1
+            }
+          }).then((res) => {
+            if(res && res.data.success) {
+              this.list = res.data.module || [];
+            }
+          });
+        }
       }
     }
 </script>

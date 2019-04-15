@@ -89,13 +89,13 @@
 <template>
     <div class="wood-cert">
       <van-nav-bar title="可用非原木量" left-arrow @click-left="goBack" fixed />
-      <div class="group">
+      <div class="group"  v-for="(item, key) in list" :key="key">
         <div class="title">
           <div class="name">
-            <div class="icon">落</div>
-            <div class="txt">落叶松</div>
+            <div class="icon">{{item.plant.plantVarietyName.split('')[0]}}</div>
+            <div class="txt">{{item.plant.plantVarietyName}}</div>
           </div>
-          <div class="num"><span>50</span> m³</div>
+          <div class="num"><span>{{item.plant.amount}}</span> m³</div>
         </div>
         <div class="content">
           <div class="item">
@@ -116,14 +116,51 @@
     // @ is an alias to /src
 
     export default {
-        name: '',
-        data() {
-            return {}
-        },
+      name: '',
+      data() {
+        return {
+          list: {}
+        }
+      },
+      async created() {
+        await this.$store.dispatch('getCompanyInfo', this);
+        this.getCertAmount();
+      },
       methods: {
         goBack() {
           window.history.back();
         },
+        getCertAmount() {
+          this.$http({
+            url: '/cert/authApi/getCertAmount',
+            method: 'POST',
+            data: {
+              cid: this.$store.getters.oCompanyInfo.id,
+              isWood: 2
+            }
+          }).then((res) => {
+            if(res && res.data.success) {
+              res.data.module = res.data.module || [];
+              res.data.module.map(item => {
+                if (!this.list[item.plantVarietyName]) {
+                  this.list[item.plantVarietyName] = {
+                    plant: {
+                      plantVarietyName: item.plantVarietyName,
+                      amount: 0
+                    },
+                    list: []
+                  };
+                }
+                this.list[item.plantVarietyName].list.push({
+                  woodVarietyName: item.woodVarietyName,
+                  amount: item.amount
+                });
+                this.list[item.plantVarietyName].plant.amount + item.amount;
+              });
+              console.log(this.list)
+            }
+          });
+        }
       }
     }
 </script>

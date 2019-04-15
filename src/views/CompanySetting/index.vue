@@ -187,7 +187,10 @@ export default {
   data() {
     return {
       active: 2,
-      amount: {},
+      amount: {
+        woodCertAmount: 0,
+        boardCertAmount: 0
+      },
       isShowGalleryPopup: false
     }
   },
@@ -202,7 +205,13 @@ export default {
         }
       }).then((res) => {
         if(res && res.data.success) {
-          this.amount = res.data.module;
+          res.data.module.map( item => {
+            if (item.woodVariety == 'wood_variety_01') {
+              this.amount.woodCertAmount += item.amount;
+            } else {
+              this.amount.boardCertAmount += item.amount;
+            }
+          } );
         }
       });
     }
