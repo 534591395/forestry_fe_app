@@ -81,6 +81,16 @@ export default new Router({
       component: () => import('../views/CertUpload')
     },
     {
+      path: '/usableWoodCert',
+      name: 'usableWoodCert',
+      component: () => import('../views/UsableWoodCert')
+    },
+    {
+      path: '/usableBoardCert',
+      name: 'usableBoardCert',
+      component: () => import('../views/UsableBoardCert')
+    },
+    {
       path: '*',
       redirect: '/home'
     }

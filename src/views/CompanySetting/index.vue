@@ -107,10 +107,10 @@
 
     <van-row gutter="10" class="company-setting-middle-card-wrapper">
       <van-col span="12">
-        <div class="company-setting-middle-card">
+        <div class="company-setting-middle-card" @click="$router.push({name: 'usableWoodCert'})">
           <div class="flex-center-y">
             <div class="company-setting-middle-card__title">可用原木量</div>
-            <div class="company-setting-middle-card__text flex-center-y" @click="$router.push({name: 'woodCert'})">
+            <div class="company-setting-middle-card__text flex-center-y" @click.stop="$router.push({name: 'woodCert'})">
               开证
               <van-icon name="arrow" />
             </div>
@@ -124,10 +124,10 @@
       </van-col>
 
       <van-col span="12">
-        <div class="company-setting-middle-card">
+        <div class="company-setting-middle-card" @click="$router.push({name: 'usableBoardCert'})">
           <div class="flex-center-y">
             <div class="company-setting-middle-card__title">可用非原木量</div>
-            <div class="company-setting-middle-card__text flex-center-y" @click="$router.push({name: 'boardCert'})">
+            <div class="company-setting-middle-card__text flex-center-y" @click.stop="$router.push({name: 'boardCert'})">
               开证
               <van-icon name="arrow" />
             </div>
