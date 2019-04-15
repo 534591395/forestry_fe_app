@@ -81,7 +81,7 @@
           <div class="apply-card-main__td">{{ file }}</div>
         </van-col>
 
-        <van-col span="6" v-if="data.status === 2">
+        <van-col span="6" v-if="data.type === 2 && data.status === 2">
           <div class="apply-card-main__th">领证窗口</div>
           <div class="apply-card-main__td">{{ data.windows }}</div>
         </van-col>

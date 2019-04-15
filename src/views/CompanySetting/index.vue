@@ -198,7 +198,7 @@ export default {
         method: 'POST',
         data: {
           cid: this.$store.getters.oCompanyInfo.id,
-          isWood: 1
+          isWood: 0
         }
       }).then((res) => {
         if(res && res.data.success) {

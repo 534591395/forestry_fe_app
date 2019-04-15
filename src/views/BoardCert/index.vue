@@ -201,7 +201,7 @@ export default {
       this.formData.noticepic = this.$route.params.noticepic.split(',');
       this.formData.contractpic = this.$route.params.contractpic.split(',');
       this.formData.declarationpic = this.$route.params.declarationpic.split(',');
-      this.statusObject['2'].text = `审核已通过，请至城厢镇林业局${this.formData.windows}号窗口领取`;
+      this.statusObject['2'].text = `审核已通过。`;
       this.statusObject['3'].text = `审核未通过，被拒原因: ${this.formData.refuse_reason}`;
       try {
         const woodJson = JSON.parse(this.$route.params.woodJson);
