@@ -4,6 +4,7 @@
     height: 100vh;
     padding-top: 56px;
     .group {
+      background-color: #fff;
       margin: 10px 8px 0 8px;
       border-radius: 5px;
       height: 54px;

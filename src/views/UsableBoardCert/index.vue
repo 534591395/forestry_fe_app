@@ -49,8 +49,10 @@
       }
     }
     .content {
+      background-color: #fff;
       padding: 0px 27px 0px 65px;
       overflow: hidden;
+      border-radius: 0 0 5px 5px;
       .item {
         width: 100%;
         display: flex;
