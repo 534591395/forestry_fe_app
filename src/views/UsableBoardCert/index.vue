@@ -98,13 +98,9 @@
           <div class="num"><span>{{list[item].plant.amount}}</span> m³</div>
         </div>
         <div class="content">
-          <div class="item">
-            <div class="name">板材</div>
-            <div class="num"><span>30</span> m³</div>
-          </div>
-          <div class="item">
-            <div class="name">方料</div>
-            <div class="num"><span>20</span> m³</div>
+          <div class="item" v-for="(woodListItem, key) in list[item].list" :key="key">
+            <div class="name">{{woodListItem.woodVarietyName}}</div>
+            <div class="num"><span>{{woodListItem.amount}}</span> m³</div>
           </div>
         </div>
       </div>
