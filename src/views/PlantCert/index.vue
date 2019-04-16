@@ -95,7 +95,7 @@
         <img :src="statusObject[formData.status].img" alt="" class="plant-cert-status-top__img">
         <span style="word-break: break-all;">{{ statusObject[formData.status].text }}</span>
       </div>
-      <p class="plant-cert-status-bottom">{{ formData.create_time }}</p>
+      <p class="plant-cert-status-bottom">{{ formData.createTime }}</p>
     </div>
 
     <div class="plant-cert-card">
@@ -105,8 +105,8 @@
         <div class="plant-cert-card__title">木材运输与植物检疫申请单</div>
       </div>
 
-      <card v-for="(item, index) in woodList" :key="index" v-model="woodList[index]" :index="index" @del-card="handleDelCard" :materialss="materialss" :plantNames="plantNames" :woodNames="woodNames" :firstVarietyList="firstVarietyList" :woodPlantListNames="woodPlantListNames" :woodPlantList="woodPlantList"></card>
-      <div class="set-employee-add-employee flex-center-xy" @click="addFn">
+      <card v-for="(item, index) in woodList" :key="index" v-model="woodList[index]" :index="index" @del-card="handleDelCard" :notWoodsNames="notWoodsNames" :notWoods="notWoods"  :woodNames="woodNames" :firstVarietyList="firstVarietyList"  :plantNames="plantNames" :plantList="plantList"></card>
+      <div class="set-employee-add-employee flex-center-xy" @click="addFn"  v-if="!formData.createTime && woodList.length<=10">
         <div class="set-employee-add-employee__text">
           <van-icon name="plus" />
           <span>
@@ -116,38 +116,38 @@
       </div>
 
       <van-cell-group class="van-hairline--bottom change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.create_time" label="车船数" placeholder="车船数" input-align="right" required
+        <van-field :readonly="$route.params.createTime" label="车船数" placeholder="车船数" input-align="right" required
         v-model="formData.car_amount" :error-message="errMsg.car_amountErrMsg" @blur="handleInputBlur('car_amount')">
           <span slot="button" style="color: #323233;">辆</span>
         </van-field>
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.create_time" label="每车/船" placeholder="多少立方米" input-align="right" required
+        <van-field :readonly="$route.params.createTime" label="每车/船" placeholder="多少立方米" input-align="right" required
         v-model="formData.every_car_amount" :error-message="errMsg.every_car_amountErrMsg" @blur="handleInputBlur('every_car_amount')">
           <span slot="button" style="color: #323233;">m³</span>
         </van-field>
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-center-y-cell__value" :border="false">
-        <van-field :readonly="$route.params.create_time" label="包装方式" placeholder="请输入包装方式" input-align="right"
+        <van-field :readonly="$route.params.createTime" label="包装方式" placeholder="请输入包装方式" input-align="right"
         v-model="formData.packaging" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-center-y-cell__value" :border="false">
-        <van-field :readonly="$route.params.create_time" label="规格" placeholder="请输入规格" input-align="right"
+        <van-field :readonly="$route.params.createTime" label="规格" placeholder="请输入规格" input-align="right"
         v-model="formData.standard" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message change-cell-title-width-default" :border="false">
-        <van-field :readonly="$route.params.create_time" label="收货单位（个人）" placeholder="请输入收货单位" input-align="right" required
+        <van-field :readonly="$route.params.createTime" label="收货单位（个人）" placeholder="请输入收货单位" input-align="right" required
         v-model="formData.receive_person" :error-message="errMsg.receive_personErrMsg" @blur="handleInputBlur('receive_person')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-cell__value change-field__error-message change-cell-title-width-default" :border="false">
-        <van-field :readonly="$route.params.create_time" label="收货单位详细地址" disabled>
+        <van-field :readonly="$route.params.createTime" label="收货单位详细地址" disabled>
           <van-radio-group
-            :disabled="$route.params.create_time"
+            :disabled="$route.params.createTime"
             v-model="formData.receive_address_type"
             slot="button"
             class="flex-center-y"
@@ -156,22 +156,22 @@
             <van-radio :name="1" style="margin-left: 10px;">省外</van-radio>
           </van-radio-group>
         </van-field>
-        <van-field :readonly="$route.params.create_time" placeholder="请输入收货单位详细地址" type="textarea" rows="3" required
+        <van-field :readonly="$route.params.createTime" placeholder="请输入收货单位详细地址" type="textarea" rows="3" required
         v-model="formData.receive_address" :error-message="errMsg.receive_addressErrMsg" @blur="handleInputBlur('receive_address')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message change-cell-title-width-large" :border="false">
-        <van-field :readonly="$route.params.create_time" label="收货单位（个人）电话" placeholder="请输入电话" input-align="right" required
+        <van-field :readonly="$route.params.createTime" label="收货单位（个人）电话" placeholder="请输入电话" input-align="right" required
         v-model="formData.phone" :error-message="errMsg.phoneErrMsg" @blur="handleInputBlur('phone')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message change-cell-title-width-large" :border="false">
-        <van-field :readonly="$route.params.create_time" label="收货联系人身份证号码" placeholder="请输入收货联系人身份证号码" input-align="right" required
+        <van-field :readonly="$route.params.createTime" label="收货联系人身份证号码" placeholder="请输入收货联系人身份证号码" input-align="right" required
         v-model="formData.person_id" :error-message="errMsg.person_idErrMsg" @blur="handleInputBlur('person_id')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
-        <van-cell title="日期" is-link :value="formData.date_txt" @click="$route.params.create_time ? null : formData.show_date_time = true" />
+        <van-cell title="日期" is-link :value="formData.date_txt" @click="$route.params.createTime ? null : formData.show_date_time = true" />
         <van-popup v-model="formData.show_date_time" position="bottom" :overlay="true">
           <van-datetime-picker
             v-model="formData.date_time"
@@ -182,27 +182,27 @@
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body" :border="false">
-        <van-field :readonly="$route.params.create_time" label="申请人" placeholder="请输入申请人" input-align="right"
+        <van-field :readonly="$route.params.createTime" label="申请人" placeholder="请输入申请人" input-align="right"
         v-model="formData.apply_person" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.create_time" label="承运人" placeholder="请输入承运人" input-align="right" required
+        <van-field :readonly="$route.params.createTime" label="承运人" placeholder="请输入承运人" input-align="right" required
         v-model="formData.transport_person" :error-message="errMsg.transport_personErrMsg" @blur="handleInputBlur('transport_person')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.create_time" label="对应报检单号" placeholder="请输入报检单号" input-align="right" required
+        <van-field :readonly="$route.params.createTime" label="对应报检单号" placeholder="请输入报检单号" input-align="right" required
         v-model="formData.report_number" :error-message="errMsg.report_numberErrMsg" @blur="handleInputBlur('report_number')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.create_time" label="车牌号" placeholder="请输入车牌号" input-align="right" required type="textarea" rows="2"
+        <van-field :readonly="$route.params.createTime" label="车牌号" placeholder="请输入车牌号" input-align="right" required type="textarea" rows="2"
         v-model="formData.car_number" :error-message="errMsg.car_numberErrMsg" @blur="handleInputBlur('car_number')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.create_time" label="提单量" placeholder="请输入提单量" input-align="right" required
+        <van-field :readonly="$route.params.createTime" label="提单量" placeholder="请输入提单量" input-align="right" required
         v-model="formData.amount" :error-message="errMsg.amount_numberErrMsg" @blur="handleInputBlur('amount')" />
       </van-cell-group>
 
@@ -220,8 +220,8 @@
     </div>
 
     <div class="plant-cert-btn change-button-background">
-      <van-button size="large" round type="primary" @click="submit" v-if="!this.$route.params.create_time">提交</van-button>
-      <van-button size="large" round type="primary" @click="skipNewPath" v-if="this.$route.params.create_time && this.$route.params.status === 4">上传照片</van-button>
+      <van-button size="large" round type="primary" @click="submit" v-if="!this.$route.params.createTime">提交</van-button>
+      <van-button size="large" round type="primary" @click="skipNewPath" v-if="this.$route.params.createTime && this.$route.params.status === 4">上传照片</van-button>
     </div>
 
     <div class="change-radio">
@@ -279,12 +279,12 @@ export default {
     } else
     if (this.woodNames.indexOf('非原木类') > -1) {
       await this.getNotWoods();
-      await this.getNotWoodPlant(this.woods[0].plantVarietyValue);
+      await this.getNotWoodPlant(this.notWoods[0].plantVarietyValue);
     }
     
     this.addFn();
     window.scrollTo(0, 0);
-    if(this.$route.params.create_time) {
+    if(this.$route.params.createTime) {
       this.formData = Object.assign(this.formData, this.$route.params);
       this.formData.date_txt =  this.$route.params.date_time;
       const timeArr = this.$route.params.date_time.split('-');
@@ -314,26 +314,24 @@ export default {
     let self = this;
     return {
       woodList: [
-        {
-          producing_area: '',
-          processing_area: '',
-          plant_variety: '',
-          wood_variety: '',
-          amount: ''
-        },
+        // {
+        //   producing_area: '',
+        //   processing_area: '',
+        //   plant_variety: '',
+        //   wood_variety: '',
+        //   amount: ''
+        // },
       ],
       // 一级目录，该用户有什么（原木、非原木）,详细数据
       firstVarietyList: [],
       // 一级目录，文案
       woodNames: [],
-      // 原木下，植物品种列表
-      woodPlantList: [],
-      woodPlantListNames: [],
+      plantNames: [],
+      //植物品种列表
+      plantList: [],
       // 非原木类品种列表，比如：板材。。
       notWoods: [],
       notWoodsNames: [],
-      notWoodPlant: [],
-      notWoodPlantNames: [],
       formData: {
         producing_area: '',
         processing_area: '',
@@ -479,6 +477,7 @@ export default {
         data
       }).then((res) => {
         if(res && res.data.success) {
+          this.woodNames = [];
           this.firstVarietyList = res.data.module || [];
           this.firstVarietyList.map( item => {
             this.woodNames.push(item.plantVarietyName);
@@ -499,8 +498,11 @@ export default {
         data
       }).then((res) => {
         if(res && res.data.success) {
-          this.woodPlantList = res.data.module || [];
-          this.woodPlantListNames.push(item.plantVarietyName);
+          this.plantNames = [];
+          this.plantList = res.data.module || [];
+          this.plantList.map( item => {
+            this.plantNames.push(item.plantVarietyName);
+          } );
         }
       });
     },
@@ -517,8 +519,11 @@ export default {
         data
       }).then((res) => {
         if(res && res.data.success) {
+          this.notWoodsNames = [];
           this.notWoods = res.data.module || [];
-          this.notWoodsNames.push(item.plantVarietyName);
+          this.notWoods.map( item => {
+            this.notWoodsNames.push(item.plantVarietyName);
+          } );
         }
       });
     },
@@ -538,8 +543,11 @@ export default {
         data
       }).then((res) => {
         if(res && res.data.success) {
-          this.notWoodPlant = res.data.module || [];
-          this.notWoodPlantNames.push(item.plantVarietyName);
+          this.plantNames = [];
+          this.plantList = res.data.module || [];
+          this.plantList.map( item => {
+            this.plantNames.push(item.plantVarietyName);
+          } );
         }
       });
     },
@@ -574,7 +582,7 @@ export default {
       if (this.woodNames.indexOf('原木类') > -1) {
         this.woodList.push(
           {
-            plant_variety: this.woodPlantList[0].plantVarietyValue,
+            plant_variety: this.plantList[0].plantVarietyValue,
             wood_variety: 'wood_variety_01',
             amount: 0
           }
@@ -582,7 +590,7 @@ export default {
       } else if(this.woodNames.indexOf('非原木类') > -1){
         this.woodList.push(
           {
-            plant_variety: this.notWoodPlant[0].plantVarietyValue,
+            plant_variety: this.plantList[0].plantVarietyValue,
             wood_variety: this.notWoods[0].plantVarietyValue,
             amount: 0
           }

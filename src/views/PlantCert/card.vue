@@ -98,11 +98,11 @@
     </van-cell-group>
     <!--选择名称-->
     <van-cell-group class="change-field__body change-field__error-message" :border="false">
-      <van-cell v-show="getWOODOneName(value.wood_variety) === '非原木'" :title="getWOODOneName(value.wood_variety) === '非原木' ? ' ' : '植物产品名称'" is-link :value="getWOODName(value.wood_variety)" @click="show_materialss = true" :border="false" />
+      <van-cell v-show="getWOODOneName(value.wood_variety) === '非原木类'" :title="getWOODOneName(value.wood_variety) === '非原木类' ? ' ' : '植物产品名称'" is-link :value="getWOODName(value.wood_variety)" @click="show_materialss = true" :border="false" />
       <van-popup v-model="show_materialss" position="bottom" :overlay="true">
-        <van-picker :columns="materialss" @change="onChangeMaterials" />
+        <van-picker :columns="notWoodsNames" @change="onChangeMaterials" />
       </van-popup>
-      <van-cell :title="getWOODOneName(value.wood_variety) === '非原木' ? '植物产品名称' : ' '" is-link :value="getPLANTName(value.plant_variety)" @click="show_product_names = true" :border="false" />
+      <van-cell :title="getWOODOneName(value.wood_variety) === '非原木类' ? '植物产品名称' : ' '" is-link :value="getPLANTName(value.plant_variety)" @click="show_product_names = true" :border="false" />
       <van-popup v-model="show_product_names" position="bottom" :overlay="true">
         <van-picker :columns="plantNames" @change="onChangePlantName" />
       </van-popup>
@@ -133,11 +133,22 @@
         type: Number,
         required: true
       },
-      materialss: {
+      // 非原木
+      notWoodsNames: {
+        type: Array,
+        required: true
+      },
+      // 非原木
+      notWoods: {
         type: Array,
         required: true
       },
       plantNames: {
+        type: Array,
+        required: true
+      },
+      // 植物品种值
+      plantList: {
         type: Array,
         required: true
       },
@@ -148,16 +159,6 @@
       },
       // 一级菜单，原木类\非原木类名称列表
       woodNames: {
-        type: Array,
-        required: true
-      },
-      // 选择原木类时，对应的植物品种名称列表
-      woodPlantListNames: {
-        type: Array,
-        required: true
-      },
-      // 选择原木类时，对应的植物品种值
-      woodPlantList: {
         type: Array,
         required: true
       }
@@ -176,34 +177,44 @@
       // 根据品种名称（比如板材）获取对应的value
       getWOODValue(paramName) {
         let paramValue = '';
-        this.$store.getters.WOOD_VARIETY.map(item => {
-          if (item.paramName === paramName) {
-            paramValue = item.paramValue;
-          }
-        });
+        if (paramName == '原木') {
+          paramValue = 'wood_variety_01';
+        } else {
+          this.notWoods.map(item => {
+            if (item.plantVarietyName === paramName) {
+              paramValue = item.plantVarietyValue;
+            }
+          });
+        }
         return paramValue;
       },
       // 根据植物名称（比如杉树）获取对应的value
       getPLANTValue(paramName) {
         let paramValue = '';
-        this.$store.getters.PLANT_VARIETY.map(item => {
-          if (item.paramName === paramName) {
-            paramValue = item.paramValue;
+        this.plantList.map(item => {
+          if (item.plantVarietyName === paramName) {
+            paramValue = item.plantVarietyValue;
           }
         });
         return paramValue;
       },
       // 根据品种值获取对应的名称（原木和非原木）
       getWOODOneName(paramValue) {
-        let paramName = '原木';
+        let paramName = '';
         if (paramValue) {
-          this.$store.getters.WOOD_VARIETY.map(item => {
-            if (item.paramValue === paramValue) {
-              paramName = item.paramName;
-            }
-          });
+          if (paramValue == 'wood_variety_01') {
+            paramName = '原木';
+          } else {
+            this.notWoods.map(item => {
+              if (item.plantVarietyValue === paramValue) {
+                paramName = item.plantVarietyName;
+              }
+            });
+          }
           if (paramName != '原木') {
-            paramName = '非原木';
+            paramName = '非原木类';
+          } else {
+            paramName = '原木类';
           }
         }
         return paramName;
@@ -211,19 +222,25 @@
       // 根据品种值获取对应的名称
       getWOODName(paramValue) {
         let paramName = '';
-        this.$store.getters.WOOD_VARIETY.map(item => {
-          if (item.paramValue === paramValue) {
-            paramName = item.paramName;
+        if (paramValue) {
+          if (paramValue == 'wood_variety_01') {
+            paramName = '原木';
+          } else {
+            this.notWoods.map(item => {
+              if (item.plantVarietyValue === paramValue) {
+                paramName = item.plantVarietyName;
+              }
+            });
           }
-        });
+        }
         return paramName;
       },
       // 根据植物值获取对应的名称
       getPLANTName(paramValue) {
         let paramName = '';
-        this.$store.getters.PLANT_VARIETY.map(item => {
-          if (item.paramValue === paramValue) {
-            paramName = item.paramName;
+        this.plantList.map(item => {
+          if (item.plantVarietyValue === paramValue) {
+            paramName = item.plantVarietyName;
           }
         });
         return paramName;
@@ -236,22 +253,38 @@
           this.errMsg[inputName + 'ErrMsg'] = '';
         }
       },
+      // 切换到非原木时，查取非原木列表
+      async getNotWoods() {
+        await this.$parent.getNotWoods();
+      },
+      async getNotWoodPlant() {
+        await this.$parent.getNotWoodPlant(this.notWoods[0].plantVarietyValue);
+        this.value.plant_variety = this.plantList[0].plantVarietyValue;
+      },
+      async getWoodPlant() {
+        await this.$parent.getWoodPlant();
+        this.value.plant_variety = this.plantList[0].plantVarietyValue;
+      },
       // 切换原木和非原木，切换了话，选择默认第一个值（materialss[0]）
-      onChangeWoodName(picker, value, index) {
-        console.log(this.value);
-        if (value === '原木') {
+      async onChangeWoodName(picker, value, index) {
+        if (value === '原木类') {
           this.value.wood_variety = this.getWOODValue('原木');
+          await this.getWoodPlant();
         } else {
-          this.value.wood_variety = this.getWOODValue(this.materialss[0]);
+          if (!this.notWoodsNames.length) {
+            await this.getNotWoods();
+          }
+          this.value.wood_variety = this.getWOODValue(this.notWoodsNames[0]);
+          await this.getNotWoodPlant();
         }
         //this.show_wood_names = false;
       },
       onChangePlantName(picker, value, index) {
-        // console.log(`当前值：${value}, 当前索引：${index}`);
         this.value.plant_variety = this.getPLANTValue(value);
       },
-      onChangeMaterials(picker, value, index) {
+      async onChangeMaterials(picker, value, index) {
         this.value.wood_variety = this.getWOODValue(value);
+        await this.getNotWoodPlant();
       }
     }
   }
