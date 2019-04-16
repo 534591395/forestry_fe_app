@@ -93,7 +93,7 @@
       <van-popup v-model="show_product_names" position="bottom" :overlay="true">
         <van-picker :columns="plantNames" @change="onChangePlantName" />
       </van-popup>
-      <van-cell v-show="getWOODOneName(value.wood_variety) === '非原木'" title=" " is-link :value="getWOODName(value.wood_variety)" @click="show_materialss = true" :border="false" />
+      <van-cell v-show="getWOODOneName(value.wood_variety) === '非原木类'" title=" " is-link :value="getWOODName(value.wood_variety)" @click="show_materialss = true" :border="false" />
       <van-popup v-model="show_materialss" position="bottom" :overlay="true">
         <van-picker :columns="materialss" @change="onChangeMaterials" />
       </van-popup>
@@ -135,7 +135,7 @@
     },
     data() {
       return {
-        woodNames: ['原木', '非原木'],
+        woodNames: ['原木类', '非原木类'],
         show_wood_names: false,
         show_product_names: false,
         show_materialss: false,
@@ -175,7 +175,9 @@
             }
           });
           if (paramName != '原木') {
-            paramName = '非原木';
+            paramName = '非原木类';
+          } else {
+            paramName = '原木类';
           }
         }
         return paramName;
@@ -211,7 +213,7 @@
       // 切换原木和非原木，切换了话，选择默认第一个值（materialss[0]）
       onChangeWoodName(picker, value, index) {
         console.log(this.value);
-        if (value === '原木') {
+        if (value === '原木类') {
           this.value.wood_variety = this.getWOODValue('原木');
         } else {
           this.value.wood_variety = this.getWOODValue(this.materialss[0]);

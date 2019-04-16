@@ -321,7 +321,8 @@ export default {
       await this.getWoodPlant();
     } else
     if (this.woodNames.indexOf('非原木类') > -1) {
-      await this.getWoods();
+      await this.getNotWoods();
+      await this.getNotWoodPlant(this.woods[0].plantVarietyValue);
     }
     
     this.addFn();
@@ -372,8 +373,10 @@ export default {
       woodPlantList: [],
       woodPlantListNames: [],
       // 非原木类品种列表，比如：板材。。
-      woods: [],
-      woodsNames: [],
+      notWoods: [],
+      notWoodsNames: [],
+      notWoodPlant: [],
+      notWoodPlantNames: [],
       formData: {
         producing_area: '',
         processing_area: '',
@@ -545,7 +548,7 @@ export default {
       });
     },
     // 选择非原木时，获取板材品种
-    getWoods() {
+    getNotWoods() {
       const data = {
         code:2,
         firstparamValue: 'first_variety_02',
@@ -557,12 +560,32 @@ export default {
         data
       }).then((res) => {
         if(res && res.data.success) {
-          this.woods = res.data.module || [];
-          this.woodsNames.push(item.plantVarietyName);
+          this.notWoods = res.data.module || [];
+          this.notWoodsNames.push(item.plantVarietyName);
         }
       });
     },
-    // 
+    // 选择非原木 -> 品种 -> 获取植物品种列表
+    getNotWoodPlant(secondparamValue) {
+      if (!secondparamValue) {
+        return ;
+      }
+      const data = {
+        code:3,
+        firstparamValue: 'first_variety_02',
+        secondparamValue: secondparamValue
+      };
+      return this.$http({
+        url: '/cert/authApi/getCertSort',
+        method: 'POST',
+        data
+      }).then((res) => {
+        if(res && res.data.success) {
+          this.notWoodPlant = res.data.module || [];
+          this.notWoodPlantNames.push(item.plantVarietyName);
+        }
+      });
+    },
     handleInputBlur(inputName) {
       if(this.formData[inputName] === '') {
         this.errMsg[inputName + 'ErrMsg'] = '此项不能为空';
@@ -602,8 +625,8 @@ export default {
       } else if(this.woodNames.indexOf('非原木类') > -1){
         this.woodList.push(
           {
-            plant_variety: this.getPlantValue(this.plantNames[0]),
-            wood_variety: this.woods[0].plantVarietyValue,
+            plant_variety: this.notWoodPlant[0].plantVarietyValue,
+            wood_variety: this.notWoods[0].plantVarietyValue,
             amount: 0
           }
         );
