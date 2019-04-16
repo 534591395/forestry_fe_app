@@ -167,7 +167,7 @@
         <!--</van-cell-group>-->
 
         <card v-for="(item, index) in woodList" :key="index" v-model="woodList[index]" :index="index" @del-card="handleDelCard" :plantNames="plantNames"></card>
-        <div class="set-employee-add-employee flex-center-xy" @click="addFn"  v-if="!$route.params.createTime">
+        <div class="set-employee-add-employee flex-center-xy" @click="addFn"  v-if="!$route.params.createTime  && woodList.length<=10">
           <div class="set-employee-add-employee__text">
             <van-icon name="plus" />
             <span>
@@ -360,6 +360,9 @@ export default {
     },
     addFn() {
       // 默认值，植物数组第一个，默认选择原木
+      if (this.woodList.length >= 10) {
+        return;
+      }
       this.woodList.push(
         {
           plant_variety: this.getPlantValue(this.plantNames[0]),
