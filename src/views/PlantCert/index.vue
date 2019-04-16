@@ -328,6 +328,7 @@ export default {
     return {
       woodList: [
         // {
+         //    first_variety: '',
         //   producingArea: '',
         //   processingArea: '',
         //   plant_variety: '',
@@ -621,6 +622,7 @@ export default {
       if (this.woodNames.indexOf('原木类') > -1) {
         this.woodList.push(
           {
+            first_variety: 'first_variety_01',
             plant_variety: this.plantList[0].plantVarietyValue,
             wood_variety: 'wood_variety_01',
             amount: 0,
@@ -633,6 +635,7 @@ export default {
       } else if(this.woodNames.indexOf('非原木类') > -1){
         this.woodList.push(
           {
+            first_variety: 'first_variety_02',
             plant_variety: this.plantList[0].plantVarietyValue,
             wood_variety: this.notWoods[0].plantVarietyValue,
             amount: 0,

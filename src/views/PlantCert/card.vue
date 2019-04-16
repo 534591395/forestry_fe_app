@@ -91,18 +91,18 @@
     </van-cell-group>
     <!--选择品名-->
     <van-cell-group class="change-field__body change-field__error-message" :border="false">
-      <van-cell title="品名(材种)" is-link :value="getWOODOneName(value.wood_variety)" @click="show_wood_names = true" :border="false" />
+      <van-cell title="品名(材种)" is-link :value="getWOODOneName(value.first_variety)" @click="show_wood_names = true" :border="false" />
       <van-popup v-model="show_wood_names" position="bottom" :overlay="true">
         <van-picker :columns="woodNames" @change="onChangeWoodName" />
       </van-popup>
     </van-cell-group>
     <!--选择名称-->
     <van-cell-group class="change-field__body change-field__error-message" :border="false">
-      <van-cell v-show="getWOODOneName(value.wood_variety) === '非原木类'" :title="getWOODOneName(value.wood_variety) === '非原木类' ? ' ' : '植物产品名称'" is-link :value="getWOODName(value.wood_variety)" @click="show_materialss = true" :border="false" />
+      <van-cell v-show="getWOODOneName(value.first_variety) === '非原木类'" :title="getWOODOneName(value.first_variety) === '非原木类' ? ' ' : '植物产品名称'" is-link :value="getWOODName(value.wood_variety)" @click="show_materialss = true" :border="false" />
       <van-popup v-model="show_materialss" position="bottom" :overlay="true">
         <van-picker :columns="notWoodsNames" @change="onChangeMaterials" />
       </van-popup>
-      <van-cell :title="getWOODOneName(value.wood_variety) === '非原木类' ? '植物产品名称' : ' '" is-link :value="getPLANTName(value.plant_variety)" @click="show_product_names = true" :border="false" />
+      <van-cell :title="getWOODOneName(value.first_variety) === '非原木类' ? '植物产品名称' : ' '" is-link :value="getPLANTName(value.plant_variety)" @click="show_product_names = true" :border="false" />
       <van-popup v-model="show_product_names" position="bottom" :overlay="true">
         <van-picker :columns="plantNames" @change="onChangePlantName" />
       </van-popup>
@@ -198,23 +198,15 @@
         });
         return paramValue;
       },
-      // 根据品种值获取对应的名称（原木和非原木）
+      // 原木类或非原木类
       getWOODOneName(paramValue) {
         let paramName = '';
         if (paramValue) {
-          if (paramValue == 'wood_variety_01') {
-            paramName = '原木';
-          } else {
-            this.notWoods.map(item => {
-              if (item.plantVarietyValue === paramValue) {
-                paramName = item.plantVarietyName;
-              }
-            });
-          }
-          if (paramName != '原木') {
-            paramName = '非原木类';
-          } else {
+          if (paramValue == 'first_variety_01') {
             paramName = '原木类';
+          } else 
+          if (paramValue == 'first_variety_02'){
+            paramName = '非原木类';
           }
         }
         return paramName;
@@ -268,12 +260,14 @@
       // 切换原木和非原木，切换了话，选择默认第一个值（materialss[0]）
       async onChangeWoodName(picker, value, index) {
         if (value === '原木类') {
+          this.value.first_variety = 'first_variety_01';
           this.value.wood_variety = this.getWOODValue('原木');
           await this.getWoodPlant();
         } else {
           if (!this.notWoodsNames.length) {
             await this.getNotWoods();
           }
+          this.value.first_variety = 'first_variety_02';
           this.value.wood_variety = this.getWOODValue(this.notWoodsNames[0]);
           await this.getNotWoodPlant();
         }
