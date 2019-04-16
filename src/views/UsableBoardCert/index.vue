@@ -158,7 +158,7 @@
                   woodVarietyName: item.woodVarietyName,
                   amount: item.amount
                 });
-                this.list[item.plantVarietyName].plant.amount + item.amount;
+                this.list[item.plantVarietyName].plant.amount += item.amount;
               });
               console.log(this.list)
               console.log(this.typeList)
