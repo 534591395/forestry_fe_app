@@ -105,38 +105,6 @@
         <div class="plant-cert-card__title">木材运输与植物检疫申请单</div>
       </div>
 
-      <!--<van-cell-group class="van-hairline&#45;&#45;bottom change-center-y-cell__value change-cell-title-width-default" :border="false">-->
-        <!--<van-field :readonly="$route.params.create_time" label="植物来源（产地）" placeholder="请输入产地" input-align="right"-->
-        <!--v-model="formData.producing_area" />-->
-      <!--</van-cell-group>-->
-
-      <!--<van-cell-group class="van-hairline&#45;&#45;bottom change-center-y-cell__value change-cell-title-width-large" :border="false">-->
-        <!--<van-field :readonly="$route.params.create_time" label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right"-->
-        <!--v-model="formData.processing_area" />-->
-      <!--</van-cell-group>-->
-
-      <!--<van-cell-group class="van-hairline&#45;&#45;bottom change-cell__value" :border="false">-->
-        <!--<van-field-->
-          <!--readonly-->
-          <!--label="植物产品名称"-->
-          <!--v-model="formData.plant_name"-->
-          <!--@focus="$route.params.create_time ? null : popup.plantNamePopup = true"-->
-          <!--input-align="right"-->
-        <!--&gt;-->
-        <!--</van-field>-->
-      <!--</van-cell-group>-->
-
-      <!--<van-cell-group class="van-hairline&#45;&#45;bottom change-cell__value" :border="false">-->
-        <!--<van-field-->
-          <!--readonly-->
-          <!--label="品种"-->
-          <!--v-model="formData.variety"-->
-          <!--@focus="$route.params.create_time ? null : popup.varietyPopup = true"-->
-          <!--input-align="right"-->
-        <!--&gt;-->
-        <!--</van-field>-->
-      <!--</van-cell-group>-->
-
       <card v-for="(item, index) in woodList" :key="index" v-model="woodList[index]" :index="index" @del-card="handleDelCard" :materialss="materialss" :plantNames="plantNames" :woodNames="woodNames" :firstVarietyList="firstVarietyList" :woodPlantListNames="woodPlantListNames" :woodPlantList="woodPlantList"></card>
       <div class="set-employee-add-employee flex-center-xy" @click="addFn">
         <div class="set-employee-add-employee__text">
@@ -204,8 +172,6 @@
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
         <van-cell title="日期" is-link :value="formData.date_txt" @click="$route.params.create_time ? null : formData.show_date_time = true" />
-        <!--<van-field :readonly="$route.params.create_time" label="日期" placeholder="按年-月-日输入（中间要加横线）" input-align="right" required-->
-        <!--v-model="formData.date_time" :error-message="errMsg.date_timeErrMsg" @blur="handleInputBlur('date_time')" />-->
         <van-popup v-model="formData.show_date_time" position="bottom" :overlay="true">
           <van-datetime-picker
             v-model="formData.date_time"
@@ -214,15 +180,6 @@
           />
         </van-popup>
       </van-cell-group>
-
-      <!--<van-cell-group class="van-hairline&#45;&#45;bottom change-field__body change-field__error-message" :border="false">-->
-        <!--<van-popup v-model="formData.show_date_time" position="bottom" :overlay="true">-->
-          <!--<van-datetime-picker-->
-            <!--v-model="formData.date_time"-->
-            <!--type="date"-->
-          <!--/>-->
-        <!--</van-popup>-->
-      <!--</van-cell-group>-->
 
       <van-cell-group class="van-hairline--bottom change-field__body" :border="false">
         <van-field :readonly="$route.params.create_time" label="申请人" placeholder="请输入申请人" input-align="right"

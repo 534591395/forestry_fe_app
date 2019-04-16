@@ -172,6 +172,20 @@ export default {
               this.applyData.push(i);
             }
           }
+          if(res.data.module.woodOrBoard) {
+            for(let i of res.data.module.woodOrBoard) {
+              // 原木运输证
+              if (i.firstVariety == 'first_variety_01') {
+                i.type = 0;
+              } else
+              // 非原木运输证（板材）
+              if (i.firstVariety == 'first_variety_02') {
+                i.type = 1;
+              }
+              
+              this.applyData.push(i);
+            }
+          }
           if(res.data.module.plant) {
             // 植物运输证 i.type = 2
             for(let i of res.data.module.plant) {
