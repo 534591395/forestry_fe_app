@@ -96,11 +96,17 @@ export default {
   created() {
     switch (this.data.type) {
       case 0: {
-        this.file = this.data.ladingpic.split(',').length + this.data.declarationpic.split(',').length + this.data.noticepic.split(',').length
+        let ladingpic = this.data.ladingpic ? this.data.ladingpic.split(',').length : 0
+        let declarationpic = this.data.declarationpic ? this.data.declarationpic.split(',').length : 0
+        let noticepic = this.data.noticepic ? this.data.noticepic.split(',').length : 0
+        this.file = ladingpic + declarationpic + noticepic
         break;
       }
       case 1: {
-        this.file = this.data.contractpic.split(',').length + this.data.declarationpic.split(',').length + this.data.noticepic.split(',').length
+        let contractpic = this.data.contractpic ? this.data.contractpic.split(',').length : 0
+        let declarationpic = this.data.declarationpic ? this.data.declarationpic.split(',').length : 0
+        let noticepic = this.data.noticepic ? this.data.noticepic.split(',').length : 0
+        this.file = contractpic + declarationpic + noticepic
         break;
       }
       case 2: {

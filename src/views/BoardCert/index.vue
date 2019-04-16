@@ -197,10 +197,10 @@ export default {
     this.addFn();
     window.scrollTo(0, 0);
     if(this.$route.params.createTime) {
-      this.formData = JSON.parse(JSON.stringify(this.$route.params)); 
-      this.formData.noticepic = this.$route.params.noticepic.split(',');
-      this.formData.contractpic = this.$route.params.contractpic.split(',');
-      this.formData.declarationpic = this.$route.params.declarationpic.split(',');
+      this.formData = JSON.parse(JSON.stringify(this.$route.params));
+      this.formData.noticepic = this.$route.params.noticepic ? this.$route.params.noticepic.split(',') : [];
+      this.formData.contractpic = this.$route.params.contractpic ? this.$route.params.contractpic.split(',') : [];
+      this.formData.declarationpic = this.$route.params.declarationpic ? this.$route.params.declarationpic.split(',') : [];
       this.statusObject['2'].text = `审核已通过。`;
       this.statusObject['3'].text = `审核未通过，被拒原因: ${this.formData.refuse_reason}`;
       try {

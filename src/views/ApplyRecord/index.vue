@@ -168,7 +168,7 @@ export default {
               if (i.firstVariety == 'first_variety_02') {
                 i.type = 1;
               }
-              
+
               this.applyData.push(i);
             }
           }
@@ -182,7 +182,7 @@ export default {
               if (i.firstVariety == 'first_variety_02') {
                 i.type = 1;
               }
-              
+
               this.applyData.push(i);
             }
           }
@@ -193,6 +193,7 @@ export default {
               this.applyData.push(i);
             }
           }
+          console.log(this.applyData);
         }
       });
     },
