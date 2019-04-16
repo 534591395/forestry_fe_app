@@ -318,10 +318,10 @@ export default {
     await this.$store.dispatch('getCompanyInfo', this);
     await this.getFirst();
     if (this.woodNames.indexOf('原木类') > -1) {
-      await this.getWoods();
+      await this.getWoodPlant();
     } else
     if (this.woodNames.indexOf('非原木类') > -1) {
-      await this.getWoodPlant();
+      await this.getWoods();
     }
     
     this.addFn();
