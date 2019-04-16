@@ -140,11 +140,30 @@
       plantNames: {
         type: Array,
         required: true
+      },
+      // 一级菜单值
+      firstVarietyList: {
+        type: Array,
+        required: true
+      },
+      // 一级菜单，原木类\非原木类名称列表
+      woodNames: {
+        type: Array,
+        required: true
+      },
+      // 选择原木类时，对应的植物品种名称列表
+      woodPlantListNames: {
+        type: Array,
+        required: true
+      },
+      // 选择原木类时，对应的植物品种值
+      woodPlantList: {
+        type: Array,
+        required: true
       }
     },
     data() {
       return {
-        woodNames: ['原木', '非原木'],
         show_wood_names: false,
         show_product_names: false,
         show_materialss: false,

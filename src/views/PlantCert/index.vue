@@ -137,7 +137,7 @@
         <!--</van-field>-->
       <!--</van-cell-group>-->
 
-      <card v-for="(item, index) in woodList" :key="index" v-model="woodList[index]" :index="index" @del-card="handleDelCard" :materialss="materialss" :plantNames="plantNames"></card>
+      <card v-for="(item, index) in woodList" :key="index" v-model="woodList[index]" :index="index" @del-card="handleDelCard" :materialss="materialss" :plantNames="plantNames" :woodNames="woodNames" :firstVarietyList="firstVarietyList" :woodPlantListNames="woodPlantListNames" :woodPlantList="woodPlantList"></card>
       <div class="set-employee-add-employee flex-center-xy" @click="addFn">
         <div class="set-employee-add-employee__text">
           <van-icon name="plus" />
@@ -316,7 +316,15 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('getCompanyInfo', this);
-    await this.getFirst01();
+    await this.getFirst();
+    if (this.woodNames.indexOf('原木类') > -1) {
+      await this.getWoods();
+    } else
+    if (this.woodNames.indexOf('非原木类') > -1) {
+      await this.getWoodPlant();
+    }
+    
+    this.addFn();
     window.scrollTo(0, 0);
     if(this.$route.params.create_time) {
       this.formData = Object.assign(this.formData, this.$route.params);
@@ -354,8 +362,18 @@ export default {
           plant_variety: '',
           wood_variety: '',
           amount: ''
-        }
+        },
       ],
+      // 一级目录，该用户有什么（原木、非原木）,详细数据
+      firstVarietyList: [],
+      // 一级目录，文案
+      woodNames: [],
+      // 原木下，植物品种列表
+      woodPlantList: [],
+      woodPlantListNames: [],
+      // 非原木类品种列表，比如：板材。。
+      woods: [],
+      woodsNames: [],
       formData: {
         producing_area: '',
         processing_area: '',
@@ -441,6 +459,10 @@ export default {
     validate() {
       let flag = true;
 
+      if(!this.woodList.length) {
+        this.$toast('木材种类必须添加一项');
+        return false;
+      }
       if(this.formData.car_amount == '') {
         this.errMsg.car_amountErrMsg = '此项不能为空';
         flag = false;
@@ -485,9 +507,9 @@ export default {
       return flag;
     },
     // 获取一级分类原木下的列表
-    getFirst01() {
+    getFirst() {
       const data = {
-        code: 1,
+        code:1,
         firstparamValue: '',
         secondparamValue: ''
       };
@@ -497,10 +519,50 @@ export default {
         data
       }).then((res) => {
         if(res && res.data.success) {
-          
+          this.firstVarietyList = res.data.module || [];
+          this.firstVarietyList.map( item => {
+            this.woodNames.push(item.plantVarietyName);
+          } );
         }
       });
     },
+    // 获取原木对应的植物品种列表
+    getWoodPlant() {
+      const data = {
+        code:3,
+        firstparamValue: 'first_variety_01',
+        secondparamValue: 'wood_variety_01'
+      };
+      return this.$http({
+        url: '/cert/authApi/getCertSort',
+        method: 'POST',
+        data
+      }).then((res) => {
+        if(res && res.data.success) {
+          this.woodPlantList = res.data.module || [];
+          this.woodPlantListNames.push(item.plantVarietyName);
+        }
+      });
+    },
+    // 选择非原木时，获取板材品种
+    getWoods() {
+      const data = {
+        code:2,
+        firstparamValue: 'first_variety_02',
+        secondparamValue: ''
+      };
+      return this.$http({
+        url: '/cert/authApi/getCertSort',
+        method: 'POST',
+        data
+      }).then((res) => {
+        if(res && res.data.success) {
+          this.woods = res.data.module || [];
+          this.woodsNames.push(item.plantVarietyName);
+        }
+      });
+    },
+    // 
     handleInputBlur(inputName) {
       if(this.formData[inputName] === '') {
         this.errMsg[inputName + 'ErrMsg'] = '此项不能为空';
@@ -525,20 +587,33 @@ export default {
       this.$set(this.formData, 'date_txt', moment(this.formData.date_time).format('YYYY-MM-DD'));
     },
     addFn() {
-      // 默认值，植物数组第一个，默认选择原木
-      this.woodList.push(
-        {
-          // plant_variety: this.getPlantValue(this.plantNames[0]),
-          // wood_variety: this.getWOODValue('原木'),
-          // amount: 0
-        }
-      )
+      // 默认值，植物数组第一个，默认选择 firstVarietyList[0]
+      if (this.woodList.length >= 10) {
+        return;
+      }
+      if (this.woodNames.indexOf('原木类') > -1) {
+        this.woodList.push(
+          {
+            plant_variety: this.woodPlantList[0].plantVarietyValue,
+            wood_variety: 'wood_variety_01',
+            amount: 0
+          }
+        );
+      } else if(this.woodNames.indexOf('非原木类') > -1){
+        this.woodList.push(
+          {
+            plant_variety: this.getPlantValue(this.plantNames[0]),
+            wood_variety: this.woods[0].plantVarietyValue,
+            amount: 0
+          }
+        );
+      }
     },
     handleDelCard(index) {
       if(this.woodList.length != 1) {
         this.woodList.splice(index, 1);
       }
-    },
+    }
   },
   created() {
     this.$set(this.formData, 'date_txt', moment().format('YYYY-MM-DD'));
