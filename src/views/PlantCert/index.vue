@@ -117,14 +117,14 @@
 
       <van-cell-group class="van-hairline--bottom change-field__error-message" :border="false">
         <van-field :readonly="$route.params.createTime" label="车船数" placeholder="车船数" input-align="right" required
-        v-model="formData.car_amount" :error-message="errMsg.car_amountErrMsg" @blur="handleInputBlur('car_amount')">
+        v-model="formData.carAmount" :error-message="errMsg.car_amountErrMsg" @blur="handleInputBlur('carAmount')">
           <span slot="button" style="color: #323233;">辆</span>
         </van-field>
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__error-message" :border="false">
         <van-field :readonly="$route.params.createTime" label="每车/船" placeholder="多少立方米" input-align="right" required
-        v-model="formData.every_car_amount" :error-message="errMsg.every_car_amountErrMsg" @blur="handleInputBlur('every_car_amount')">
+        v-model="formData.everyCarAmount" :error-message="errMsg.every_car_amountErrMsg" @blur="handleInputBlur('everyCarAmount')">
           <span slot="button" style="color: #323233;">m³</span>
         </van-field>
       </van-cell-group>
@@ -141,14 +141,14 @@
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message change-cell-title-width-default" :border="false">
         <van-field :readonly="$route.params.createTime" label="收货单位（个人）" placeholder="请输入收货单位" input-align="right" required
-        v-model="formData.receive_person" :error-message="errMsg.receive_personErrMsg" @blur="handleInputBlur('receive_person')" />
+        v-model="formData.receivePerson" :error-message="errMsg.receive_personErrMsg" @blur="handleInputBlur('receivePerson')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-cell__value change-field__error-message change-cell-title-width-default" :border="false">
         <van-field :readonly="$route.params.createTime" label="收货单位详细地址" disabled>
           <van-radio-group
             :disabled="$route.params.createTime"
-            v-model="formData.receive_address_type"
+            v-model="formData.receiveAddressType"
             slot="button"
             class="flex-center-y"
           >
@@ -157,7 +157,7 @@
           </van-radio-group>
         </van-field>
         <van-field :readonly="$route.params.createTime" placeholder="请输入收货单位详细地址" type="textarea" rows="3" required
-        v-model="formData.receive_address" :error-message="errMsg.receive_addressErrMsg" @blur="handleInputBlur('receive_address')" />
+        v-model="formData.receiveAddress" :error-message="errMsg.receive_addressErrMsg" @blur="handleInputBlur('receiveAddress')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message change-cell-title-width-large" :border="false">
@@ -167,14 +167,14 @@
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message change-cell-title-width-large" :border="false">
         <van-field :readonly="$route.params.createTime" label="收货联系人身份证号码" placeholder="请输入收货联系人身份证号码" input-align="right" required
-        v-model="formData.person_id" :error-message="errMsg.person_idErrMsg" @blur="handleInputBlur('person_id')" />
+        v-model="formData.personId" :error-message="errMsg.person_idErrMsg" @blur="handleInputBlur('personId')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
         <van-cell title="日期" is-link :value="formData.date_txt" @click="$route.params.createTime ? null : formData.show_date_time = true" />
         <van-popup v-model="formData.show_date_time" position="bottom" :overlay="true">
           <van-datetime-picker
-            v-model="formData.date_time"
+            v-model="formData.dateTime"
             type="date"
             @confirm="dateConfirm"
           />
@@ -183,27 +183,22 @@
 
       <van-cell-group class="van-hairline--bottom change-field__body" :border="false">
         <van-field :readonly="$route.params.createTime" label="申请人" placeholder="请输入申请人" input-align="right"
-        v-model="formData.apply_person" />
+        v-model="formData.applyPerson" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
         <van-field :readonly="$route.params.createTime" label="承运人" placeholder="请输入承运人" input-align="right" required
-        v-model="formData.transport_person" :error-message="errMsg.transport_personErrMsg" @blur="handleInputBlur('transport_person')" />
+        v-model="formData.transportPerson" :error-message="errMsg.transport_personErrMsg" @blur="handleInputBlur('transportPerson')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
         <van-field :readonly="$route.params.createTime" label="对应报检单号" placeholder="请输入报检单号" input-align="right" required
-        v-model="formData.report_number" :error-message="errMsg.report_numberErrMsg" @blur="handleInputBlur('report_number')" />
+        v-model="formData.reportNumber" :error-message="errMsg.report_numberErrMsg" @blur="handleInputBlur('reportNumber')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
         <van-field :readonly="$route.params.createTime" label="车牌号" placeholder="请输入车牌号" input-align="right" required type="textarea" rows="2"
-        v-model="formData.car_number" :error-message="errMsg.car_numberErrMsg" @blur="handleInputBlur('car_number')" />
-      </van-cell-group>
-
-      <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.createTime" label="提单量" placeholder="请输入提单量" input-align="right" required
-        v-model="formData.amount" :error-message="errMsg.amount_numberErrMsg" @blur="handleInputBlur('amount')" />
+        v-model="formData.carNumber" :error-message="errMsg.car_numberErrMsg" @blur="handleInputBlur('carNumber')" />
       </van-cell-group>
 
       <div v-if="formData.picture_url">
@@ -228,7 +223,7 @@
       <van-popup v-model="popup.plantNamePopup" position="bottom">
         <van-radio-group
           class="plant-cert__radio"
-          v-model="formData.plant_name"
+          v-model="formData.plantName"
           @change="popup.plantNamePopup = false"
         >
           <van-radio
@@ -273,25 +268,36 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('getCompanyInfo', this);
-    await this.getFirst();
-    if (this.woodNames.indexOf('原木类') > -1) {
-      await this.getWoodPlant();
-    } else
-    if (this.woodNames.indexOf('非原木类') > -1) {
-      await this.getNotWoods();
-      await this.getNotWoodPlant(this.notWoods[0].plantVarietyValue);
-    }
-    
-    this.addFn();
+
     window.scrollTo(0, 0);
     if(this.$route.params.createTime) {
+      await this.$store.dispatch('getPlantList', this);
+      await this.$store.dispatch('getWoodList', this);
+      this.materialss = this.getNotWoodNameList();
+      this.plantNames = this.getPlantNameList();
+
       this.formData = Object.assign(this.formData, this.$route.params);
-      this.formData.date_txt =  this.$route.params.date_time;
-      const timeArr = this.$route.params.date_time.split('-');
-      this.formData.date_time= new Date(timeArr[0],timeArr[1],timeArr[2]);
+      
+
+      this.formData.date_txt =  this.$route.params.dateTime;
+      const timeArr = this.$route.params.dateTime.split('-');
+      this.formData.dateTime= new Date(timeArr[0],timeArr[1],timeArr[2]);
       console.log(this.formData)
       this.statusObject['2'].text = `审核已通过，请至城厢镇林业局${this.formData.windows}号窗口领取`;
       this.statusObject['3'].text = `审核未通过，被拒原因: ${this.formData.refuse_reason}`;
+      try {
+        const woodJson = JSON.parse(this.$route.params.woodJson);
+        this.woodList = woodJson.woodList;
+        const processingAreaArr =  (this.formData.processingArea+'').split(',');
+        const producingAreaArr =  (this.formData.producingArea+'').split(',');
+        // 地址初始化
+        this.woodList.map( (item, i) => {
+          item.processingArea = processingAreaArr[i];
+          item.producingArea = producingAreaArr[i];
+        } );
+      } catch (error) {
+        this.woodList = [];
+      }
 
       if(this.formData.status === 4) {
         this.$dialog.confirm({
@@ -305,18 +311,25 @@ export default {
 
         });
       }
+    } else {
+      await this.getFirst();
+      if (this.woodNames.indexOf('原木类') > -1) {
+        await this.getWoodPlant();
+      } else
+      if (this.woodNames.indexOf('非原木类') > -1) {
+        await this.getNotWoods();
+        await this.getNotWoodPlant(this.notWoods[0].plantVarietyValue);
+      }
+      this.addFn();
     }
-  },
-  created() {
-    
   },
   data() {
     let self = this;
     return {
       woodList: [
         // {
-        //   producing_area: '',
-        //   processing_area: '',
+        //   producingArea: '',
+        //   processingArea: '',
         //   plant_variety: '',
         //   wood_variety: '',
         //   amount: ''
@@ -333,28 +346,26 @@ export default {
       notWoods: [],
       notWoodsNames: [],
       formData: {
-        producing_area: '',
-        processing_area: '',
-        plant_name: this.$store.getters.oBasicInfo['植物产品名称'].info[0],
+        producingArea: '',
+        processingArea: '',
+        plantName: this.$store.getters.oBasicInfo['植物产品名称'].info[0],
         variety: this.$store.getters.oBasicInfo['品种'].info[0],
-        car_amount: '',
-        every_car_amount: '',
+        carAmount: '',
+        everyCarAmount: '',
         packaging: '',
         standard: '',
-        receive_person: '',
-        receive_address_type: 0,
-        receive_address: '',
+        receivePerson: '',
+        receiveAddressType: 0,
+        receiveAddress: '',
         phone: '',
-        person_id: '',
+        personId: '',
         date_txt: '',
         show_date_time: false,
-        date_time: new Date(),
-        apply_person: '',
-        transport_person: '',
-        report_number: '',
-        car_number: '',
-        // 提单量
-        amount: ''
+        dateTime: new Date(),
+        applyPerson: '',
+        transportPerson: '',
+        reportNumber: '',
+        carNumber: ''
       },
       errMsg: {
         car_amountErrMsg: '',
@@ -366,8 +377,7 @@ export default {
         date_timeErrMsg: '',
         transport_personErrMsg: '',
         report_numberErrMsg: '',
-        car_numberErrMsg: '',
-        amount_numberErrMsg: ''
+        car_numberErrMsg: ''
       },
       statusObject: {
         1: {
@@ -401,7 +411,22 @@ export default {
     submit() {
       if(this.validate()) {
         let data = JSON.parse(JSON.stringify(this.formData));
-        data.date_time = data.date_txt;
+        data.dateTime = data.date_txt;
+
+        let processingAreaArr = [];
+        let producingAreaArr = [];
+        // 地址初始化
+        this.woodList.map( (item, i) => {
+          processingAreaArr.push(item.processingArea);
+          producingAreaArr.push(item.producingArea);
+          delete item.processingArea;
+          delete item.producingArea;
+        } );
+        data.processingArea = processingAreaArr.join(',');
+        data.producingArea = producingAreaArr.join(',');
+        data.woodJson = JSON.stringify({woodList: this.woodList});
+        data.plantName =  this.$store.getters.oBasicInfo['植物产品名称'].info[0];
+
         this.$http({
           url: '/cert/authApi/addPlantCert',
           method: 'POST',
@@ -421,15 +446,15 @@ export default {
         this.$toast('木材种类必须添加一项');
         return false;
       }
-      if(this.formData.car_amount == '') {
+      if(this.formData.carAmount == '') {
         this.errMsg.car_amountErrMsg = '此项不能为空';
         flag = false;
       }
-      if(this.formData.every_car_amount == '') {
+      if(this.formData.everyCarAmount == '') {
         this.errMsg.every_car_amountErrMsg = '此项不能为空';
         flag = false;
       }
-      if(this.formData.receive_person == '') {
+      if(this.formData.receivePerson == '') {
         this.errMsg.receive_personErrMsg = '此项不能为空';
         flag = false;
       }
@@ -437,32 +462,46 @@ export default {
         this.errMsg.phoneErrMsg = '此项不能为空';
         flag = false;
       }
-      if(this.formData.person_id == '') {
+      if(this.formData.personId == '') {
         this.errMsg.person_idErrMsg = '此项不能为空';
         flag = false;
       }
-      if(this.formData.date_time == '') {
+      if(this.formData.dateTime == '') {
         this.errMsg.date_timeErrMsg = '此项不能为空';
         flag = false;
       }
-      if(this.formData.transport_person == '') {
+      if(this.formData.transportPerson == '') {
         this.errMsg.transport_personErrMsg = '此项不能为空';
         flag = false;
       }
-      if(this.formData.report_number == '') {
+      if(this.formData.reportNumber == '') {
         this.errMsg.report_numberErrMsg = '此项不能为空';
         flag = false;
       }
-      if(this.formData.car_number == '') {
+      if(this.formData.carNumber == '') {
         this.errMsg.car_numberErrMsg = '此项不能为空';
-        flag = false;
-      }
-      if (this.formData.amount == '') {
-        this.errMsg.amount_numberErrMsg = '此项不能为空';
         flag = false;
       }
 
       return flag;
+    },
+    //获取非原木名称列表
+    getNotWoodNameList() {
+      let list = [];
+      this.$store.getters.WOOD_VARIETY.map(item => {
+        if (item.paramName !== '原木') {
+          list.push(item.paramName);
+        }
+      });
+      return list;
+    },
+    // 获取植物品种名称列表
+    getPlantNameList() {
+      let list = [];
+      this.$store.getters.PLANT_VARIETY.map(item => {
+        list.push(item.paramName);
+      });
+      return list;
     },
     // 获取一级分类原木下的列表
     getFirst() {
@@ -572,7 +611,7 @@ export default {
     },
     dateConfirm() {
       this.formData.show_date_time = false;
-      this.$set(this.formData, 'date_txt', moment(this.formData.date_time).format('YYYY-MM-DD'));
+      this.$set(this.formData, 'date_txt', moment(this.formData.dateTime).format('YYYY-MM-DD'));
     },
     addFn() {
       // 默认值，植物数组第一个，默认选择 firstVarietyList[0]
@@ -584,7 +623,11 @@ export default {
           {
             plant_variety: this.plantList[0].plantVarietyValue,
             wood_variety: 'wood_variety_01',
-            amount: 0
+            amount: 0,
+            // 植物来源（产地）
+            producingArea: '',
+            // 植物产品来源（加工地）
+            processingArea: ''
           }
         );
       } else if(this.woodNames.indexOf('非原木类') > -1){
@@ -592,7 +635,11 @@ export default {
           {
             plant_variety: this.plantList[0].plantVarietyValue,
             wood_variety: this.notWoods[0].plantVarietyValue,
-            amount: 0
+            amount: 0,
+            // 植物来源（产地）
+            producingArea: '',
+            // 植物产品来源（加工地）
+            processingArea: ''
           }
         );
       }

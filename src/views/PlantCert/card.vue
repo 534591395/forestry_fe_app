@@ -82,12 +82,12 @@
 
     <van-cell-group class="change-center-y-cell__value change-cell-title-width-default" :border="false" style="margin-top: 20px">
       <van-field :readonly="$route.params.create_time" label="植物来源（产地）" placeholder="请输入产地" input-align="right"
-                 v-model="value.producing_area" />
+                 v-model="value.producingArea" />
     </van-cell-group>
 
     <van-cell-group class="change-center-y-cell__value change-cell-title-width-large" :border="false">
       <van-field :readonly="$route.params.create_time" label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right"
-                 v-model="value.processing_area" />
+                 v-model="value.processingArea" />
     </van-cell-group>
     <!--选择品名-->
     <van-cell-group class="change-field__body change-field__error-message" :border="false">

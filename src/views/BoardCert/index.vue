@@ -194,7 +194,7 @@ export default {
     await this.$store.dispatch('getWoodList', this);
     this.materialss = this.getNotWoodNameList();
     this.plantNames = this.getPlantNameList();
-    this.addFn();
+    
     window.scrollTo(0, 0);
     if(this.$route.params.createTime) {
       this.formData = JSON.parse(JSON.stringify(this.$route.params));
@@ -209,6 +209,8 @@ export default {
       } catch (error) {
         this.woodList = [];
       }
+    } else {
+      this.addFn();
     }
   },
   data() {
