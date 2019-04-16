@@ -89,13 +89,13 @@
 <template>
     <div class="wood-cert">
       <van-nav-bar title="可用非原木量" left-arrow @click-left="goBack" fixed />
-      <div class="group"  v-for="(item, key) in list" :key="key">
+      <div class="group"  v-for="(item, key) in typeList" :key="key">
         <div class="title">
           <div class="name">
-            <div class="icon">{{item.plant.plantVarietyName.split('')[0]}}</div>
-            <div class="txt">{{item.plant.plantVarietyName}}</div>
+            <div class="icon">{{list[item].plant.plantVarietyName.split('')[0]}}</div>
+            <div class="txt">{{list[item].plant.plantVarietyName}}</div>
           </div>
-          <div class="num"><span>{{item.plant.amount}}</span> m³</div>
+          <div class="num"><span>{{list[item].plant.amount}}</span> m³</div>
         </div>
         <div class="content">
           <div class="item">
@@ -119,7 +119,8 @@
       name: '',
       data() {
         return {
-          list: {}
+          list: [],
+          typeList: []
         }
       },
       async created() {
@@ -143,6 +144,8 @@
               res.data.module = res.data.module || [];
               res.data.module.map(item => {
                 if (!this.list[item.plantVarietyName]) {
+                  // 循环种类的数组
+                  this.typeList.push(item.plantVarietyName)
                   this.list[item.plantVarietyName] = {
                     plant: {
                       plantVarietyName: item.plantVarietyName,
@@ -158,6 +161,7 @@
                 this.list[item.plantVarietyName].plant.amount + item.amount;
               });
               console.log(this.list)
+              console.log(this.typeList)
             }
           });
         }
