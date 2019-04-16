@@ -65,9 +65,9 @@ export default {
         {
           name: '',
           username: '',
-          socialsecuritypic: '',
-          cardfrontpic: '',
-          cardoppositepic: '',
+          socialsecuritypic: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555438565947&di=215ba92fe281770186af2446976d659e&imgtype=0&src=http%3A%2F%2Fimg4.gamersky.com%2FFiles%2FGamerSky%2Fnews_UploadFiles_3424%2F200710%2F20071010171602454.jpg',
+          cardfrontpic: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555438565947&di=215ba92fe281770186af2446976d659e&imgtype=0&src=http%3A%2F%2Fimg4.gamersky.com%2FFiles%2FGamerSky%2Fnews_UploadFiles_3424%2F200710%2F20071010171602454.jpg',
+          cardoppositepic: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555438565947&di=215ba92fe281770186af2446976d659e&imgtype=0&src=http%3A%2F%2Fimg4.gamersky.com%2FFiles%2FGamerSky%2Fnews_UploadFiles_3424%2F200710%2F20071010171602454.jpg',
           boss: ''
         },
       type: 'add'

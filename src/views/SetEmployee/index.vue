@@ -150,9 +150,10 @@ export default {
       this.$router.push({path: '/setEmployeeCard', query: {info: info}})
     },
     addEmployee() {
-      if (this.$store.getters.oCompanyInfo.status !== 1 && this.$store.getters.oCompanyInfo.status !== 4) {
-        this.$router.push({name: 'setEmployeeCard'})
-      }
+      // if (this.$store.getters.oCompanyInfo.status !== 1 && this.$store.getters.oCompanyInfo.status !== 4) {
+      //   this.$router.push({name: 'setEmployeeCard'})
+      // }
+      this.$router.push({name: 'setEmployeeCard'})
     }
   }
 }
