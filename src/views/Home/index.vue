@@ -103,8 +103,8 @@ export default {
   },
   mounted () {
     let userAgent = window.plus.navigator.getUserAgent().toLowerCase();
-    if (userAgent.indexOf('iphone') >= 0 || userAgent.indexOf('ipad') >= 0) { 
-      document.body.scrollTop = document.body.scrollHeight; 
+    if (userAgent.indexOf('iphone') >= 0 || userAgent.indexOf('ipad') >= 0) {
+      document.body.scrollTop = document.body.scrollHeight;
     }
   },
   data() {
