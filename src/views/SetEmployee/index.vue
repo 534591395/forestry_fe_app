@@ -93,15 +93,7 @@ export default {
       }).then((res) => {
         if(res && res.data.success) {
           this.employeeInit = JSON.parse(JSON.stringify(res.data.module));
-          this.employee = (res.data.module.length > 0 ? res.data.module : '' ) || [
-            {
-              name: '',
-              username: '',
-              socialsecuritypic: '',
-              cardfrontpic: '',
-              cardoppositepic: ''
-            }
-          ];
+          this.employee = (res.data.module.length > 0 ? res.data.module : '' ) || [];
         }
       });
     },
