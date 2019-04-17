@@ -95,7 +95,7 @@
         <img :src="statusObject[formData.status].img" alt="" class="plant-cert-status-top__img">
         <span style="word-break: break-all;">{{ statusObject[formData.status].text }}</span>
       </div>
-      <p class="plant-cert-status-bottom">{{ formData.createTime }}</p>
+      <p class="plant-cert-status-bottom">{{ `${new Date(formData.createTime).getFullYear()}年${new Date(formData.createTime).getMonth() + 1}月${new Date(formData.createTime).getDate()}日` }}</p>
     </div>
 
     <div class="plant-cert-card">

@@ -73,20 +73,26 @@
       margin-top: 17px;
       margin-left: 10px;
     }
+    .dddd {
+      padding: 0 10px;
+      font-size: 16px;
+    }
   }
 </style>
 
 <template>
-  <div class="wood-cert">
+  <div class="wood-cert" v-if="!$route.params.createTime">
     <van-icon name="cross" class="wood-cert__icon" @click="$emit('del-card', index)" />
-
+    <van-cell-group>
+      <span class="dddd">木材种类：种类{{index+1}}</span>
+    </van-cell-group>
     <van-cell-group class="change-center-y-cell__value change-cell-title-width-default" :border="false" style="margin-top: 20px">
-      <van-field :readonly="$route.params.create_time" label="植物来源（产地）" placeholder="请输入产地" input-align="right"
+      <van-field  label="植物来源（产地）" placeholder="请输入产地" input-align="right"
                  v-model="value.producingArea" />
     </van-cell-group>
 
     <van-cell-group class="change-center-y-cell__value change-cell-title-width-large" :border="false">
-      <van-field :readonly="$route.params.create_time" label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right"
+      <van-field label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right"
                  v-model="value.processingArea" />
     </van-cell-group>
     <!--选择品名-->
@@ -110,7 +116,37 @@
 
     <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 20px;">
       <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"
-                 v-model="value.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.create_time" input-align="right">
+                 v-model="value.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.createTime" input-align="right">
+        <span slot="button" style="color: #333333;">m³</span>
+      </van-field>
+    </van-cell-group>
+  </div>
+  <div class="wood-cert" v-else>
+    <van-cell-group>
+      <span class="dddd">木材种类：种类{{index+1}}</span>
+    </van-cell-group>
+    <van-cell-group class="change-center-y-cell__value change-cell-title-width-default" :border="false" style="margin-top: 20px">
+      <van-field :readonly="$route.params.createTime" label="植物来源（产地）" placeholder="请输入产地" input-align="right"
+                 v-model="value.producingArea" />
+    </van-cell-group>
+
+    <van-cell-group class="change-center-y-cell__value change-cell-title-width-large" :border="false">
+      <van-field :readonly="$route.params.createTime" label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right"
+                 v-model="value.processingArea" />
+    </van-cell-group>
+    <!--选择品名-->
+    <van-cell-group class="change-field__body change-field__error-message" :border="false">
+      <van-cell title="品名(材种)" is-link :value="getWOODOneName(value.first_variety)" @click="show_wood_names = true" :border="false" />
+    </van-cell-group>
+    <!--选择名称-->
+    <van-cell-group class="change-field__body change-field__error-message" :border="false">
+      <van-cell v-show="getWOODOneName(value.first_variety) === '非原木类'" :title="getWOODOneName(value.first_variety) === '非原木类' ? ' ' : '植物产品名称'" is-link :value="getWOODNameLook(value.wood_variety)" @click="show_materialss = true" :border="false" />
+      <van-cell :title="getWOODOneName(value.first_variety) === '非原木类' ? '植物产品名称' : ' '" is-link :value="getPLANTNameLook(value.plant_variety)" @click="show_product_names = true" :border="false" />
+    </van-cell-group>
+
+    <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 20px;">
+      <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"
+                 v-model="value.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.createTime" input-align="right">
         <span slot="button" style="color: #333333;">m³</span>
       </van-field>
     </van-cell-group>
@@ -227,12 +263,32 @@
         }
         return paramName;
       },
+      // 根据品种值获取对应的名称
+      getWOODNameLook(paramValue) {
+        let paramName = '';
+        this.$store.getters.WOOD_VARIETY.map(item => {
+          if (item.paramValue === paramValue) {
+            paramName = item.paramName;
+          }
+        });
+        return paramName;
+      },
       // 根据植物值获取对应的名称
       getPLANTName(paramValue) {
         let paramName = '';
         this.plantList.map(item => {
           if (item.plantVarietyValue === paramValue) {
             paramName = item.plantVarietyName;
+          }
+        });
+        return paramName;
+      },
+      // 根据植物值获取对应的名称
+      getPLANTNameLook(paramValue) {
+        let paramName = '';
+        this.$store.getters.PLANT_VARIETY.map(item => {
+          if (item.paramValue === paramValue) {
+            paramName = item.paramName;
           }
         });
         return paramName;

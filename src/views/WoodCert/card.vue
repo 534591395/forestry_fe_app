@@ -77,7 +77,7 @@
 </style>
 
 <template>
-  <div class="wood-cert">
+  <div class="wood-cert" v-if="!$route.params.createTime">
     <van-icon name="cross" class="wood-cert__icon" @click="$emit('del-card', index)" />
 
     <van-cell-group class="change-field__body change-field__error-message" :border="false" style="margin-top: 20px">
@@ -85,6 +85,18 @@
       <van-popup v-model="show_product_names" position="bottom" :overlay="true">
         <van-picker :columns="plantNames" @change="onChangePlantName" />
       </van-popup>
+    </van-cell-group>
+
+    <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 20px;">
+      <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"
+                 v-model="value.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.create_time" input-align="right">
+        <span slot="button" style="color: #333333;">m³</span>
+      </van-field>
+    </van-cell-group>
+  </div>
+  <div class="wood-cert" v-else>
+    <van-cell-group class="change-field__body change-field__error-message" :border="false" style="margin-top: 20px">
+      <van-cell title="植物产品名称" is-link :value="getPLANTName(value.plant_variety)" @click="show_product_names = true" :border="false" />
     </van-cell-group>
 
     <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 20px;">
