@@ -376,7 +376,7 @@ export default {
       if(this.woodList.length != 1) {
         this.woodList.splice(index, 1);
       }
-    },
+    }
   }
 }
 </script>
