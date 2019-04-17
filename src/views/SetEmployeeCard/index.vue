@@ -67,8 +67,7 @@ export default {
           username: '',
           socialsecuritypic: '',
           cardfrontpic: '',
-          cardoppositepic: '',
-          boss: ''
+          cardoppositepic: ''
         },
       type: 'add'
     }
@@ -83,7 +82,7 @@ export default {
       console.log(flag);
       console.log(this.employee);
       if(flag) {
-        this.employee.boss = this.$store.getters.oUserInfo.userC.boss;
+        //this.employee.boss = this.$store.getters.oUserInfo.userC.boss;
         this.$http({
           url: '/employee/authApi/addEmployee',
           method: 'POST',

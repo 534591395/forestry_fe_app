@@ -440,11 +440,36 @@ export default {
         });
       }
     },
+    validateWoodList() {
+      let bool = true;
+      this.woodList.map( item => {
+        if (item.processingArea.trim() == '') {
+          bool = false;
+        }
+        if (item.producingArea.trim() == '') {
+          bool = false;
+        }
+        if (!item.plant_variety) {
+          bool = false;
+        }
+        if (!item.wood_variety) {
+          bool = false;
+        }
+        if (item.amount == '') {
+          bool = false;
+        }
+      } );
+      return bool;
+    },
     validate() {
       let flag = true;
 
       if(!this.woodList.length) {
         this.$toast('木材种类必须添加一项');
+        return false;
+      }
+      if (!this.validateWoodList()) {
+        this.$toast('木材种类有选项未填写');
         return false;
       }
       if(this.formData.carAmount == '') {
