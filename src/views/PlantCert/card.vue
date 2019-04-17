@@ -157,8 +157,11 @@
 
   export default {
     name: 'BoardCert',
-    created() {
-
+    async mounted() {
+      if(!this.$route.params.createTime) {
+        await this.getWoodPlant();
+        await this.getNotWoodPlant();
+      }
     },
     props: {
       value: {
@@ -176,15 +179,6 @@
       },
       // 非原木
       notWoods: {
-        type: Array,
-        required: true
-      },
-      plantNames: {
-        type: Array,
-        required: true
-      },
-      // 植物品种值
-      plantList: {
         type: Array,
         required: true
       },
@@ -206,7 +200,9 @@
         show_materialss: false,
         errMsg: {
           amountErrMsg: ''
-        }
+        },
+        plantList: [],
+        plantNames: []
       }
     },
     methods: {
@@ -301,16 +297,61 @@
           this.errMsg[inputName + 'ErrMsg'] = '';
         }
       },
+      // 获取原木对应的植物品种列表
+      getWoodPlants() {
+        const data = {
+          code:3,
+          firstparamValue: 'first_variety_01',
+          secondparamValue: 'wood_variety_01'
+        };
+        return this.$http({
+          url: '/cert/authApi/getCertSort',
+          method: 'POST',
+          data
+        }).then((res) => {
+          if(res && res.data.success) {
+            this.plantNames = [];
+            this.plantList = res.data.module || [];
+            this.plantList.map( item => {
+              this.plantNames.push(item.plantVarietyName);
+            } );
+          }
+        });
+      },
+      // 选择非原木 -> 品种 -> 获取植物品种列表
+      getNotWoodPlants(secondparamValue) {
+        if (!secondparamValue) {
+          return ;
+        }
+        const data = {
+          code:3,
+          firstparamValue: 'first_variety_02',
+          secondparamValue: secondparamValue
+        };
+        return this.$http({
+          url: '/cert/authApi/getCertSort',
+          method: 'POST',
+          data
+        }).then((res) => {
+          if(res && res.data.success) {
+            this.plantNames = [];
+            this.plantList = res.data.module || [];
+            this.plantList.map( item => {
+              this.plantNames.push(item.plantVarietyName);
+            } );
+          }
+        });
+      },
       // 切换到非原木时，查取非原木列表
       async getNotWoods() {
         await this.$parent.getNotWoods();
       },
       async getNotWoodPlant() {
-        await this.$parent.getNotWoodPlant(this.notWoods[0].plantVarietyValue);
+        await this.getNotWoodPlants(this.value.wood_variety);
         this.value.plant_variety = this.plantList[0].plantVarietyValue;
       },
       async getWoodPlant() {
-        await this.$parent.getWoodPlant();
+        await this.getWoodPlants();
         this.value.plant_variety = this.plantList[0].plantVarietyValue;
       },
       // 切换原木和非原木，切换了话，选择默认第一个值（materialss[0]）

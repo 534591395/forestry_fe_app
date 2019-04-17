@@ -268,11 +268,10 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('getCompanyInfo', this);
-
+    await this.$store.dispatch('getPlantList', this);
+    await this.$store.dispatch('getWoodList', this);
     window.scrollTo(0, 0);
     if(this.$route.params.createTime) {
-      await this.$store.dispatch('getPlantList', this);
-      await this.$store.dispatch('getWoodList', this);
       this.materialss = this.getNotWoodNameList();
       this.plantNames = this.getPlantNameList();
 
@@ -443,10 +442,10 @@ export default {
     validateWoodList() {
       let bool = true;
       this.woodList.map( item => {
-        if (item.processingArea.trim() == '') {
+        if (!item.processingArea) {
           bool = false;
         }
-        if (item.producingArea.trim() == '') {
+        if (!item.producingArea) {
           bool = false;
         }
         if (!item.plant_variety) {
