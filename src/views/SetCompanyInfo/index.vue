@@ -289,7 +289,7 @@
       </div>
 
       <div class="btn-pic change-button-background">
-        <van-button size="large" round type="primary" @click="submit" v-if="$store.getters.oCompanyInfo.status === 2 || $store.getters.oCompanyInfo.status === 3 || $window.$storage.get('isReg')">提交企业信息</van-button>
+        <!--<van-button size="large" round type="primary" @click="submit" v-if="$store.getters.oCompanyInfo.status === 2 || $store.getters.oCompanyInfo.status === 3 || $window.$storage.get('isReg')">提交企业信息</van-button>-->
         <van-button
           size="large"
           round
@@ -299,6 +299,7 @@
         >
             查看业务员信息
           </van-button>
+        <van-button size="large" round type="primary" @click="submit" v-else>提交企业信息</van-button>
       </div>
     </div>
   </div>
@@ -314,7 +315,7 @@ export default {
   },
   async created() {
     await this.$store.dispatch('getCompanyInfo', this);
-    await this.$store.dispatch('getFileInfo', this);     
+    await this.$store.dispatch('getFileInfo', this);
     await this.$store.dispatch('getBasicInfo', this);
     await this.$store.dispatch('getWoodList', this);
     if(Object.keys(this.$store.getters.oCompanyInfo).length) {

@@ -40,8 +40,8 @@
     </div>
 
     <div class="set-employee-btn change-button-background">
-      <van-button size="large" round type="primary" @click="submit" v-if="employee.length > 0">提交</van-button>
-      <van-button size="large" round type="primary" @click="finishReg" v-else>跳过</van-button>
+      <!--<van-button size="large" round type="primary" @click="submit" v-if="employee.length > 0">提交</van-button>-->
+      <van-button size="large" round type="primary" @click="finishReg" v-if="$store.getters.oCompanyInfo.status === 1 || $store.getters.oCompanyInfo.status === 4">跳过</van-button>
     </div>
 
     <!--原先的提交按钮-->
@@ -61,6 +61,7 @@ export default {
     EmployeeCard
   },
   async created() {
+    console.log(this.$store.getters.oCompanyInfo.status);
     await this.$store.dispatch('getCompanyInfo', this);
     if(Object.keys(this.$store.getters.oCompanyInfo).length) {
       this.getEmployee();
