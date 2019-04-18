@@ -9,8 +9,8 @@ window.baseUrl = 'http://47.105.67.161';
 
 const request = axios.create({
   // 上线打包前需要还原
-  baseURL: `${window.baseUrl}:8083`,
-  //baseURL: '/',
+  //baseURL: `${window.baseUrl}:8083`,
+  baseURL: '/',
   timeout: 10000,
   headers: {
     'Cache-Control': 'no-cache'

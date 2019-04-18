@@ -292,7 +292,7 @@ export default {
         data.noticepic = data.noticepic.toString();
         data.woodJson = JSON.stringify({woodList: this.woodList});
         data.firstVariety = 'first_variety_01';
-        data.cid = this.$store.getters.oCompanyInfo.id;
+        //data.cid = this.$store.getters.oCompanyInfo.id;
 
         this.$http({
           url: '/cert/authApi/addWoodCert',

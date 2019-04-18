@@ -67,8 +67,7 @@ export default {
           username: '',
           socialsecuritypic: '',
           cardfrontpic: '',
-          cardoppositepic: '',
-          boss: ''
+          cardoppositepic: ''
         },
       type: 'add'
     }
@@ -83,15 +82,15 @@ export default {
       console.log(flag);
       console.log(this.employee);
       if(flag) {
-        this.employee.boss = this.$store.getters.oUserInfo.userC.boss;
+        //this.employee.boss = this.$store.getters.oUserInfo.userC.boss;
         this.$http({
           url: '/employee/authApi/addEmployee',
           method: 'POST',
           data: this.employee
         }).then((res) => {
-          if(res && res.data.code == 0) {
+          if(res && res.data.success) {
             this.$toast.success('添加成功');
-            this.$router.go(-1)
+            this.$router.push({name: 'setEmployee'});
           }
         });
       }
@@ -104,15 +103,17 @@ export default {
       }
       console.log(flag);
       console.log(this.employee);
+      let data = JSON.parse(JSON.stringify(this.employee));
+      data.password = '';
       if(flag) {
         this.$http({
           url: '/employee/authApi/alterEmployee',
           method: 'POST',
-          data: this.employee
+          data: data
         }).then((res) => {
           if(res && res.data.success) {
             this.$toast.success('修改成功');
-            this.$router.go(-1)
+            this.$router.push({name: 'setEmployee'});
           }
         });
       }
@@ -132,7 +133,7 @@ export default {
           }).then((res) => {
             if(res && res.data.success) {
               this.$toast.success('删除成功');
-              this.$router.go(-1)
+              this.$router.push({name: 'setEmployee'});
             }
           });
       })

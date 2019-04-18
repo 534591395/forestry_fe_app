@@ -72,7 +72,7 @@
         </van-col>
 
         <van-col span="6">
-          <div class="apply-card-main__th">植物产品名称</div>
+          <div class="apply-card-main__th">产品种类</div>
           <div class="apply-card-main__td">{{ data.variety }}种</div>
         </van-col>
 

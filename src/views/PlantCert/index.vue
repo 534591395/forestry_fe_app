@@ -268,11 +268,10 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('getCompanyInfo', this);
-
+    await this.$store.dispatch('getPlantList', this);
+    await this.$store.dispatch('getWoodList', this);
     window.scrollTo(0, 0);
     if(this.$route.params.createTime) {
-      await this.$store.dispatch('getPlantList', this);
-      await this.$store.dispatch('getWoodList', this);
       this.materialss = this.getNotWoodNameList();
       this.plantNames = this.getPlantNameList();
 
@@ -440,11 +439,36 @@ export default {
         });
       }
     },
+    validateWoodList() {
+      let bool = true;
+      this.woodList.map( item => {
+        if (!item.processingArea) {
+          bool = false;
+        }
+        if (!item.producingArea) {
+          bool = false;
+        }
+        if (!item.plant_variety) {
+          bool = false;
+        }
+        if (!item.wood_variety) {
+          bool = false;
+        }
+        if (item.amount == '') {
+          bool = false;
+        }
+      } );
+      return bool;
+    },
     validate() {
       let flag = true;
 
       if(!this.woodList.length) {
         this.$toast('木材种类必须添加一项');
+        return false;
+      }
+      if (!this.validateWoodList()) {
+        this.$toast('木材种类有选项未填写');
         return false;
       }
       if(this.formData.carAmount == '') {
