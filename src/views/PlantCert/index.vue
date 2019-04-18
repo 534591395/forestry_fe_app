@@ -116,14 +116,14 @@
       </div>
 
       <van-cell-group class="van-hairline--bottom change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.createTime" label="车船数" placeholder="车船数" input-align="right" required
+        <van-field :readonly="$route.params.createTime" label="车船数" placeholder="车船数" input-align="right" required  type="number"
         v-model="formData.carAmount" :error-message="errMsg.car_amountErrMsg" @blur="handleInputBlur('carAmount')">
           <span slot="button" style="color: #323233;">辆</span>
         </van-field>
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.createTime" label="每车/船" placeholder="多少立方米" input-align="right" required
+        <van-field :readonly="$route.params.createTime" label="每车/船" placeholder="多少立方米" input-align="right" required  type="number"
         v-model="formData.everyCarAmount" :error-message="errMsg.every_car_amountErrMsg" @blur="handleInputBlur('everyCarAmount')">
           <span slot="button" style="color: #323233;">m³</span>
         </van-field>
@@ -219,7 +219,7 @@
       <van-button size="large" round type="primary" @click="skipNewPath" v-if="this.$route.params.createTime && this.$route.params.status === 4">上传照片</van-button>
     </div>
 
-    <div class="change-radio">
+    <!-- <div class="change-radio">
       <van-popup v-model="popup.plantNamePopup" position="bottom">
         <van-radio-group
           class="plant-cert__radio"
@@ -251,7 +251,7 @@
           </van-radio>
         </van-radio-group>
       </van-popup>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -270,8 +270,7 @@ export default {
     await this.$store.dispatch('getCompanyInfo', this);
     await this.$store.dispatch('getPlantList', this);
     await this.$store.dispatch('getWoodList', this);
-    this.formData.plantName = this.$store.getters.oBasicInfo['植物产品名称'].info[0];
-    this.formData.variety = this.$store.getters.oBasicInfo['品种'].info[0];
+
     window.scrollTo(0, 0);
     if(this.$route.params.createTime) {
       this.materialss = this.getNotWoodNameList();
@@ -427,7 +426,9 @@ export default {
         data.processingArea = processingAreaArr.join(',');
         data.producingArea = producingAreaArr.join(',');
         data.woodJson = JSON.stringify({woodList: this.woodList});
-        data.plantName =  this.$store.getters.oBasicInfo['植物产品名称'].info[0];
+        if (this.$store.getters.oBasicInfo['植物产品名称']) {
+          data.plantName =  this.$store.getters.oBasicInfo['植物产品名称'].info[0];
+        }
 
         this.$http({
           url: '/cert/authApi/addPlantCert',
