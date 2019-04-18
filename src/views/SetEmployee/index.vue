@@ -34,7 +34,7 @@
       <div class="set-employee-add-employee__text">
         <van-icon name="plus" />
         <span>
-          添加一位业务员1
+          添加一位业务员
         </span>
       </div>
     </div>
