@@ -110,7 +110,7 @@
         <div class="company-setting-middle-card" @click="$router.push({name: 'usableWoodCert'})">
           <div class="flex-center-y">
             <div class="company-setting-middle-card__title">可用原木量</div>
-            <div class="company-setting-middle-card__text flex-center-y" @click.stop="$router.push({name: 'woodCert'})">
+            <div class="company-setting-middle-card__text flex-center-y" @click.stop="skipNewUrl('woodCert')">
               开证
               <van-icon name="arrow" />
             </div>
@@ -124,10 +124,10 @@
       </van-col>
 
       <van-col span="12">
-        <div class="company-setting-middle-card" @click="$router.push({name: 'usableBoardCert'})">
+        <div class="company-setting-middle-card" @click.stop="$router.push({name: 'usableBoardCert'})">
           <div class="flex-center-y">
             <div class="company-setting-middle-card__title">可用非原木量</div>
-            <div class="company-setting-middle-card__text flex-center-y" @click.stop="$router.push({name: 'boardCert'})">
+            <div class="company-setting-middle-card__text flex-center-y"  @click.stop="skipNewUrl('boardCert')">
               开证
               <van-icon name="arrow" />
             </div>
@@ -214,6 +214,14 @@ export default {
           } );
         }
       });
+    },
+    skipNewUrl(path) {
+      if (this.$store.getters.oCompanyInfo.status == 2) {
+        this.$router.push({name: path})
+      }
+      else {
+        this.$toast('请在企业信息通过审核后再办理此项业务');
+      }
     }
   }
 }

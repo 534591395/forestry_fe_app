@@ -270,6 +270,8 @@ export default {
     await this.$store.dispatch('getCompanyInfo', this);
     await this.$store.dispatch('getPlantList', this);
     await this.$store.dispatch('getWoodList', this);
+    this.formData.plantName = this.$store.getters.oBasicInfo['植物产品名称'].info[0];
+    this.formData.variety = this.$store.getters.oBasicInfo['品种'].info[0];
     window.scrollTo(0, 0);
     if(this.$route.params.createTime) {
       this.materialss = this.getNotWoodNameList();
@@ -348,8 +350,8 @@ export default {
       formData: {
         producingArea: '',
         processingArea: '',
-        plantName: this.$store.getters.oBasicInfo['植物产品名称'].info[0],
-        variety: this.$store.getters.oBasicInfo['品种'].info[0],
+        plantName: '',
+        variety: '',
         carAmount: '',
         everyCarAmount: '',
         packaging: '',
