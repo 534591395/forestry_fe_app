@@ -350,7 +350,6 @@ export default {
         producingArea: '',
         processingArea: '',
         plantName: '',
-        variety: '',
         carAmount: '',
         everyCarAmount: '',
         packaging: '',
@@ -426,10 +425,12 @@ export default {
         } );
         data.processingArea = processingAreaArr.join(',');
         data.producingArea = producingAreaArr.join(',');
-        data.woodJson = JSON.stringify({woodList: this.woodList});
+        data.woodJson = JSON.stringify({woodList: woodList});
         if (this.$store.getters.oBasicInfo['植物产品名称']) {
           data.plantName =  this.$store.getters.oBasicInfo['植物产品名称'].info[0];
         }
+        delete data.show_date_time;
+        delete data.date_txt;
 
         this.$http({
           url: '/cert/authApi/addPlantCert',

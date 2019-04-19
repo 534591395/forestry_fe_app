@@ -93,7 +93,8 @@ export default {
                   this.imageObject[time].push({
                     name: subFiles[i].name,
                     time: metadata.modificationTime.toLocaleString(),
-                    url: subFiles[i].fullPath
+                    url: subFiles[i].fullPath,
+                    path: fileEntry.toLocalURL()
                   });
                 }
                 else {
@@ -101,7 +102,8 @@ export default {
                   this.imageObject[time].push({
                     name: subFiles[i].name,
                     time: metadata.modificationTime.toLocaleString(),
-                    url: subFiles[i].fullPath
+                    url: subFiles[i].fullPath,
+                    path: fileEntry.toLocalURL()
                   });
                 }
               });

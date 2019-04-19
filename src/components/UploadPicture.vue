@@ -115,7 +115,7 @@ export default {
         uploadTask.addData("Signature", oOssSign.Signature);
         uploadTask.addData("host", oOssSign.host);
         uploadTask.addData("success_action_status", oOssSign.success_action_status);
-        let res = uploadTask.addFile(picture.url, {key: 'file'});
+        let res = uploadTask.addFile(picture.path, {key: 'file'});
         uploadTask.start();
       });
     },
