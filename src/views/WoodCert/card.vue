@@ -88,8 +88,8 @@
     </van-cell-group>
 
     <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 20px;">
-      <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"
-                 v-model="value.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.create_time" input-align="right">
+      <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"  type="number"
+                 v-model="value.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.createTime" input-align="right">
         <span slot="button" style="color: #333333;">m³</span>
       </van-field>
     </van-cell-group>
@@ -100,8 +100,8 @@
     </van-cell-group>
 
     <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 20px;">
-      <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"
-                 v-model="value.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.create_time" input-align="right">
+      <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')" type="number"
+                 v-model="value.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.createTime" input-align="right">
         <span slot="button" style="color: #333333;">m³</span>
       </van-field>
     </van-cell-group>

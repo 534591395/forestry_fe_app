@@ -115,7 +115,7 @@
     </van-cell-group>
 
     <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 20px;">
-      <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"
+      <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"  type="number"
                  v-model="value.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.createTime" input-align="right">
         <span slot="button" style="color: #333333;">m³</span>
       </van-field>
@@ -146,7 +146,7 @@
 
     <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 20px;">
       <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"
-                 v-model="value.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.createTime" input-align="right">
+                 v-model="value.amount" required :error-message="errMsg.amountErrMsg"  :readonly="$route.params.createTime" input-align="right"  type="number">
         <span slot="button" style="color: #333333;">m³</span>
       </van-field>
     </van-cell-group>
@@ -159,8 +159,11 @@
     name: 'BoardCert',
     async mounted() {
       if(!this.$route.params.createTime) {
-        await this.getWoodPlant();
-        await this.getNotWoodPlant();
+        if (this.value.first_variety == 'first_variety_01') {
+          await this.getWoodPlant();
+        } else {
+          await this.getNotWoodPlant();
+        }
       }
     },
     props: {
@@ -348,11 +351,19 @@
       },
       async getNotWoodPlant() {
         await this.getNotWoodPlants(this.value.wood_variety);
-        this.value.plant_variety = this.plantList[0].plantVarietyValue;
+        if (this.plantList[0]) {
+          this.value.plant_variety = this.plantList[0].plantVarietyValue;
+        } else {
+          this.value.plant_variety = '';
+        }
       },
       async getWoodPlant() {
         await this.getWoodPlants();
-        this.value.plant_variety = this.plantList[0].plantVarietyValue;
+        if (this.plantList[0]) {
+          this.value.plant_variety = this.plantList[0].plantVarietyValue;
+        } else {
+          this.value.plant_variety = '';
+        }
       },
       // 切换原木和非原木，切换了话，选择默认第一个值（materialss[0]）
       async onChangeWoodName(picker, value, index) {
