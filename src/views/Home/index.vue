@@ -120,6 +120,11 @@ export default {
           window.$storage.merge('picture', {
             [capturedFile.split('/')[1]]: position.addresses
           });
+        }, (error) => {
+
+        }, 
+        {
+          filename: '_doc/forestry/camera/'
         });
       }, (error) => {
         console.warn('get position err: ' + error.message);

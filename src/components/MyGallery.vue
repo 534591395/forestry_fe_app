@@ -82,11 +82,11 @@ export default {
   },
   methods: {
     getGalleryImage() {
-      window.plus.io.resolveLocalFileSystemURL('_doc', (dirEntry) => {
+      window.plus.io.resolveLocalFileSystemURL('_doc/forestry/camera/', (dirEntry) => {
         let reader = dirEntry.createReader();
         reader.readEntries((subFiles) => {
           for (let i = 0; i < subFiles.length; i++) {
-            window.plus.io.resolveLocalFileSystemURL(`_doc/${subFiles[i].name}`, (fileEntry) => {
+            window.plus.io.resolveLocalFileSystemURL(`_doc/forestry/camera/${subFiles[i].name}`, (fileEntry) => {
               fileEntry.getMetadata((metadata) => {
                 let time = metadata.modificationTime.toLocaleString().split(' ')[0]
                 if(this.imageObject[time]) {
@@ -117,7 +117,10 @@ export default {
     },
     close() {
       this.$nextTick(() => {
-        this.$emit('input', false);
+        //this.$emit('input', false);
+        this.$router.push({
+          name: 'certUpload'
+        });
       });
     },
     delPicture() {

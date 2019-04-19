@@ -145,7 +145,7 @@ export default {
           fCallback && fCallback(res.data.data);
         }
       });
-    },
+    }
   }
 }
 </script>
