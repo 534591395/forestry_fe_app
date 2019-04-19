@@ -415,8 +415,9 @@ export default {
 
         let processingAreaArr = [];
         let producingAreaArr = [];
+        let woodList = JSON.parse(JSON.stringify(this.woodList));
         // 地址初始化
-        this.woodList.map( (item, i) => {
+        woodList.map( (item, i) => {
           processingAreaArr.push(item.processingArea);
           producingAreaArr.push(item.producingArea);
           delete item.processingArea;
@@ -424,7 +425,7 @@ export default {
         } );
         data.processingArea = processingAreaArr.join(',');
         data.producingArea = producingAreaArr.join(',');
-        data.woodJson = JSON.stringify({woodList: this.woodList});
+        data.woodJson = JSON.stringify({woodList: woodList});
         data.plantName =  this.$store.getters.oBasicInfo['植物产品名称'].info[0];
 
         this.$http({
