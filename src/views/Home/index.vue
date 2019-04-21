@@ -117,8 +117,12 @@ export default {
       window.plus.geolocation.getCurrentPosition((position) => {
         let camera = window.plus.camera.getCamera();
         camera.captureImage((capturedFile) => {
+          let addresses = position.addresses;
+          if (!addresses) {
+            addresses = JSON.stringify({longitude: position.coords.longitude, latitude: position.coords.latitude});
+          }
           window.$storage.merge('picture', {
-            [capturedFile.split('/')[3]]: position.addresses
+            [capturedFile.split('/')[3]]: addresses
           });
         }, (error) => {
 

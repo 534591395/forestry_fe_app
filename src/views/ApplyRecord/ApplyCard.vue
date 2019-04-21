@@ -50,7 +50,7 @@
 
 <template>
   <div class="apply-card">
-    <header :style="{backgroundImage: `url(${backgroundImageArray[data.type]})`, backgroundSize: '100%'}">
+    <header :style="{backgroundImage: `url(${backgroundImageArray[data.type]})`, backgroundSize: '100%'}" @click="skip2Detail">
       <div class="flex-center-xy">
         <img :src="cardIconArray[data.type]" alt="">
         <div class="apply-card-header__text">{{ typeNameArray[data.type] }}</div>
@@ -58,7 +58,7 @@
 
       <div class="flex-center-xy">
         <span class="apply-card-header__status-text">{{ statusNameArray[data.status] }}</span>
-        <van-icon name="arrow" size="0.7rem" color="#FFF" style="margin-right: 0.1rem" @click="skip2Detail" />
+        <van-icon name="arrow" size="0.7rem" color="#FFF" style="margin-right: 0.1rem" />
       </div>
     </header>
 

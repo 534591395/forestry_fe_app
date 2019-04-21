@@ -122,9 +122,6 @@ export default {
       e.stopPropagation(); 
       this.$nextTick(() => {
         this.$emit('input', false);
-        // this.$router.push({
-        //   name: 'certUpload'
-        // });
       });
     },
     delPicture() {
