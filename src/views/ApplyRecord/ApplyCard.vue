@@ -78,7 +78,7 @@
 
         <van-col span="6">
           <div class="apply-card-main__th">附件数</div>
-          <div class="apply-card-main__td">{{ file }}</div>
+          <div class="apply-card-main__td">{{ getFileNum() }}</div>
         </van-col>
 
         <van-col span="6" v-if="data.type === 2 && data.status === 2">
@@ -94,29 +94,7 @@
 export default {
   name: 'ApplyCard',
   created() {
-    switch (this.data.type) {
-      case 0: {
-        let ladingpic = this.data.ladingpic ? this.data.ladingpic.split(',').length : 0
-        let declarationpic = this.data.declarationpic ? this.data.declarationpic.split(',').length : 0
-        let noticepic = this.data.noticepic ? this.data.noticepic.split(',').length : 0
-        this.file = ladingpic + declarationpic + noticepic
-        break;
-      }
-      case 1: {
-        let contractpic = this.data.contractpic ? this.data.contractpic.split(',').length : 0
-        let declarationpic = this.data.declarationpic ? this.data.declarationpic.split(',').length : 0
-        let noticepic = this.data.noticepic ? this.data.noticepic.split(',').length : 0
-        this.file = contractpic + declarationpic + noticepic
-        break;
-      }
-      case 2: {
-        this.file = this.data.picture_url ? this.data.picture_url.split(',').length : 0;
-        break;
-      }
-      default: {
-        break;
-      }
-    }
+
   },
   props: {
     data: {
@@ -137,11 +115,37 @@ export default {
         require('../../assets/thirdCardIcon.png')
       ],
       typeNameArray: ['原木类开证', '板材类开证', '木材运输与植物检疫申请'],
-      statusNameArray: ['', '审核中', '已审批', '未通过', '待上传照片'],
-      file: 0
+      statusNameArray: ['', '审核中', '已审批', '未通过', '待上传照片']
     }
   },
   methods: {
+    getFileNum() {
+      let fileNum = 0;
+      switch (this.data.type) {
+        case 0: {
+          let ladingpic = this.data.ladingpic ? this.data.ladingpic.split(',').length : 0
+          let declarationpic = this.data.declarationpic ? this.data.declarationpic.split(',').length : 0
+          let noticepic = this.data.noticepic ? this.data.noticepic.split(',').length : 0
+          fileNum = ladingpic + declarationpic + noticepic
+          break;
+        }
+        case 1: {
+          let contractpic = this.data.contractpic ? this.data.contractpic.split(',').length : 0
+          let declarationpic = this.data.declarationpic ? this.data.declarationpic.split(',').length : 0
+          let noticepic = this.data.noticepic ? this.data.noticepic.split(',').length : 0
+          fileNum = contractpic + declarationpic + noticepic
+          break;
+        }
+        case 2: {
+          fileNum = this.data.pictureUrl ? this.data.pictureUrl.split(',').length : 0;
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+      return fileNum;
+    },
     skip2Detail() {
       if(this.data.type === 0) {
         this.$router.push({

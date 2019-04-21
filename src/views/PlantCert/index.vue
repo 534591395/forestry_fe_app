@@ -201,13 +201,13 @@
         v-model="formData.carNumber" :error-message="errMsg.car_numberErrMsg" @blur="handleInputBlur('carNumber')" />
       </van-cell-group>
 
-      <div v-if="formData.picture_url">
+      <div v-if="formData.pictureUrl">
         <p class="title-pic">
           车辆照片
         </p>
         <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 26px;">
           <div style="display: flex;flex-wrap: wrap;">
-            <upload-picture v-for="(item, index) in formData.picture_url.split(',')" :key="index" :index="index" :canUpload="false"
+            <upload-picture v-for="(item, index) in formData.pictureUrl.split(',')" :key="index" :index="index" :canUpload="false"
             :sPictureUrl="item" style="margin-left: 10px;margin-bottom: 10px;" />
           </div>
         </van-cell-group>
