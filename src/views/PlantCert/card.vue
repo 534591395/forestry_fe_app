@@ -116,7 +116,7 @@
 
     <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 20px;">
       <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"  type="number"
-                 v-model="value.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.createTime" input-align="right">
+                 v-model="value.amount" required :error-message="errMsg.amountErrMsg" :readonly="$route.params.createTime ? true : false" input-align="right">
         <span slot="button" style="color: #333333;">m³</span>
       </van-field>
     </van-cell-group>
@@ -126,12 +126,12 @@
       <span class="dddd">木材种类：种类{{index+1}}</span>
     </van-cell-group>
     <van-cell-group class="change-center-y-cell__value change-cell-title-width-default" :border="false" style="margin-top: 20px">
-      <van-field :readonly="$route.params.createTime" label="植物来源（产地）" placeholder="请输入产地" input-align="right"
+      <van-field :readonly="$route.params.createTime ? true : false" label="植物来源（产地）" placeholder="请输入产地" input-align="right"
                  v-model="value.producingArea" />
     </van-cell-group>
 
     <van-cell-group class="change-center-y-cell__value change-cell-title-width-large" :border="false">
-      <van-field :readonly="$route.params.createTime" label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right"
+      <van-field :readonly="$route.params.createTime ? true : false" label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right"
                  v-model="value.processingArea" />
     </van-cell-group>
     <!--选择品名-->
@@ -146,7 +146,7 @@
 
     <van-cell-group class="van-hairline--bottom" :border="false" style="padding-bottom: 20px;">
       <van-field label="总量" placeholder="请输入总量" @blur="handleInputBlur('amount')"
-                 v-model="value.amount" required :error-message="errMsg.amountErrMsg"  :readonly="$route.params.createTime" input-align="right"  type="number">
+                 v-model="value.amount" required :error-message="errMsg.amountErrMsg"  :readonly="$route.params.createTime ? true : false" input-align="right"  type="number">
         <span slot="button" style="color: #333333;">m³</span>
       </van-field>
     </van-cell-group>

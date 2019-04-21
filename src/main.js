@@ -2,7 +2,7 @@ import Vue from 'vue';
 import qs from 'qs';
 
 // 上线打包前需要去掉
-//import './app_js_bridge.js';
+// import './app_js_bridge.js';
 
 import App from './App';
 import router from './router';

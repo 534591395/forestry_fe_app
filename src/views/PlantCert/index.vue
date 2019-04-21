@@ -116,38 +116,38 @@
       </div>
 
       <van-cell-group class="van-hairline--bottom change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.createTime" label="车船数" placeholder="车船数" input-align="right" required  type="number"
+        <van-field :readonly="$route.params.createTime ? true : false" label="车船数" placeholder="车船数" input-align="right" required  type="number"
         v-model="formData.carAmount" :error-message="errMsg.car_amountErrMsg" @blur="handleInputBlur('carAmount')">
           <span slot="button" style="color: #323233;">辆</span>
         </van-field>
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.createTime" label="每车/船" placeholder="多少立方米" input-align="right" required  type="number"
+        <van-field :readonly="$route.params.createTime ? true : false" label="每车/船" placeholder="多少立方米" input-align="right" required  type="number"
         v-model="formData.everyCarAmount" :error-message="errMsg.every_car_amountErrMsg" @blur="handleInputBlur('everyCarAmount')">
           <span slot="button" style="color: #323233;">m³</span>
         </van-field>
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-center-y-cell__value" :border="false">
-        <van-field :readonly="$route.params.createTime" label="包装方式" placeholder="请输入包装方式" input-align="right"
+        <van-field :readonly="$route.params.createTime ? true : false" label="包装方式" placeholder="请输入包装方式" input-align="right"
         v-model="formData.packaging" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-center-y-cell__value" :border="false">
-        <van-field :readonly="$route.params.createTime" label="规格" placeholder="请输入规格" input-align="right"
+        <van-field :readonly="$route.params.createTime ? true : false" label="规格" placeholder="请输入规格" input-align="right"
         v-model="formData.standard" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message change-cell-title-width-default" :border="false">
-        <van-field :readonly="$route.params.createTime" label="收货单位（个人）" placeholder="请输入收货单位" input-align="right" required
+        <van-field :readonly="$route.params.createTime ? true : false" label="收货单位（个人）" placeholder="请输入收货单位" input-align="right" required
         v-model="formData.receivePerson" :error-message="errMsg.receive_personErrMsg" @blur="handleInputBlur('receivePerson')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-cell__value change-field__error-message change-cell-title-width-default" :border="false">
-        <van-field :readonly="$route.params.createTime" label="收货单位详细地址" disabled>
+        <van-field :readonly="$route.params.createTime ? true : false" label="收货单位详细地址" disabled>
           <van-radio-group
-            :disabled="$route.params.createTime"
+            :disabled="$route.params.createTime ? true : false"
             v-model="formData.receiveAddressType"
             slot="button"
             class="flex-center-y"
@@ -156,17 +156,17 @@
             <van-radio :name="1" style="margin-left: 10px;">省外</van-radio>
           </van-radio-group>
         </van-field>
-        <van-field :readonly="$route.params.createTime" placeholder="请输入收货单位详细地址" type="textarea" rows="3" required
+        <van-field :readonly="$route.params.createTime ? true : false" placeholder="请输入收货单位详细地址" type="textarea" rows="3" required
         v-model="formData.receiveAddress" :error-message="errMsg.receive_addressErrMsg" @blur="handleInputBlur('receiveAddress')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message change-cell-title-width-large" :border="false">
-        <van-field :readonly="$route.params.createTime" label="收货单位（个人）电话" placeholder="请输入电话" input-align="right" required
+        <van-field :readonly="$route.params.createTime ? true : false" label="收货单位（个人）电话" placeholder="请输入电话" input-align="right" required
         v-model="formData.phone" :error-message="errMsg.phoneErrMsg" @blur="handleInputBlur('phone')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message change-cell-title-width-large" :border="false">
-        <van-field :readonly="$route.params.createTime" label="收货联系人身份证号码" placeholder="请输入收货联系人身份证号码" input-align="right" required
+        <van-field :readonly="$route.params.createTime ? true : false" label="收货联系人身份证号码" placeholder="请输入收货联系人身份证号码" input-align="right" required
         v-model="formData.personId" :error-message="errMsg.person_idErrMsg" @blur="handleInputBlur('personId')" />
       </van-cell-group>
 
@@ -182,22 +182,22 @@
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body" :border="false">
-        <van-field :readonly="$route.params.createTime" label="申请人" placeholder="请输入申请人" input-align="right"
+        <van-field :readonly="$route.params.createTime ? true : false" label="申请人" placeholder="请输入申请人" input-align="right"
         v-model="formData.applyPerson" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.createTime" label="承运人" placeholder="请输入承运人" input-align="right" required
+        <van-field :readonly="$route.params.createTime ? true : false" label="承运人" placeholder="请输入承运人" input-align="right" required
         v-model="formData.transportPerson" :error-message="errMsg.transport_personErrMsg" @blur="handleInputBlur('transportPerson')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.createTime" label="对应报检单号" placeholder="请输入报检单号" input-align="right" required
+        <van-field :readonly="$route.params.createTime ? true : false" label="对应报检单号" placeholder="请输入报检单号" input-align="right" required
         v-model="formData.reportNumber" :error-message="errMsg.report_numberErrMsg" @blur="handleInputBlur('reportNumber')" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.createTime" label="车牌号" placeholder="请输入车牌号" input-align="right" required type="textarea" rows="2"
+        <van-field :readonly="$route.params.createTime ? true : false" label="车牌号" placeholder="请输入车牌号" input-align="right" required type="textarea" rows="2"
         v-model="formData.carNumber" :error-message="errMsg.car_numberErrMsg" @blur="handleInputBlur('carNumber')" />
       </van-cell-group>
 
@@ -282,7 +282,7 @@ export default {
       this.formData.date_txt =  this.$route.params.dateTime;
       const timeArr = this.$route.params.dateTime.split('-');
       this.formData.dateTime= new Date(timeArr[0],timeArr[1],timeArr[2]);
-      console.log(this.formData)
+      console.log(this.formData, 123)
       this.statusObject['2'].text = `审核已通过，请至城厢镇林业局${this.formData.windows}号窗口领取`;
       this.statusObject['3'].text = `审核未通过，被拒原因: ${this.formData.refuse_reason}`;
       try {
