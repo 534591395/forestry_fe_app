@@ -118,7 +118,7 @@ export default {
         let camera = window.plus.camera.getCamera();
         camera.captureImage((capturedFile) => {
           window.$storage.merge('picture', {
-            [capturedFile.split('/')[1]]: position.addresses
+            [capturedFile.split('/')[3]]: position.addresses
           });
         }, (error) => {
 
