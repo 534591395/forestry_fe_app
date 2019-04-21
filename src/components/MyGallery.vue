@@ -118,7 +118,7 @@ export default {
       }
     },
     close(e) {
-      // 阻止冒泡， 防止上层元素点击事件发生（upload2Oss函数）
+      // 阻止冒泡， 防止上层元素点击事件发生（upload2Oss函数）。
       e.stopPropagation(); 
       this.$nextTick(() => {
         this.$emit('input', false);
