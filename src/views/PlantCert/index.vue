@@ -284,7 +284,7 @@ export default {
       this.formData.dateTime= new Date(timeArr[0],timeArr[1],timeArr[2]);
       console.log(this.formData, 123)
       this.statusObject['2'].text = `审核已通过，请至城厢镇林业局${this.formData.windows}号窗口领取`;
-      this.statusObject['3'].text = `审核未通过，被拒原因: ${this.formData.refuse_reason}`;
+      this.statusObject['3'].text = `审核未通过，被拒原因: ${this.formData.refuseReason}`;
       try {
         const woodJson = JSON.parse(this.$route.params.woodJson);
         this.woodList = woodJson.woodList;

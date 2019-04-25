@@ -207,7 +207,7 @@ export default {
       this.formData.ladingpic = this.$route.params.ladingpic.split(',');
       this.formData.declarationpic = this.$route.params.declarationpic.split(',');
       this.statusObject['2'].text = `审核已通过。`;
-      this.statusObject['3'].text = `审核未通过，被拒原因: ${this.formData.refuse_reason}`;
+      this.statusObject['3'].text = `审核未通过，被拒原因: ${this.formData.refuseReason}`;
       try {
         const woodJson = JSON.parse(this.$route.params.woodJson);
         this.woodList = woodJson.woodList;

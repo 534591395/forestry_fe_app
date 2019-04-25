@@ -320,7 +320,7 @@ export default {
     await this.$store.dispatch('getWoodList', this);
     if(Object.keys(this.$store.getters.oCompanyInfo).length) {
       this.oFormData = JSON.parse(JSON.stringify(this.$store.getters.oCompanyInfo));
-      this.statusObject['3'].text = `审核未通过，被拒原因: ${this.oFormData.refuse_reason}`;
+      this.statusObject['3'].text = `审核未通过，被拒原因: ${this.oFormData.refuseReason}`;
     }
   },
   data() {
