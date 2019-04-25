@@ -401,7 +401,8 @@ export default {
   },
   methods: {
     submit() {
-      if(window.$underscore.isEqual(this.oFormData, this.$store.getters.oCompanyInfo)) {
+      console.log(this.$store.getters.oCompanyInfo.status);
+      if(window.$underscore.isEqual(this.oFormData, this.$store.getters.oCompanyInfo) && this.$store.getters.oCompanyInfo.status !== 3) {
         this.$router.push({name: 'setEmployee'});
         return;
       }
@@ -476,11 +477,11 @@ export default {
         this.oErrMsg.saleMountErrMsg = '此项不能为空';
         bFlag = true;
       }
-      if(this.oFormData.saw == '') {
+      if(this.oFormData.saw == '' && this.isSaw) {
         this.oErrMsg.sawErrMsg = '此项不能为空';
         bFlag = true;
       }
-      if(this.oFormData.sawoutput == '') {
+      if(this.oFormData.sawoutput == '' && this.isSaw) {
         this.oErrMsg.sawOutputErrMsg = '此项不能为空';
         bFlag = true;
       }
