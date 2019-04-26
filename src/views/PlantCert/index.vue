@@ -447,8 +447,13 @@ export default {
     validateWoodList() {
       let bool = true;
       this.woodList.map( item => {
-        if (!item.processingArea) {
-          bool = false;
+        // if (!item.processingArea) {
+        //   bool = false;
+        // }
+        if (item.first_variety !== 'first_variety_01') {
+          if (!item.processingArea) {
+            bool = false;
+          }
         }
         if (!item.producingArea) {
           bool = false;
@@ -465,9 +470,23 @@ export default {
       } );
       return bool;
     },
+    // 验证车辆数 * 每辆车的运载的数量是否等于输入的总数
+    validateTotal() {
+      let flag = true
+      let total = 0
+      this.woodList.map (item => {
+        total = Number(item.amount) + total
+      })
+      let carTotal = Number(this.formData.carAmount) * Number(this.formData.everyCarAmount)
+      // console.log(carTotal)
+      // console.log(total)
+      if ( total !== carTotal) {
+        flag = false
+      }
+      return flag
+    },
     validate() {
       let flag = true;
-
       if(!this.woodList.length) {
         this.$toast('木材种类必须添加一项');
         return false;
@@ -511,6 +530,10 @@ export default {
       if(this.formData.carNumber == '') {
         this.errMsg.car_numberErrMsg = '此项不能为空';
         flag = false;
+      }
+      if (!this.validateTotal()) {
+        this.$toast('总量与车船数量不一致');
+        return false;
       }
 
       return flag;

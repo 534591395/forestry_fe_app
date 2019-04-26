@@ -57,7 +57,7 @@
     <div>
       <span class="employee-card__title employee-card__title--required">附件添加</span>
 
-      <span class="employee-card__tips">1.所在公司6个月社保证明（法人股东除外）</span>
+      <span class="employee-card__tips">1.所在公司6个月社保证明（法人股东除外，股东需要提交股东证明文件照片）</span>
       <span class="employee-card__tips">2.清晰的身份证正反面照片</span>
 
       <van-cell-group :border="false" style="margin-top: 20px;">

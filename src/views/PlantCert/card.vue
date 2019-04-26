@@ -83,7 +83,7 @@
 <template>
   <div class="wood-cert" v-if="!$route.params.createTime">
     <van-icon name="cross" class="wood-cert__icon" @click="$emit('del-card', index)" />
-    <van-cell-group>
+    <van-cell-group style="margin-top: 20px" :border="false">
       <span class="dddd">木材种类：种类{{index+1}}</span>
     </van-cell-group>
     <van-cell-group class="change-center-y-cell__value change-cell-title-width-default" :border="false" style="margin-top: 20px">
@@ -91,8 +91,10 @@
                  v-model="value.producingArea" />
     </van-cell-group>
 
-    <van-cell-group class="change-center-y-cell__value change-cell-title-width-large" :border="false">
+    <van-cell-group class="change-center-y-cell__value change-cell-title-width-large" :border="false" 
+    v-show="getWOODOneName(value.first_variety) === '非原木类'">
       <van-field label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right"
+
                  v-model="value.processingArea" />
     </van-cell-group>
     <!--选择品名-->
@@ -130,7 +132,7 @@
                  v-model="value.producingArea" />
     </van-cell-group>
 
-    <van-cell-group class="change-center-y-cell__value change-cell-title-width-large" :border="false">
+    <van-cell-group class="change-center-y-cell__value change-cell-title-width-large" :border="false" v-show="getWOODOneName(value.first_variety) === '非原木类'">
       <van-field :readonly="$route.params.createTime ? true : false" label="植物产品来源（加工地）" placeholder="请输入加工地" input-align="right"
                  v-model="value.processingArea" />
     </van-cell-group>
