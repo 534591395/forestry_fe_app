@@ -104,7 +104,7 @@
           </div>
         </div>
       </div>
-      <div class="tip" @click="$router.push({name: 'boardCert'})">余量不够？去开证></div>
+      <div class="tip" @click="skipNewUrl('boardCert')">余量不够？去开证></div>
     </div>
 </template>
 
@@ -160,7 +160,15 @@
               console.log(this.typeList)
             }
           });
-        }
+        },
+        skipNewUrl(path) {
+          if (this.$store.getters.oCompanyInfo.status == 2) {
+            this.$router.push({name: path})
+          }
+          else {
+            this.$toast('请在企业信息通过审核后再办理此项业务');
+          }
+        }        
       }
     }
 </script>

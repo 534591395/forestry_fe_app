@@ -71,7 +71,7 @@
         </div>
         <div class="num"><span>{{item.amount}}</span> m³</div>
       </div>
-      <div class="tip" @click="$router.push({name: 'woodCert'})">余量不够？去开证></div>
+      <div class="tip" @click="skipNewUrl('woodCert')">余量不够？去开证></div>
     </div>
 </template>
 
@@ -106,7 +106,15 @@
               this.list = res.data.module || [];
             }
           });
-        }
+        },
+        skipNewUrl(path) {
+          if (this.$store.getters.oCompanyInfo.status == 2) {
+            this.$router.push({name: path})
+          }
+          else {
+            this.$toast('请在企业信息通过审核后再办理此项业务');
+          }
+        } 
       }
     }
 </script>
