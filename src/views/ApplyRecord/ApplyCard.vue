@@ -67,7 +67,7 @@
         <van-col span="6">
           <div class="apply-card-main__th">提交日期</div>
           <div class="apply-card-main__td">
-            {{ `${new Date(data.createTime).getMonth() + 1}月${new Date(data.createTime).getDate()}日` }}
+            {{ `${new Date(data.createTime.replace(/-/g,'/')).getMonth() + 1}月 ${new Date(data.createTime.replace(/-/g,'/')).getDate()}日` }}
           </div>
         </van-col>
 

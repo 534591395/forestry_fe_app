@@ -95,7 +95,7 @@
         <img :src="statusObject[formData.status].img" alt="" class="plant-cert-status-top__img">
         <span style="word-break: break-all;">{{ statusObject[formData.status].text }}</span>
       </div>
-      <p class="plant-cert-status-bottom">{{ `${new Date(formData.createTime).getFullYear()}年${new Date(formData.createTime).getMonth() + 1}月${new Date(formData.createTime).getDate()}日` }}</p>
+      <p class="plant-cert-status-bottom">{{ `${new Date(formData.createTime.replace(/-/g,'/')).getFullYear()}年${new Date(formData.createTime.replace(/-/g,'/')).getMonth() + 1}月${new Date(formData.createTime.replace(/-/g,'/')).getDate()}日` }}</p>
     </div>
 
     <div class="plant-cert-card">
@@ -204,8 +204,8 @@
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
-        <van-field :readonly="$route.params.createTime ? true : false" label="承运人" placeholder="请输入承运人" input-align="right" required
-        v-model="formData.transportPerson" :error-message="errMsg.transport_personErrMsg" @blur="handleInputBlur('transportPerson')" />
+        <van-field :readonly="$route.params.createTime ? true : false" label="承运人" placeholder="请输入承运人" input-align="right"
+        v-model="formData.transportPerson" :error-message="errMsg.transport_personErrMsg" />
       </van-cell-group>
 
       <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message" :border="false">
@@ -531,10 +531,10 @@ export default {
         this.errMsg.date_timeErrMsg = '此项不能为空';
         flag = false;
       }
-      if(this.formData.transportPerson == '') {
-        this.errMsg.transport_personErrMsg = '此项不能为空';
-        flag = false;
-      }
+      // if(this.formData.transportPerson == '') {
+      //   this.errMsg.transport_personErrMsg = '此项不能为空';
+      //   flag = false;
+      // }
       if(this.formData.reportNumber == '') {
         this.errMsg.report_numberErrMsg = '此项不能为空';
         flag = false;

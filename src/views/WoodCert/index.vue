@@ -99,7 +99,7 @@
         <img :src="statusObject[formData.status].img" alt="" class="wood-cert-status-top__img">
         <span style="word-break: break-all;">{{ statusObject[formData.status].text }}</span>
       </div>
-      <p class="wood-cert-status-bottom">{{ `${new Date(formData.createTime).getFullYear()}年${new Date(formData.createTime).getMonth() + 1}月${new Date(formData.createTime).getDate()}日` }}</p>
+      <p class="wood-cert-status-bottom">{{ `${new Date(formData.createTime.replace(/-/g,'/')).getFullYear()}年${new Date(formData.createTime.replace(/-/g,'/')).getMonth() + 1}月${new Date(formData.createTime.replace(/-/g,'/')).getDate()}日` }}</p>
     </div>
 
     <div class="wood-cert-card">
