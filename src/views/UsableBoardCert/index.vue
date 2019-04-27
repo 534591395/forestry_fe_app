@@ -166,7 +166,11 @@
             this.$router.push({name: path})
           }
           else {
-            this.$toast('请在企业信息通过审核后再办理此项业务');
+            if (this.$store.getters.oCompanyInfo.status == 5) {
+              this.$toast('您的企业已被停开');
+            } else {
+              this.$toast('请在企业信息通过审核后再办理此项业务');
+            }
           }
         }        
       }

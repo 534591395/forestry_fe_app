@@ -110,10 +110,27 @@
         <div class="set-employee-add-employee__text">
           <van-icon name="plus" />
           <span>
-          新增一条
+          新增木材种类
         </span>
         </div>
       </div>
+
+
+      <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message change-cell-title-width-default" :border="false">
+        <van-field :readonly="$route.params.createTime ? true : false" label="单位负责人（承办人）姓名" placeholder="单位负责人（承办人）姓名" input-align="right" required
+        v-model="formData.headerName" :error-message="errMsg.headerNameErrMsg" @blur="handleInputBlur('headerName')" />
+      </van-cell-group>
+
+      <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message change-cell-title-width-default" :border="false">
+        <van-field :readonly="$route.params.createTime ? true : false" label="身份证号" placeholder="身份证号" input-align="right" required
+        v-model="formData.headerIdentity" :error-message="errMsg.headerIdentityErrMsg" @blur="handleInputBlur('headerIdentity')" />
+      </van-cell-group>
+
+      <van-cell-group class="van-hairline--bottom change-field__body change-field__error-message change-cell-title-width-default" :border="false">
+        <van-field :readonly="$route.params.createTime ? true : false" label="联系电话" placeholder="联系电话" input-align="right" required
+        v-model="formData.headerPhone" :error-message="errMsg.headerPhoneErrMsg" @blur="handleInputBlur('headerPhone')" />
+      </van-cell-group>
+
 
       <van-cell-group class="van-hairline--bottom change-field__error-message" :border="false">
         <van-field :readonly="$route.params.createTime ? true : false" label="车船数" placeholder="车船数" input-align="right" required  type="number"
@@ -218,40 +235,6 @@
       <van-button size="large" round type="primary" @click="submit" v-if="!this.$route.params.createTime">提交</van-button>
       <van-button size="large" round type="primary" @click="skipNewPath" v-if="this.$route.params.createTime && this.$route.params.status === 4">上传照片</van-button>
     </div>
-
-    <!-- <div class="change-radio">
-      <van-popup v-model="popup.plantNamePopup" position="bottom">
-        <van-radio-group
-          class="plant-cert__radio"
-          v-model="formData.plantName"
-          @change="popup.plantNamePopup = false"
-        >
-          <van-radio
-            v-for="(item, index) in $store.getters.oBasicInfo['植物产品名称'].info"
-            :key="index"
-            :name="item"
-          >
-           {{ item }}
-          </van-radio>
-        </van-radio-group>
-      </van-popup>
-
-      <van-popup v-model="popup.varietyPopup" position="bottom">
-        <van-radio-group
-          v-model="formData.variety"
-          class="plant-cert__radio"
-          @change="popup.varietyPopup = false"
-        >
-          <van-radio
-            v-for="(item, index) in $store.getters.oBasicInfo['品种'].info"
-            :key="index"
-            :name="item"
-          >
-            {{ item }}
-          </van-radio>
-        </van-radio-group>
-      </van-popup>
-    </div> -->
   </div>
 </template>
 
@@ -312,6 +295,9 @@ export default {
         });
       }
     } else {
+      this.formData.headerName = window.$storage.get('headerName');
+      this.formData.headerIdentity = window.$storage.get('headerIdentity');
+      this.formData.headerPhone = window.$storage.get('headerPhone');
       await this.getFirst();
       if (this.woodNames.indexOf('原木类') > -1) {
         await this.getWoodPlant();
@@ -365,7 +351,13 @@ export default {
         applyPerson: '',
         transportPerson: '',
         reportNumber: '',
-        carNumber: ''
+        carNumber: '',
+        // 单位负责人
+        headerName: '',
+        //身份证
+        headerIdentity: '',
+        //电话号码
+        headerPhone: ''
       },
       errMsg: {
         car_amountErrMsg: '',
@@ -377,7 +369,10 @@ export default {
         date_timeErrMsg: '',
         transport_personErrMsg: '',
         report_numberErrMsg: '',
-        car_numberErrMsg: ''
+        car_numberErrMsg: '',
+        headerNameErrMsg: '',
+        headerIdentityErrMsg: '',
+        headerPhoneErrMsg: ''
       },
       statusObject: {
         1: {
@@ -431,6 +426,11 @@ export default {
         }
         delete data.show_date_time;
         delete data.date_txt;
+
+        // 单位负责人（承办人）姓名；身份证号；联系电话，保存到本地，下次新增运输证的时候初始化默认取值
+        window.$storage.set('headerName',data.headerName);
+        window.$storage.set('headerIdentity', data.headerIdentity);
+        window.$storage.set('headerPhone', data.headerPhone);
 
         this.$http({
           url: '/cert/authApi/addPlantCert',
@@ -494,6 +494,18 @@ export default {
       if (!this.validateWoodList()) {
         this.$toast('木材种类有选项未填写');
         return false;
+      }
+      if (this.formData.headerName == '')  {
+        this.errMsg.headerNameErrMsg = '此项不能为空';
+        flag = false;
+      } 
+      if (this.formData.headerIdentity == '')  {
+        this.errMsg.headerIdentityErrMsg = '此项不能为空';
+        flag = false;
+      } 
+      if (this.formData.headerPhone == '')  {
+        this.errMsg.headerPhoneErrMsg = '此项不能为空';
+        flag = false;
       }
       if(this.formData.carAmount == '') {
         this.errMsg.car_amountErrMsg = '此项不能为空';

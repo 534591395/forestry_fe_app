@@ -114,7 +114,7 @@ export default {
         require('../../assets/secondCardIcon.png'),
         require('../../assets/thirdCardIcon.png')
       ],
-      typeNameArray: ['原木类开证', '板材类开证', '木材运输与植物检疫申请'],
+      typeNameArray: ['原木类提单', '板材类提单', '木材运输与植物检疫申请'],
       statusNameArray: ['', '审核中', '已审批', '未通过', '待上传照片']
     }
   },

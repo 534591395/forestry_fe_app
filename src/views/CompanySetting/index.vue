@@ -93,7 +93,7 @@
           <div class="company-setting-top-card-header__text">{{ $store.getters.oCompanyInfo.name }}</div>
         </div>
 
-        <van-icon name="arrow" color="#FFF" size="0.5rem" v-if="$store.getters.oUserInfo.userC && $store.getters.oUserInfo.userC.boss === 0 && $store.getters.oCompanyInfo.status != 1"
+        <van-icon name="arrow" color="#FFF" size="0.5rem" v-if="$store.getters.oUserInfo.userC && $store.getters.oUserInfo.userC.boss === 0 && $store.getters.oCompanyInfo.status != 1 && $store.getters.oCompanyInfo.status != 5"
         class="company-setting-top-card-header__icon"  @click="$router.push({name: 'setCompanyInfo'})" />
       </div>
 
@@ -179,6 +179,9 @@ export default {
         case 4: {
           return '已注销'
         }
+        case 5: {
+          return '已停开'
+        }
         default:
           return;
       }
@@ -220,7 +223,11 @@ export default {
         this.$router.push({name: path})
       }
       else {
-        this.$toast('请在企业信息通过审核后再办理此项业务');
+        if (this.$store.getters.oCompanyInfo.status == 5) {
+          this.$toast('您的企业已被停开');
+        } else {
+          this.$toast('请在企业信息通过审核后再办理此项业务');
+        }
       }
     }
   }
